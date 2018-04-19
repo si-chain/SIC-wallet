@@ -2,6 +2,9 @@
 	"extends": "standard",
 	"plugins": [
 		"html"
-	],
+  ],
+  "rules": {
+    "no-console": "off"
+  },
 	"parser": "babel-eslint"
 }
