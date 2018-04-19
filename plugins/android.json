@@ -12,6 +12,9 @@
     },
     "phonegap-plugin-barcodescanner": {
       "PACKAGE_NAME": "com.rensanning.cordova"
+    },
+    "cordova-plugin-android-permissions": {
+      "PACKAGE_NAME": "com.rensanning.cordova"
     }
   },
   "dependent_plugins": {}
