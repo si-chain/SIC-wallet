@@ -15,6 +15,10 @@
             {
               "xml": "<feature name=\"BarcodeScanner\"><param name=\"android-package\" value=\"com.phonegap.plugins.barcodescanner.BarcodeScanner\" /></feature>",
               "count": 1
+            },
+            {
+              "xml": "<feature name=\"Permissions\"><param name=\"android-package\" value=\"com.android.plugins.Permissions\" /></feature>",
+              "count": 1
             }
           ]
         }
@@ -541,6 +545,9 @@
     },
     "phonegap-plugin-barcodescanner": {
       "PACKAGE_NAME": "com.rensanning.cordova"
+    },
+    "cordova-plugin-android-permissions": {
+      "PACKAGE_NAME": "com.rensanning.cordova"
     }
   },
   "dependent_plugins": {},
@@ -552,10 +559,19 @@
       "clobbers": [
         "cordova.plugins.barcodeScanner"
       ]
+    },
+    {
+      "id": "cordova-plugin-android-permissions.Permissions",
+      "file": "plugins/cordova-plugin-android-permissions/www/permissions.js",
+      "pluginId": "cordova-plugin-android-permissions",
+      "clobbers": [
+        "cordova.plugins.permissions"
+      ]
     }
   ],
   "plugin_metadata": {
     "cordova-plugin-whitelist": "1.3.3",
-    "phonegap-plugin-barcodescanner": "4.0.1"
+    "phonegap-plugin-barcodescanner": "4.0.1",
+    "cordova-plugin-android-permissions": "1.0.0"
   }
 }
