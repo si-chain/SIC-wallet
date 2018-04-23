@@ -2,6 +2,7 @@
 build.xml
 local.properties
 /gradlew
+/assets
 /gradlew.bat
 /gradle
 # Ant builds

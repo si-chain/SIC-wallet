@@ -2,6 +2,7 @@
 /* jshint ignore:start */
 import ecc from 'eosjs-ecc'
 import AES from 'crypto-js/aes'
+import CryptoJS from 'crypto-js';
 import _ from 'lodash'
 let util = {}
 util._ = _
@@ -59,7 +60,123 @@ util.set_wallets = (wallets) => {
       resolve()
     }
   })
+}
+/**
+ * 删除钱包本地存储
+ * @param wallet
+ */
+util.del_wallet = (wallet) => {
+  return new Promise((resolve, reject) => {
+    let wallets = util.get_wallets()
+    for (let i = 0; i < wallets.length; i++) {
+      if (wallet.account === wallets[i].account) {
+        wallets.splice(i, 1)
+      }
+    }
+    return util.set_wallets(wallets).then(() => {
+      resolve()
+    })
+  })
+}
+/**
+ * 更新钱包
+ * @param {*} wallet
+ */
+util.update_wallet = (wallet) => {
+  return new Promise((resolve, reject) => {
+    let wallets = util.get_wallets();
+    let updated = 0; // eslint-disable-line
+    wallets = wallets.map((w) => {
+      if (w.account == wallet.account) {
+        updated += 1;
+        return wallet;
+      }
+      return w;
+    });
+    return util.set_wallets(wallets).then(() => {
+      resolve();
+    });
+  });
 };
+/***
+     * 加密
+     * @param
+     * data（String） => 需要加密的字符串
+     * password (String) => 加密的依据
+     */
+util.encryption = (data, password) => {
+  try {
+    return AES.encrypt(data, password).toString()
+  } catch (exception) {
+    if (this.i18n._vm.locale.indexOf('CN') > -1) {
+      this.errorMess('密码错误')
+    } else {
+      this.errorMess('Invalid password')
+    }
+  }
+};
+/**
+ * 解密
+ * @param
+ * data（String） => 需要解密的字符串
+ * password (String) => 解密的依据
+ */
+util.decrypt = (data, password) => {
+  try {
+    return CryptoJS.enc.Utf8.stringify(AES.decrypt(data, password))
+  } catch (exception) {
+    console.log(exception)
+    return 'unlock.error.invalid_password'
+  }
+  // return CryptoJS.enc.Utf8.stringify(AES.decrypt(data, password))
+};
+/**
+ * 导出公钥
+ * @param
+ * data（String） => 需要解密的字符串
+ * password (String) => 解密的依据
+ */
+util.backupPublicKey = (data, password) => {
+  let str = util.decrypt(data, password)
+  console.log(str)
+  if (str !== 'unlock.error.invalid_password') {
+    let publicKey = ecc.privateToPublic(str)
+    return publicKey
+  } else {
+    return 'unlock.error.invalid_password'
+  }
+}
+/**
+ * 备份导出
+ * @param
+ * data（Object） => 具有加密的对象
+ * password (String) => 解密 加密的依据
+ */
+util.backupExport = (data, password) => {
+  let backupData = {
+    'account': data.account
+  }
+  backupData.active = util.decrypt(data.active, password)
+  backupData.owner = util.decrypt(data.owner, password)
+  let exportStr = JSON.stringify(backupData)
+  exportStr = util.encryption(exportStr, password)
+  return exportStr
+}
+/**
+ * 备份导入
+ * @param
+ * data（String） => 密文
+ * password (String) => 解密 加密的依据
+ */
+util.backupImport = (data, password) => {
+  let backupData = null
+  if (util.decrypt(data, password)) {
+    backupData = JSON.parse(this.decrypt(data, password))
+    return backupData
+  } else {
+    return false
+  }
+}
 /**
  * create an account by faucet api and import
  * @param account

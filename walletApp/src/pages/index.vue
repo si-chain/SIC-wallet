@@ -22,19 +22,11 @@
           </div>
           <cell title="创建钱包" link="/create-account">
           </cell>
-          <cell title="导入钱包" link="/import-wallet">
-          </cell>
-        </group>
-        <group style="margin-top:20px;">
-          <cell title="创建钱包" link="/creat-wallet">
-          </cell>
-          <cell title="创建钱包" link="/creat-wallet">
+          <cell title="管理钱包" link="/wallet-manage">
           </cell>
         </group>
         <group style="margin-top:20px;">
           <cell title="扫一扫" @click.native="qrcode">
-          </cell>
-          <cell title="创建钱包" link="/creat-wallet">
           </cell>
         </group>
       </div>
@@ -57,7 +49,8 @@
         <transition
         @after-enter="$vux.bus && $vux.bus.$emit('vux:after-view-enter')"
         :name="viewTransition" :css="!!direction">
-          <router-view class="router-view"></router-view>
+          <account-detail v-if="$route.path === '/'" :wallet="wallets[0]"></account-detail>
+          <router-view v-else class="router-view"></router-view>
         </transition>
       </view-box>
     </drawer>
@@ -68,6 +61,7 @@
 import { Radio, Group, Cell, Badge, Drawer, Actionsheet, ButtonTab, ButtonTabItem, ViewBox, XHeader, Tabbar, TabbarItem, Loading, TransferDom } from 'vux'
 import { mapState, mapActions } from 'vuex'
 import util from '../libs/utils'
+import accountDetail from '../components/accountDetail'
 import AccountImage from '../components/AccountImage'
 export default {
   name: 'index',
@@ -88,7 +82,8 @@ export default {
     TabbarItem,
     Loading,
     Actionsheet,
-    AccountImage
+    AccountImage,
+    accountDetail
   },
   methods: {
     onPlacementChange (val) {
@@ -193,6 +188,10 @@ export default {
       return 'vux-pop-' + (this.direction === 'forward' ? 'in' : 'out')
     }
   },
+  created () {
+    this.wallets = this.$common.get_wallets()
+    console.log(this.$route.path)
+  },
   data () {
     return {
       showMenu: false,
@@ -208,6 +207,7 @@ export default {
       showMode: 'push',
       showModeValue: 'push',
       showPlacement: 'left',
+      wallets: [],
       showPlacementValue: 'left'
     }
   }

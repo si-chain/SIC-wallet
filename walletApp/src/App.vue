@@ -1,15 +1,98 @@
 <template>
-  <div style="height:100%;">
+  <div style="height:100%">
     <router-view class="router-view"></router-view>
   </div>
 </template>
 
 <script>
-  export default {
-    name: 'app'
+import CryptoJS from 'crypto-js'
+import AES from 'crypto-js/aes'
+import ecc from 'eosjs-ecc'
+export default {
+  name: 'app',
+  methods: {
+    /***
+     * 加密
+     * @param
+     * data（String） => 需要加密的字符串
+     * password (String) => 加密的依据
+     */
+    encryption (data, password) {
+      try {
+        return AES.encrypt(data, password).toString()
+      } catch (exception) {
+        if (this.i18n._vm.locale.indexOf('CN') > -1) {
+          this.errorMess('密码错误')
+        } else {
+          this.errorMess('Invalid password')
+        }
+      }
+    },
+    /**
+     * 解密
+     * @param
+     * data（String） => 需要解密的字符串
+     * password (String) => 解密的依据
+     */
+    decrypt (data, password) {
+      try {
+        return CryptoJS.enc.Utf8.stringify(AES.decrypt(data, password))
+      } catch (exception) {
+        if (this.i18n._vm.locale.indexOf('CN') > -1) {
+          this.errorMess('密码错误')
+        } else {
+          this.errorMess('Invalid password')
+        }
+      }
+      // return CryptoJS.enc.Utf8.stringify(AES.decrypt(data, password))
+    },
+    /**
+     * 导出公钥
+     * @param
+     * data（String） => 需要解密的字符串
+     * password (String) => 解密的依据
+     */
+    backupPublicKey (data, password) {
+      let str = this.decrypt(data, password)
+      if (str !== '') {
+        let publicKey = ecc.privateToPublic(str)
+        return publicKey
+      }
+    },
+    /**
+     * 备份导出
+     * @param
+     * data（Object） => 具有加密的对象
+     * password (String) => 解密 加密的依据
+     */
+    backupExport (data, password) {
+      let backupData = {
+        'account': data.account
+      }
+      backupData.active = this.decrypt(data.active, password)
+      backupData.owner = this.decrypt(data.owner, password)
+      let exportStr = JSON.stringify(backupData)
+      exportStr = this.encryption(exportStr, password)
+      return exportStr
+    },
+    /**
+     * 备份导入
+     * @param
+     * data（String） => 密文
+     * password (String) => 解密 加密的依据
+     */
+    backupImport (data, password) {
+      let backupData = null
+      if (this.decrypt(data, password)) {
+        backupData = JSON.parse(this.decrypt(data, password))
+        return backupData
+      } else {
+        return false
+      }
+    }
   }
+}
 </script>
-
 <style lang="less">
   @import '~vux/src/styles/reset.less';
   @import '~vux/src/styles/1px.less';
@@ -113,3 +196,4 @@
     color: #888;
   }
 </style>
+
