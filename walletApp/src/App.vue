@@ -1,17 +1,20 @@
 <template>
   <div style="height:100%">
     <router-view class="router-view"></router-view>
-    <tabbar>
-      <tabbar-item selected link="/">
-        <!-- <img slot="icon" src="../assets/demo/icon_nav_button.png"> -->
+    <tabbar v-if="$route.path === '/' || $route.path === '/home'">
+      <tabbar-item selected link="/" @on-index-change="onIndexChange">
+        <img slot="icon" src="./assets/wallet.png">
+        <img slot="icon-active" src="./assets/wallet-active.png">
         <span slot="label">钱包</span>
       </tabbar-item>
-      <tabbar-item show-dot>
-        <!-- <img slot="icon" src="../assets/demo/icon_nav_msg.png"> -->
-        <span slot="label">保单上传</span>
+      <tabbar-item>
+        <img slot="icon" src="./assets/upload.png">
+        <img slot="icon-active" src="./assets/upload-active.png">
+        <span slot="label">保单托管</span>
       </tabbar-item>
       <tabbar-item link="/home">
-        <!-- <img slot="icon" src="../assets/demo/icon_nav_cell.png"> -->
+        <img slot="icon" src="./assets/index.png">
+        <img slot="icon-active" src="./assets/index-active.png">
         <span slot="label">我</span>
       </tabbar-item>
     </tabbar>
@@ -108,6 +111,14 @@ export default {
       } else {
         return false
       }
+    },
+    onIndexChange (newIndex, oldIndex) {
+      console.log(newIndex, oldIndex)
+    }
+  },
+  created () {
+    if (this.$common.get_wallets()) {
+      this.$store.commit('UPDATE_WALLETS', this.$common.get_wallets())
     }
   }
 }

@@ -6,15 +6,18 @@
     <div v-transfer-dom>
       <actionsheet :menus="menus" v-model="showMenu" @on-click-menu="changeLocale"></actionsheet>
     </div>
-
-    <drawer
+    <x-header >
+      <img @click="onClickMore" class="sys" slot="overwrite-left" src="../assets/language.png"/>
+      <img @click="qrcode" class="sys" slot="right" src="../assets/sys.png"/>
+    </x-header>
+    <account-detail :wallet="wallets[0]"></account-detail>
+    <!-- <drawer
       width="200px;"
       :show.sync="drawerVisibility"
       :show-mode="showModeValue"
       :placement="showPlacementValue"
       :drawer-style="{'background-color':'#35495e', width: '200px'}">
 
-      <!-- drawer content -->
       <div slot="drawer">
         <group style="margin-top:20px;">
           <div class="account-image-wrap">
@@ -26,12 +29,11 @@
           </cell>
         </group>
         <group style="margin-top:20px;">
-          <cell title="扫一扫" @click.native="qrcode">
+          <cell title="扫一扫" >
           </cell>
         </group>
       </div>
 
-      <!-- main content -->
       <view-box ref="viewBox" body-padding-top="46px" body-padding-bottom="55px">
 
         <x-header slot="header"
@@ -45,7 +47,6 @@
           </span>
         </x-header>
 
-        <!-- remember to import BusPlugin in main.js if you use components: x-img and sticky -->
         <transition
         @after-enter="$vux.bus && $vux.bus.$emit('vux:after-view-enter')"
         :name="viewTransition" :css="!!direction">
@@ -53,13 +54,12 @@
           <router-view v-else class="router-view"></router-view>
         </transition>
       </view-box>
-    </drawer>
+    </drawer> -->
   </div>
 </template>
 
 <script>
 import { Radio, Group, Cell, Badge, Drawer, Actionsheet, ButtonTab, ButtonTabItem, ViewBox, XHeader, Tabbar, TabbarItem, Loading, TransferDom } from 'vux'
-import { mapState, mapActions } from 'vuex'
 import util from '../libs/utils'
 import accountDetail from '../components/accountDetail'
 import AccountImage from '../components/AccountImage'
@@ -86,13 +86,6 @@ export default {
     accountDetail
   },
   methods: {
-    onPlacementChange (val) {
-      /** hide drawer before changing position **/
-      this.drawerVisibility = false
-      setTimeout(one => {
-        this.showPlacementValue = val
-      }, 400)
-    },
     onClickMore () {
       this.showMenu = true
     },
@@ -100,10 +93,8 @@ export default {
       util.setStore('_locale', locale)
       this.$i18n.locale = locale
     },
-    ...mapActions([
-      'updateDemoPosition'
-    ]),
     qrcode () {
+      console.log(1111)
       // var permissions = cordova.plugins.permissions
       // permissions.hasPermission(permissions.CAMERA, checkPermissionCallback, null)
       // function checkPermissionCallback (status) {
@@ -143,51 +134,6 @@ export default {
   beforeDestroy () {
     this.box && this.box.removeEventListener('scroll', this.handler, false)
   },
-  watch: {
-  },
-  computed: {
-    ...mapState({
-      route: state => state.route,
-      deviceready: state => state.app.deviceready,
-      demoTop: state => state.vux.demoScrollTop
-    }),
-    isShowBar () {
-      if (/component/.test(this.path)) {
-        return true
-      }
-      return false
-    },
-    leftOptions () {
-      return {
-        showBack: this.path !== '/'
-      }
-    },
-    rightOptions () {
-      return {
-        showMore: true
-      }
-    },
-    headerTransition () {
-      if (!this.direction) return ''
-      return this.direction === 'forward' ? 'vux-header-fade-in-right' : 'vux-header-fade-in-left'
-    },
-    componentName () {
-      if (this.path) {
-        const parts = this.path.split('/')
-        if (/component/.test(this.path) && parts[2]) return parts[2]
-      }
-    },
-    isDemo () {
-      return /component|demo/.test(this.path)
-    },
-    isTabbarDemo () {
-      return /tabbar/.test(this.path)
-    },
-    viewTransition () {
-      if (!this.direction) return ''
-      return 'vux-pop-' + (this.direction === 'forward' ? 'in' : 'out')
-    }
-  },
   created () {
     this.wallets = this.$common.get_wallets()
     console.log(this.$route.path)
@@ -218,4 +164,12 @@ export default {
   text-align: center;
   padding: 30px 0;
 }
+.sys{
+  width: 25px;
+  height: 25px;
+}
+.vux-header{
+  background-color: #ffffff
+}
+// @header-background-color:#fff
 </style>

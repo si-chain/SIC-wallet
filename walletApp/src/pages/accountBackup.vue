@@ -124,6 +124,9 @@ export default {
 .button-block {
     margin-top: 4rem;
 }
+.vux-header{
+  background-color: #ffffff
+}
 .content-block{
   margin: 1.75rem 0;
   padding: 0 .75rem;

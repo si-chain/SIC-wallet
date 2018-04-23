@@ -76,10 +76,12 @@ export default {
       }
       let account = this.$route.query.account
       let wallets = this.$common.get_wallets()
+      // let wallets = this.$store.state.wallets
+      // let wallets = this.$store.state.wallets
+      console.log(account)
       let wallet = wallets.find(w => {
         return w.account === account
       })
-      console.log(wallet)
       let publicWallet = this.$common.backupPublicKey(wallet.active, pwd)
       let activePubkey = wallet.active_pubkey
       if (wallet == null) {
@@ -106,6 +108,14 @@ export default {
       let clipboard = new Clipboard('#copy')
       clipboard.on('success', e => {
         this.keyCopied = true
+        let wallets = this.$common.get_wallets()
+        wallets.map((item, index) => {
+          if (item.account === this.$route.query.account) {
+            item.isBackUp = true
+            this.$store.commit('BACKUPWALLET', index)
+          }
+        })
+        this.$common.set_wallets(wallets)
         setTimeout(() => {
           this.keyCopied = false
         }, 1000)
@@ -132,6 +142,9 @@ export default {
   .line-scale > div {
     background-color: #ccc;
   }
+}
+.vux-header{
+  background-color: #ffffff
 }
 .bar-nav~.content {
     top: 2.2rem;

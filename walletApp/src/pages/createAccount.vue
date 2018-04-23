@@ -126,6 +126,8 @@ export default{
             let wallets = this.$common.get_wallets()
             wallets.push(getData.wallet)
             this.$common.set_wallets(wallets)
+            this.$store.commit('UPDATE_WALLETS', wallets)
+            console.log(this.$store.state)
             this.$router.push({path: '/wallet-create-success', query: {account: this.account}})
           } else {
             _this.error = '创建账户失败，请重试'
@@ -141,6 +143,9 @@ export default{
 .account-image-wrap{
   text-align: center;
   padding: 30px 0;
+}
+.vux-header{
+  background-color: #ffffff
 }
 </style>
 
