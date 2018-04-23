@@ -6,6 +6,7 @@ import createAccountSuccess from '../pages/createAccountSuccess.vue'
 import accountBackup from '../pages/accountBackup.vue'
 import accountBackupDetail from '../pages/accountBackupDetail.vue'
 import walletManage from '../pages/walletManage.vue'
+import home from '../pages/home.vue'
 Vue.use(Router)
 
 export default new Router({
@@ -39,6 +40,11 @@ export default new Router({
       path: '/wallet-manage',
       name: 'walletManage',
       component: walletManage
+    },
+    {
+      path: '/home',
+      name: 'home',
+      component: home
     }
   ]
 })

@@ -1,6 +1,20 @@
 <template>
   <div style="height:100%">
     <router-view class="router-view"></router-view>
+    <tabbar>
+      <tabbar-item selected link="/">
+        <!-- <img slot="icon" src="../assets/demo/icon_nav_button.png"> -->
+        <span slot="label">钱包</span>
+      </tabbar-item>
+      <tabbar-item show-dot>
+        <!-- <img slot="icon" src="../assets/demo/icon_nav_msg.png"> -->
+        <span slot="label">保单上传</span>
+      </tabbar-item>
+      <tabbar-item link="/home">
+        <!-- <img slot="icon" src="../assets/demo/icon_nav_cell.png"> -->
+        <span slot="label">我</span>
+      </tabbar-item>
+    </tabbar>
   </div>
 </template>
 
@@ -8,8 +22,13 @@
 import CryptoJS from 'crypto-js'
 import AES from 'crypto-js/aes'
 import ecc from 'eosjs-ecc'
+import { Tabbar, TabbarItem } from 'vux'
 export default {
   name: 'app',
+  components: {
+    Tabbar,
+    TabbarItem
+  },
   methods: {
     /***
      * 加密
