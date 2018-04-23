@@ -6,9 +6,7 @@
 -->
 <template>
     <div class="insurance-policy">
-        <header class="bar bar-nav">
-            <h3 class="title">{{$t('wallet_create.index.tip_insurance_policy')}}</h3>
-        </header>
+      <x-header>{{$t('wallet_create.index.tip_insurance_policy')}}</x-header>
         <div class="content">
             <div class="list-block">
                 <ul>
@@ -25,17 +23,20 @@
                   </li>
                 </ul>
             </div>
-            <div class="content-block">
-                <div class="row">
-                <div class="col-50"><a href="#" class="button button-big button-fill button-danger" @click="confirm">取消</a></div>
-                <div class="col-50"><a href="#" class="button button-big button-fill button-success" @click="uploadFile">提交</a></div>
-                </div>
-            </div>
+            <flexbox>
+              <flexbox-item>
+                <x-button type="warn" @click.native="confirm">取消</x-button>
+              </flexbox-item>
+              <flexbox-item>
+                <x-button type="primary" @click.native="uploadFile">确定</x-button>
+              </flexbox-item>
+            </flexbox>
         </div>
     </div>
 </template>
 
 <script>
+import { XHeader, XButton, Flexbox, FlexboxItem } from 'vux'
 import upload from '../components/upload-img'
 import { mapState } from 'vuex'
 export default {
@@ -118,7 +119,11 @@ export default {
     this.imgs = []
   },
   components: {
-    upload
+    upload,
+    XButton,
+    XHeader,
+    Flexbox,
+    FlexboxItem
   }
 }
 </script>
@@ -126,9 +131,6 @@ export default {
 <style scoped lang="less">
 .header-wrap {
   height: 2.2rem;
-}
-.insurance-policy {
-  margin: 8px;
 }
 .item-input {
   position: relative;

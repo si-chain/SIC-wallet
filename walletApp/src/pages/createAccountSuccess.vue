@@ -55,9 +55,6 @@ export default {
 .tip-wrap{
   margin: 1rem;
 }
-.vux-header{
-  background-color: #ffffff
-}
 .tip-alert{
   background: #fbf2f1;
   color: #c2433b;

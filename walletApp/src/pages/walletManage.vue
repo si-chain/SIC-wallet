@@ -77,9 +77,6 @@ export default {
   background: #efeff4;
   height: 100%;
 }
-.vux-header{
-  background-color: #ffffff
-}
 .page,
 .content {}
 .pull-to-refresh-layer {

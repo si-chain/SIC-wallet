@@ -168,8 +168,5 @@ export default {
   width: 25px;
   height: 25px;
 }
-.vux-header{
-  background-color: #ffffff
-}
 // @header-background-color:#fff
 </style>

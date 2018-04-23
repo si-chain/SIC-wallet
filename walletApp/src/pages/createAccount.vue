@@ -9,9 +9,9 @@
       <x-input title="输入密码" type="password" :max="6" :min="6" v-model="password"></x-input>
       <x-input title="确认密码" type="password" :max="6" :min="6" v-model="confirm" @on-blur="confirmOnBlur"></x-input>
     </group>
-    <group>
+    <box gap="30px 15px">
       <x-button type="primary" @click.native="submit" :show-loading="loading">注册</x-button>
-    </group>
+    </box>
     <toast v-model="show" type="warn">{{error}}</toast>
   </div>
 </template>
@@ -34,7 +34,7 @@
 //   },
 // </i18n>
 import AccountImage from '../components/AccountImage'
-import { XHeader, Group, XButton, XInput, Toast } from 'vux'
+import { XHeader, Box, Group, XButton, XInput, Toast } from 'vux'
 export default{
   components: {
     AccountImage,
@@ -42,7 +42,8 @@ export default{
     Group,
     XButton,
     XInput,
-    Toast
+    Toast,
+    Box
   },
   data () {
     return {
@@ -143,9 +144,6 @@ export default{
 .account-image-wrap{
   text-align: center;
   padding: 30px 0;
-}
-.vux-header{
-  background-color: #ffffff
 }
 </style>
 

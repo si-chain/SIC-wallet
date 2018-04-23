@@ -143,9 +143,6 @@ export default {
     background-color: #ccc;
   }
 }
-.vux-header{
-  background-color: #ffffff
-}
 .bar-nav~.content {
     top: 2.2rem;
 }
