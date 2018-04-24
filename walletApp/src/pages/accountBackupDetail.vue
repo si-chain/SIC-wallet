@@ -27,7 +27,7 @@
                 <x-button type="primary" id='copy' data-clipboard-target="#copywin" @click.native="copyKey()">{{keyCopied ? $t('wallet_backup.detail.copied') : $t('wallet_backup.detail.copy')}}</x-button>
               </flexbox-item>
               <flexbox-item>
-                <x-button type="primary" link="/">{{$t('wallet_backup.detail.go_back')}}</x-button>
+                <x-button type="primary" @click.native="showPlugin" >{{$t('wallet_backup.detail.go_back')}}</x-button>
               </flexbox-item>
             </flexbox>
           </div>
@@ -37,7 +37,7 @@
     </div>
 </template>
 <script>
-import { XButton, XHeader, Group, Cell, Flexbox, FlexboxItem } from 'vux'
+import { XButton, XHeader, Group, Cell, Flexbox, FlexboxItem, Confirm } from 'vux'
 import Clipboard from 'clipboard'
 import PasswordConfirm from '../components/PasswordConfirm.vue'
 
@@ -49,11 +49,13 @@ export default {
     Cell,
     Flexbox,
     FlexboxItem,
-    PasswordConfirm
+    PasswordConfirm,
+    Confirm
   },
   data () {
     return {
       wifKey: '',
+      show: false,
       keyCopied: false,
       unlocked: false,
       isUnlock: false,
@@ -78,7 +80,6 @@ export default {
       let wallets = this.$common.get_wallets()
       // let wallets = this.$store.state.wallets
       // let wallets = this.$store.state.wallets
-      console.log(account)
       let wallet = wallets.find(w => {
         return w.account === account
       })
@@ -93,6 +94,7 @@ export default {
           'wallet_backup.detail.error.invalid_password'
         )
       } else {
+        self.error.common = ''
         let data = {
           account: wallet.account,
           active: wallet.active,
@@ -101,6 +103,7 @@ export default {
         let wifKey = this.$common.backupExport(data, pwd)
         self.wifKey = wifKey
         self.wallet = wallet
+        self.unlocked = true
         self.isUnlock = false
       }
     },
@@ -128,6 +131,36 @@ export default {
         // 释放内存
         clipboard.destroy()
       })
+    },
+    backup () {
+      let wallet = this.wallet
+      wallet.backup_date = new Date().getTime()
+      this.$common.update_wallet(wallet)
+      this.$router.replace({
+        path: '/'
+      })
+    },
+    showPlugin () {
+      let se = this
+      if (this.unlocked) {
+        if (!se.wallet.backup_date) {
+          this.$vux.confirm.show({
+            title: this.$t('wallet_backup.detail.confirm'),
+            content: '',
+            onConfirm () {
+              se.backup()
+            }
+          })
+        } else {
+          se.$router.replace({
+            path: '/'
+          })
+        }
+      } else {
+        se.$router.replace({
+          path: '/'
+        })
+      }
     },
     setUnlock (val) {
       this.isUnlock = val
