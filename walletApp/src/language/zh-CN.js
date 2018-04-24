@@ -1,6 +1,7 @@
 /*eslint-disable */
 const locale = {
     index: {
+        home:'我',
         balance_loading: '**',
         backup_wallet: '备份私钥',
         asset_name: 'SIC',
@@ -8,11 +9,24 @@ const locale = {
         value: '价值(CNY)',
         transfer: '转账',
         receive: '接收',
-        wallet: '钱包账户',
+        wallet: '钱包',
         account_name: '账户名',
         copy: '复制账户名',
         copied: '已复制',
+        confirm: '确定',
+        cancel: '取消',
         account_is_address: '账户名既转账地址'
+    },
+    policy: {
+      tip_insurance_policy: '保单托管',
+      policy_list: '保单记录',
+      policy_img: '保单图片',
+      upload_time: '上传时间',
+      policy_num: '保单编号',
+      policy_status_step1: '已上传',
+      policy_status_step2: '审核中',
+      policy_status_step3: '完成',
+      policy_status_step4: '审核失败',
     },
     left_panel: {
         import_wallet: '导入钱包',
@@ -29,8 +43,7 @@ const locale = {
             tip_empty: '暂未绑定SIC钱包',
             button_create: '创建钱包',
             button_import: '导入钱包',
-            tip_how: '如何导入钱包?',
-            tip_insurance_policy: '保单托管'
+            tip_how: '如何导入钱包?'
         },
         one: {
             title: '钱包创建',

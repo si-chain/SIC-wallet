@@ -1,6 +1,7 @@
 /*eslint-disable */
 const locale = {
     index: {
+        home:'home',
         balance_loading: 'loading..',
         backup_wallet: 'backup private key',
         asset_name: 'SIC',
@@ -12,7 +13,20 @@ const locale = {
         account_name: 'Account',
         copy: 'Copy Account Name',
         copied: 'Copied',
+        confirm: 'Confirm',
+        cancel: 'Cancel',
         account_is_address: 'Account name is your address'
+    },
+    policy: {
+      tip_insurance_policy: 'Insurance Policy',
+      policy_list: 'Policy record',
+      policy_img: 'Policy Image',
+      upload_time: 'Upload Time',
+      policy_num: 'Policy Number',
+      policy_status_step1: 'Uploaded',
+      policy_status_step2: 'Audit',
+      policy_status_step3: 'Complete',
+      policy_status_step4: 'Audit Failure',
     },
     left_panel: {
         import_wallet: 'Import Wallet',
@@ -29,8 +43,7 @@ const locale = {
             tip_empty: 'SIC Wallet was not created',
             button_create: 'Create Wallet',
             button_import: 'Import Wallet',
-            tip_how: 'How to import wallet',
-            tip_insurance_policy: 'Insurance Policy'
+            tip_how: 'How to import wallet'
         },
         one: {
             title: 'Wallet Create',

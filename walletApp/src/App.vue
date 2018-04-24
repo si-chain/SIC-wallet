@@ -1,21 +1,21 @@
 <template>
   <div style="height:100%">
     <router-view class="router-view"></router-view>
-    <tabbar v-if="$route.path === '/' || $route.path === '/home'">
+    <tabbar v-if="$route.path === '/' || $route.path === '/home' || $route.path === '/policy'">
       <tabbar-item selected link="/" @on-index-change="onIndexChange">
         <img slot="icon" src="./assets/wallet.png">
         <img slot="icon-active" src="./assets/wallet-active.png">
-        <span slot="label">钱包</span>
+        <span slot="label">{{$t('index.wallet')}}</span>
       </tabbar-item>
-      <tabbar-item>
+      <tabbar-item link="/policy">
         <img slot="icon" src="./assets/upload.png">
         <img slot="icon-active" src="./assets/upload-active.png">
-        <span slot="label">保单托管</span>
+        <span slot="label">{{$t('policy.tip_insurance_policy')}}</span>
       </tabbar-item>
       <tabbar-item link="/home">
         <img slot="icon" src="./assets/index.png">
         <img slot="icon-active" src="./assets/index-active.png">
-        <span slot="label">我</span>
+        <span slot="label">{{$t('index.home')}}</span>
       </tabbar-item>
     </tabbar>
   </div>
@@ -119,6 +119,9 @@ export default {
   created () {
     if (this.$common.get_wallets()) {
       this.$store.commit('UPDATE_WALLETS', this.$common.get_wallets())
+    }
+    if (this.$common.get_wallets().length === 0) {
+      this.$router.push('/create-account')
     }
   }
 }

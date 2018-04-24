@@ -145,7 +145,7 @@ export default {
         border: 1px solid #ececec;
       }
       .file-tip {
-        width: 4rem;
+        width: 5.1rem;
         position: absolute;
         left: 0.5rem;
       }

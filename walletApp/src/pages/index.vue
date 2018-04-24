@@ -11,50 +11,6 @@
       <img @click="qrcode" class="sys" slot="right" src="../assets/sys.png"/>
     </x-header>
     <account-detail :wallet="wallets[0]"></account-detail>
-    <!-- <drawer
-      width="200px;"
-      :show.sync="drawerVisibility"
-      :show-mode="showModeValue"
-      :placement="showPlacementValue"
-      :drawer-style="{'background-color':'#35495e', width: '200px'}">
-
-      <div slot="drawer">
-        <group style="margin-top:20px;">
-          <div class="account-image-wrap">
-            <account-image class="account-image" account="ssss"></account-image>
-          </div>
-          <cell title="创建钱包" link="/create-account">
-          </cell>
-          <cell title="管理钱包" link="/wallet-manage">
-          </cell>
-        </group>
-        <group style="margin-top:20px;">
-          <cell title="扫一扫" >
-          </cell>
-        </group>
-      </div>
-
-      <view-box ref="viewBox" body-padding-top="46px" body-padding-bottom="55px">
-
-        <x-header slot="header"
-        style="width:100%;position:absolute;left:0;top:0;z-index:100;"
-        :left-options="leftOptions"
-        :right-options="rightOptions"
-        :transition="headerTransition"
-        @on-click-more="onClickMore">
-          <span slot="overwrite-left" @click="drawerVisibility = !drawerVisibility">
-            <x-icon type="navicon" size="35" style="fill:#fff;position:relative;top:-8px;left:-3px;"></x-icon>
-          </span>
-        </x-header>
-
-        <transition
-        @after-enter="$vux.bus && $vux.bus.$emit('vux:after-view-enter')"
-        :name="viewTransition" :css="!!direction">
-          <account-detail v-if="$route.path === '/'" :wallet="wallets[0]"></account-detail>
-          <router-view v-else class="router-view"></router-view>
-        </transition>
-      </view-box>
-    </drawer> -->
   </div>
 </template>
 
@@ -94,7 +50,6 @@ export default {
       this.$i18n.locale = locale
     },
     qrcode () {
-      console.log(1111)
       // var permissions = cordova.plugins.permissions
       // permissions.hasPermission(permissions.CAMERA, checkPermissionCallback, null)
       // function checkPermissionCallback (status) {

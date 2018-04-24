@@ -7,7 +7,7 @@
       <div class="account-info">
         <p class="name">
           {{wallet.account}}
-          <img src="../assets/ewm.png"/>
+          <!-- <img src="../assets/ewm.png"/> -->
         </p>
         <div class="is-backup">
           <p v-if="isBackup" @click="linkBackup">{{$t('index.backup_wallet')}} ></p>

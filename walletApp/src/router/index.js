@@ -7,7 +7,8 @@ import accountBackup from '../pages/accountBackup.vue'
 import accountBackupDetail from '../pages/accountBackupDetail.vue'
 import walletManage from '../pages/walletManage.vue'
 import home from '../pages/home.vue'
-import insurancePolicy from '../pages/InsurancePolicy.vue'
+import insurancePolicy from '../pages/InsurancePolicyDetail.vue'
+import Policy from '../pages/InsurancePolicy.vue'
 Vue.use(Router)
 
 export default new Router({
@@ -46,6 +47,11 @@ export default new Router({
       path: '/home',
       name: 'home',
       component: home
+    },
+    {
+      path: '/policy',
+      name: 'Policy',
+      component: Policy
     },
     {
       path: '/insurance-policy',
