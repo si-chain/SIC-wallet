@@ -11,11 +11,24 @@
       <img @click="qrcode" class="sys" slot="right" src="../assets/sys.png"/>
     </x-header>
     <account-detail :wallet="wallets[0]"></account-detail>
+    <div v-transfer-dom>
+      <confirm v-model="showConfirm"
+      :title="$t('index.authorization')"
+      @on-cancel="onCancel"
+      @on-confirm="onConfirm">
+        <p style="text-align:center;">{{ $t('index.confirm_authorization') }}</p>
+      </confirm>
+    </div>
+    <div v-transfer-dom>
+      <alert v-model="show" button-text=" ">
+        <msg slot="default" :title="title" :buttons="buttons" :icon="icon"></msg>
+      </alert>
+    </div>
   </div>
 </template>
 
 <script>
-import { Radio, Group, Cell, Badge, Drawer, Actionsheet, ButtonTab, ButtonTabItem, ViewBox, XHeader, Tabbar, TabbarItem, Loading, TransferDom } from 'vux'
+import { Radio, Group, Cell, Badge, Drawer, Confirm, Alert, Msg, Actionsheet, ButtonTab, ButtonTabItem, ViewBox, XHeader, Tabbar, TabbarItem, Loading, TransferDom } from 'vux'
 import util from '../libs/utils'
 import accountDetail from '../components/accountDetail'
 import AccountImage from '../components/AccountImage'
@@ -27,7 +40,10 @@ export default {
   components: {
     Radio,
     Group,
+    Confirm,
     Cell,
+    Alert,
+    Msg,
     Badge,
     Drawer,
     ButtonTab,
@@ -50,32 +66,73 @@ export default {
       this.$i18n.locale = locale
     },
     qrcode () {
-      // var permissions = cordova.plugins.permissions
-      // permissions.hasPermission(permissions.CAMERA, checkPermissionCallback, null)
-      // function checkPermissionCallback (status) {
-      //   if (!status.hasPermission) {
-      //     var errorCallback = function () {
-      //       alert('请在系统设置中打开本应用的相机权限')
-      //     }
-      //     permissions.requestPermission(
-      //       permissions.CAMERA,
-      //       function (status) {
-      //         if (!status.hasPermission) errorCallback()
-      //         cordova.plugins.barcodeScanner.scan(
-      //           function (result) {
-      //             alert('We got a barcode\n' + 'Result: ' + result.text + '\n' + 'Format: ' + result.format + '\n' + 'Cancelled: ' + result.cancelled)
-      //           }, null, 'QRCode', 'scan', []
-      //         )
-      //       },
-      //       errorCallback)
-      //   } else {
-      //     cordova.plugins.barcodeScanner.scan(
-      //       function (result) {
-      //         alert('We got a barcode\n' + 'Result: ' + result.text + '\n' + 'Format: ' + result.format + '\n' + 'Cancelled: ' + result.cancelled)
-      //       }, null, 'QRCode', 'scan', []
-      //     )
-      //   }
-      // }
+      let _this = this
+      let permissions = cordova.plugins.permissions
+      permissions.hasPermission(permissions.CAMERA, checkPermissionCallback, null)
+      function checkPermissionCallback (status) {
+        if (!status.hasPermission) {
+          let errorCallback = function () {
+            alert('请在系统设置中打开本应用的相机权限')
+          }
+          permissions.requestPermission(
+            permissions.CAMERA,
+            function (status) {
+              if (!status.hasPermission) errorCallback()
+              cordova.plugins.barcodeScanner.scan(
+                function (result) {
+                  // alert('result.text:' + result.text, result.text.indexOf('webpolicy') === 0)
+                  // if (result.text.indexOf('webpolicy') === 0) {
+                  _this.showConfirm = true
+                  _this.code = result
+                  // }
+                }, null, 'QRCode', 'scan', []
+              )
+            },
+            errorCallback)
+        } else {
+          cordova.plugins.barcodeScanner.scan(
+            function (result) {
+              // alert('result.text:' + result.text, result.text.indexOf('webpolicy') === 0)
+              // if (result.text.indexOf('webpolicy') === 0) {
+              _this.showConfirm = true
+              _this.code = result.text
+              // }
+            }, null, 'QRCode', 'scan', []
+          )
+        }
+      }
+    },
+    onCancel () {
+      this.showConfirm = false
+    },
+    onConfirm () {
+      let accountArr = JSON.parse(this.$common.getStore('account'))
+      let data = ''
+      let _this = this
+      accountArr.map(item => {
+        if (item.account === this.wallets[0].account) {
+          data = { 'data': item.encryption }
+          this.$http.post(`/login/qrCode/${this.code}`, data).then(res => {
+            let responese = res.data
+            if (responese.code === 200) {
+              _this.show = true
+              _this.icon = 'success'
+              _this.title = this.$t('index.success')
+              _this.buttons[0].type = 'primary'
+              _this.buttons[0].text = _this.$t('index.success')
+            } else {
+              _this.show = true
+              _this.icon = 'warn'
+              _this.title = this.$t('index.error')
+              _this.buttons[0].type = 'warn'
+              _this.buttons[0].text = _this.$t('index.error')
+            }
+          })
+        }
+      })
+    },
+    keepOn () {
+      this.show = false
     }
   },
   mounted () {
@@ -96,11 +153,14 @@ export default {
   data () {
     return {
       showMenu: false,
+      showConfirm: false,
+      show: false,
       menus: {
         'language.noop': '<span class="menu-title">Language</span>',
         'zh-CN': '中文',
         'en-US': 'English'
       },
+      code: '',
       path: '/',
       isLoading: false,
       direction: 'forward',
@@ -109,7 +169,14 @@ export default {
       showModeValue: 'push',
       showPlacement: 'left',
       wallets: [],
-      showPlacementValue: 'left'
+      showPlacementValue: 'left',
+      icon: 'success',
+      title: this.$t('index.success'),
+      buttons: [{
+        type: 'primary',
+        text: this.$t('index.success'),
+        onClick: this.keepOn.bind(this)
+      }]
     }
   }
 }

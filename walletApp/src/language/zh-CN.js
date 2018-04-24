@@ -2,6 +2,10 @@
 const locale = {
     index: {
         home:'我',
+        authorization: '授权',
+        success: '成功',
+        error: '失败',
+        confirm_authorization: '确定授权吗？',
         balance_loading: '**',
         backup_wallet: '备份私钥',
         asset_name: 'SIC',
