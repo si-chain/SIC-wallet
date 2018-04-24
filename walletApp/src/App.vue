@@ -2,17 +2,17 @@
   <div style="height:100%">
     <router-view class="router-view"></router-view>
     <tabbar v-if="$route.path === '/' || $route.path === '/home' || $route.path === '/policy'">
-      <tabbar-item selected link="/" @on-index-change="onIndexChange">
+      <tabbar-item :selected="$route.path === '/'" link="/" @on-index-change="onIndexChange">
         <img slot="icon" src="./assets/wallet.png">
         <img slot="icon-active" src="./assets/wallet-active.png">
         <span slot="label">{{$t('index.wallet')}}</span>
       </tabbar-item>
-      <tabbar-item link="/policy">
+      <tabbar-item :selected="$route.path === '/policy'" link="/policy">
         <img slot="icon" src="./assets/upload.png">
         <img slot="icon-active" src="./assets/upload-active.png">
         <span slot="label">{{$t('policy.tip_insurance_policy')}}</span>
       </tabbar-item>
-      <tabbar-item link="/home">
+      <tabbar-item :selected="$route.path === '/home'" link="/home">
         <img slot="icon" src="./assets/index.png">
         <img slot="icon-active" src="./assets/index-active.png">
         <span slot="label">{{$t('index.home')}}</span>

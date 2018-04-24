@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import { TransferDom } from 'vux'
+import { Loading, TransferDom } from 'vux'
 import util from '../libs/utils'
 import AccountHome from '../components/AccountHome'
 export default {
@@ -18,7 +18,8 @@ export default {
     TransferDom
   },
   components: {
-    AccountHome
+    AccountHome,
+    Loading
   },
   methods: {
     onClickMore () {
