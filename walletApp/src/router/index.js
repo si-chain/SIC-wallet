@@ -10,6 +10,7 @@ import home from '../pages/home.vue'
 import insurancePolicy from '../pages/InsurancePolicyDetail.vue'
 import Policy from '../pages/InsurancePolicy.vue'
 import accountImport from '../pages/accountImport.vue'
+import TradingRecord from '../pages/TradingRecord.vue'
 Vue.use(Router)
 
 export default new Router({
@@ -63,6 +64,11 @@ export default new Router({
       path: '/account-import',
       name: 'accountImport',
       component: accountImport
+    },
+    {
+      path: '/trading-record',
+      name: 'TradingRecord',
+      component: TradingRecord
     }
   ]
 })
