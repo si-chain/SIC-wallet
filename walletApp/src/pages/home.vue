@@ -9,8 +9,7 @@
 </template>
 
 <script>
-import { Loading, TransferDom } from 'vux'
-import util from '../libs/utils'
+import { TransferDom, Loading } from 'vux'
 import AccountHome from '../components/AccountHome'
 export default {
   name: 'index',
@@ -26,7 +25,7 @@ export default {
       this.showMenu = true
     },
     changeLocale (locale) {
-      util.setStore('_locale', locale)
+      this.$common.setStore('_locale', locale)
       this.$i18n.locale = locale
     }
   },

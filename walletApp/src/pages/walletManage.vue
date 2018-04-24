@@ -15,10 +15,20 @@
             <span class="type">SIC</span>
           </p>
         </div>
+         <div class="content-block button-block bom" v-if="!this.$route.query.account">
+          <flexbox>
+            <flexbox-item>
+              <x-button type="primary" :link="`/create-account?account=${$route.query.account}`">{{$t('wallet_create.index.button_create')}}</x-button>
+            </flexbox-item>
+            <flexbox-item>
+              <x-button type="default" :link="`/account-import?account=${$route.query.account}`">{{$t('wallet_create.index.button_import')}}</x-button>
+            </flexbox-item>
+          </flexbox>
+        </div>
     </div>
 </template>
 <script>
-import { XHeader, Group, Cell, Flexbox, FlexboxItem } from 'vux'
+import { XHeader, Group, Cell, Flexbox, FlexboxItem, XButton } from 'vux'
 import AccountImage from '../components/AccountImage'
 
 export default {
@@ -28,10 +38,12 @@ export default {
     Cell,
     Flexbox,
     FlexboxItem,
-    AccountImage
+    AccountImage,
+    XButton
   },
   data () {
     let wallets = this.$common.get_wallets()
+    console.log(this.$common.get_wallets())
     return {
       wallets: wallets,
       balanceArr: []
@@ -41,7 +53,7 @@ export default {
     loadWallets () {
       if (this.wallets.length === 0) {
         this.$router.replace({
-          path: this.link('/wallet-create')
+          path: '/create-login'
         })
       } else {
         this.wallets.forEach((wallet, index) => {
@@ -132,6 +144,12 @@ export default {
     margin-right: 20px
   }
 }
+.bom {
+       position: fixed;
+       bottom: 1%;
+       left: 0%;
+       right: 0%;
+    }
 .wallets {
     margin-top: 0;
     margin-bottom: 3.8rem;
