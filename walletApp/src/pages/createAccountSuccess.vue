@@ -14,7 +14,7 @@
           <x-button type="primary" @click.native="backup">{{$t('wallet_create.success.backup_wallet')}}</x-button>
         </flexbox-item>
         <flexbox-item>
-          <x-button type="default">{{$t('wallet_create.success.detail')}}</x-button>
+          <x-button type="default" link="/">{{$t('wallet_create.success.detail')}}</x-button>
         </flexbox-item>
       </flexbox>
     </div>
@@ -36,6 +36,7 @@ export default {
   },
   methods: {
     backup () {
+      console.log(111)
       this.$router.push({path: '/wallet-backup', query: {account: this.$route.query.account}})
     }
   }

@@ -121,7 +121,7 @@ export default {
       this.$store.commit('UPDATE_WALLETS', this.$common.get_wallets())
     }
     if (this.$common.get_wallets().length === 0) {
-      // this.$router.push('/create-account')
+      this.$router.push('/create-account')
     }
   }
 }

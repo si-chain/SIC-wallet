@@ -128,4 +128,3 @@ export default{
   background: linear-gradient(white, #244983); /* 标准的语法 */
 }
 </style>
-

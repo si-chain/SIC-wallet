@@ -21,7 +21,11 @@ util.setStore = (name, content) => {
  * 获取localStorage
  */
 util.getStore = name => {
-  if (!name) return
+  if (name === 'account' && !window.localStorage.getItem('account')) {
+    return []
+  } else if (!name) {
+    return
+  }
   return window.localStorage.getItem(name)
 }
 

@@ -3,6 +3,10 @@ const locale = {
     index: {
         home:'home',
         balance_loading: 'loading..',
+        success: 'success',
+        error: 'error',
+        authorization: 'To grant authorization',
+        confirm_authorization: 'Do you confirm the authorization？',
         backup_wallet: 'backup private key',
         asset_name: 'SIC',
         asset_full_name: 'SIChares',

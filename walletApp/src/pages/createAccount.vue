@@ -123,12 +123,17 @@ export default{
         this.$http.post('/chain/accounts/faucet', getData.params).then(res => {
           let data = res.data
           if (data.code === 200) {
-            console.log(this.$common.get_wallets())
             let wallets = this.$common.get_wallets()
+            let encryptionWalletArr = this.$common.getStore('account')
             wallets.push(getData.wallet)
+            let encryptionWallet = this.$common.encryption(JSON.stringify(getData.wallet), this.password)
+            encryptionWalletArr.push({
+              account: getData.wallet.account,
+              encryption: encryptionWallet
+            })
+            this.$common.setStore('account', encryptionWalletArr)
             this.$common.set_wallets(wallets)
             this.$store.commit('UPDATE_WALLETS', wallets)
-            console.log(this.$store.state)
             this.$router.push({path: '/wallet-create-success', query: {account: this.account}})
           } else {
             _this.error = '创建账户失败，请重试'
