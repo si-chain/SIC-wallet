@@ -57,6 +57,7 @@ export default {
           let data = res.data
           if (data.code === 200) {
             this.balanceArr[index] = data.data.eos_balance.split(' ')[0]
+            console.log(this.balanceArr[index])
           } else {
             this.balanceArr[index] = '0'
           }
@@ -76,6 +77,9 @@ export default {
 .page-group{
   background: #efeff4;
   height: 100%;
+}
+.vux-header{
+  background-color: #ffffff
 }
 .page,
 .content {}
