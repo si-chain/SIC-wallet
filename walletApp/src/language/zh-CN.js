@@ -15,7 +15,9 @@ const locale = {
         copied: '已复制',
         confirm: '确定',
         cancel: '取消',
-        account_is_address: '账户名既转账地址'
+        account_is_address: '账户名既转账地址',
+        import_error: '活跃权限私钥与密码不匹配',
+        import_key_isnull: '请填写活跃权限私钥'
     },
     policy: {
       tip_insurance_policy: '保单托管',
@@ -110,6 +112,7 @@ const locale = {
         },
         confirm: '确认导入',
         error: {
+            title:'导入失败',
             password_not_equal: '两次输入密码不一致',
             account_already_exist: '账户已存在，请勿重复导入',
             account_not_found: '账户不存在',

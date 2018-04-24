@@ -15,7 +15,9 @@ const locale = {
         copied: 'Copied',
         confirm: 'Confirm',
         cancel: 'Cancel',
-        account_is_address: 'Account name is your address'
+        account_is_address: 'Account name is your address',
+        import_error: 'Active privileges private key and password mismatch',
+        import_key_isnull: 'Please fill in the active private key'
     },
     policy: {
       tip_insurance_policy: 'Insurance Policy',

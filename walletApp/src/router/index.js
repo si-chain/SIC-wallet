@@ -9,6 +9,7 @@ import walletManage from '../pages/walletManage.vue'
 import home from '../pages/home.vue'
 import insurancePolicy from '../pages/InsurancePolicyDetail.vue'
 import Policy from '../pages/InsurancePolicy.vue'
+import accountImport from '../pages/accountImport.vue'
 Vue.use(Router)
 
 export default new Router({
@@ -57,6 +58,11 @@ export default new Router({
       path: '/insurance-policy',
       name: 'insurancePolicy',
       component: insurancePolicy
+    },
+    {
+      path: '/account-import',
+      name: 'accountImport',
+      component: accountImport
     }
   ]
 })

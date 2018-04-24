@@ -44,6 +44,11 @@ util.get_wallets = () => {
   }
   return wallets
 }
+
+util.IsInArray = function (arr, val) {
+  let testStr = ',' + arr.join(',') + ',';
+  return testStr.indexOf(',' + val + ',') != -1;
+};
 /**
  * save wallets into local storage
  * @param wallets
@@ -98,6 +103,26 @@ util.update_wallet = (wallet) => {
     });
   });
 };
+/**
+ * 获得免责声明
+ * @returns {boolean}
+ */
+util.get_disclaimer_accepted = () => {
+  let result = localStorage.getItem('sic_wallets_accepted');
+  return !!Number(result);
+};
+
+/**
+ * 设定免责声明
+ * @param accepted
+ */
+util.set_disclaimer_accepted = (accepted) => {
+  if (accepted) {
+    localStorage.setItem('sic_wallets_accepted', accepted ? 1 : 0);
+  } else {
+    localStorage.removeItem('sic_wallets_accepted');
+  }
+};
 /***
      * 加密
      * @param
@@ -108,11 +133,8 @@ util.encryption = (data, password) => {
   try {
     return AES.encrypt(data, password).toString()
   } catch (exception) {
-    if (this.i18n._vm.locale.indexOf('CN') > -1) {
-      this.errorMess('密码错误')
-    } else {
-      this.errorMess('Invalid password')
-    }
+    console.log(exception)
+    return 'index.import_error'
   }
 };
 /**
@@ -171,7 +193,7 @@ util.backupExport = (data, password) => {
 util.backupImport = (data, password) => {
   let backupData = null
   if (util.decrypt(data, password)) {
-    backupData = JSON.parse(this.decrypt(data, password))
+    backupData = JSON.parse(util.decrypt(data, password))
     return backupData
   } else {
     return false

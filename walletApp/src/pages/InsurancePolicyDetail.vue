@@ -116,7 +116,6 @@ export default {
         //   }
         // })
       } else {
-        console.log(1111)
         this.show = true
         this.icon = 'warn'
         this.title = '请选择上传的图片！'
