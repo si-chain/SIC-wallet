@@ -10,7 +10,7 @@
           <!-- <img src="../assets/ewm.png"/> -->
         </p>
         <div class="is-backup">
-          <p v-if="isBackup" @click="linkBackup">{{$t('index.backup_wallet')}} ></p>
+          <p v-if="!wallet.backup_date" @click="linkBackup">{{$t('index.backup_wallet')}} ></p>
         </div>
         <flexbox class="balance">
           <flexbox-item>

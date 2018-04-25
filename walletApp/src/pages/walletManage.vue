@@ -1,7 +1,7 @@
 <template>
     <div class="page-group">
       <x-header :left-options="{backText: ''}">{{$t('wallet_manage.title')}}</x-header>
-        <div class="page clearfix" id="page-wallet-manage" v-for="(wallet,index) in wallets" :key="wallet.account" @click="goDetail(wallet.account)">
+        <div class="page clearfix" id="page-wallet-manage" v-for="(wallet,index) in wallets" :key="index" @click="goDetail(wallet.account)">
           <div class="account-img-wrap">
             <account-image :account="wallet.account" :size="28"></account-image>
           </div>
@@ -11,7 +11,7 @@
             <span v-if="!wallet.backup_date" class="backup-date">{{$t('wallet_manage.tip_backup')}}</span>
           </div>
           <p class="sic">
-            <span class="num">{{balanceArr[index]}}</span>
+            <span class="num">{{wallet.balance}}</span>
             <span class="type">SIC</span>
           </p>
         </div>
@@ -43,7 +43,6 @@ export default {
   },
   data () {
     let wallets = this.$common.get_wallets()
-    console.log(this.$common.get_wallets())
     return {
       wallets: wallets,
       balanceArr: []
@@ -68,10 +67,9 @@ export default {
         this.$http.get(`chain/accounts/eos/${account}`).then(res => {
           let data = res.data
           if (data.code === 200) {
-            this.balanceArr[index] = data.data.eos_balance.split(' ')[0]
-            console.log(this.balanceArr[index])
+            this.wallets[index].balance = data.data.eos_balance.split(' ')[0]
           } else {
-            this.balanceArr[index] = '0'
+            this.wallets[index].balance = '0'
           }
         })
       }

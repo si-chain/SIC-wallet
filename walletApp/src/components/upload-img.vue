@@ -13,9 +13,9 @@
       >
         <img :src="file.src" alt="" ondragstart="return false;">
         <span class="file-remove" @click="remove(index)">+</span>
-        <span class="flie-loading file-tip" v-if="imgStatus==='uploading'">上传中...</span>
+        <!-- <span class="flie-loading file-tip" v-if="imgStatus==='uploading'">上传中...</span>
         <span class="flie-finished file-tip" v-if="imgStatus==='finished'">已上传</span>
-        <span class="flie-error file-tip" v-if="imgStatus==='error'">上传失败！</span>
+        <span class="flie-error file-tip" v-if="imgStatus==='error'">上传失败！</span> -->
       </section>
       <section class="file-item" v-if="imgStore.length < 20">
         <div class="add">
@@ -27,14 +27,6 @@
         </div>
       </section>
     </div>
-    <!-- <div class="uploadBtn">
-      <section>
-        <span v-if="imgStore.length > 0" class="empty"
-          @click="empty">
-            {{imgStatus === 'finished' ? '重新上传' : '清空'}}
-        </span>
-      </section>
-    </div>-->
   </div>
 </template>
 
@@ -58,44 +50,23 @@ export default {
   },
   methods: {
     selectImgs () {
-      var fileObj = this.$refs.file.files[0]
-      var form = new FormData()
-      form.append('file', fileObj)
-      var xhr = new XMLHttpRequest()
-      xhr.open('post', this.url, true)
-      let that = this
-      xhr.onload = function (res) {
-        if (xhr.status === 200) {
-          that.setStoreImg(JSON.parse(res.target.response))
+      let fileList = this.$refs.file.files
+      for (let i = 0, len = fileList.length; i < len; i++) {
+        let item = {
+          key: this.index++,
+          name: fileList[i].name,
+          size: fileList[i].size,
+          file: fileList[i]
         }
-      }
-      xhr.send(form)
-    },
-    setStoreImg (data) {
-      if (data.code === 200) {
-        let fileList = this.$refs.file.files
-        for (let i = 0, len = fileList.length; i < len; i++) {
-          let item = {
-            key: this.index++,
-            name: data.data.name,
-            size: fileList[i].size,
-            file: fileList[i],
-            url: data.data.url,
-            md5: data.data.md5
-          }
-          // 将图片文件转成BASE64格式
-          let reader = new FileReader()
-          reader.onload = e => {
-            this.$set(item, 'src', e.target.result)
-          }
-          reader.readAsDataURL(fileList[i])
-          this.files.push(item)
+        // 将图片文件转成BASE64格式
+        let reader = new FileReader()
+        reader.onload = e => {
+          this.$set(item, 'src', e.target.result)
         }
-        this.$store.commit('set_img_upload_cache', this.files) // 存储文件缓存
-        this.$store.commit('set_img_status', 'finished') // 更新文件上传状态
-      } else {
-        this.$store.commit('set_img_status', 'error')
+        reader.readAsDataURL(fileList[i])
+        this.files.push(item)
       }
+      this.$store.commit('set_img_upload_cache', this.files) // 存储文件缓存
     },
     // 移除图片
     remove (index) {

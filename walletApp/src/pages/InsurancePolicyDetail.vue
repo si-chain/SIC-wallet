@@ -6,7 +6,7 @@
 -->
 <template>
     <div class="insurance-policy">
-      <x-header>{{$t('policy.tip_insurance_policy')}}</x-header>
+      <x-header :left-options="{backText: ''}">{{$t('policy.tip_insurance_policy')}}</x-header>
       <div class="content">
           <div class="list-block">
               <ul>
@@ -18,7 +18,7 @@
                     </div>
                     </div>
                     <div class="item-input">
-                        <upload url="v1/file/upload"></upload>
+                        <upload></upload>
                     </div>
                 </li>
               </ul>
@@ -43,6 +43,8 @@
 </template>
 
 <script>
+import Eos from 'eosjs'
+import config from '../libs/env'
 import { XHeader, Msg, Alert, Box, XButton, Flexbox, FlexboxItem, TransferDomDirective as TransferDom } from 'vux'
 import upload from '../components/upload-img'
 import { mapState } from 'vuex'
@@ -52,6 +54,9 @@ export default {
   },
   data () {
     return {
+      account: 'sic.policy',
+      table: 'policy',
+      user: 'eos',
       imgs: [],
       show: false,
       formData: {
@@ -66,6 +71,7 @@ export default {
           file: [] // 文件
         }
       },
+      files: [],
       icon: 'success',
       title: '操作成功！',
       buttons: [{
@@ -86,35 +92,72 @@ export default {
     })
   },
   methods: {
+    uploadXHR () {
+      var form = new FormData()
+      this.files.map(item => {
+        form.append('files', item)
+      })
+      var xhr = new XMLHttpRequest()
+      xhr.open('post', 'v1/file/uploads', true)
+      let that = this
+      xhr.onload = function (res) {
+        if (xhr.status === 200) {
+          that.uploadSuccess(JSON.parse(res.target.response))
+        }
+      }
+      xhr.send(form)
+    },
+    uploadSuccess (data) {
+      if (data.code === 200) {
+        let _this = this
+        let zrmPrivateKey = Eos.modules.ecc.seedPrivate('eos')
+        let accountStr = JSON.parse(this.$common.getStore('account'))[0]
+
+        console.log(this.$common.backupPublicKey(accountStr.encryption, '111111'))
+        config.keyProvider = zrmPrivateKey
+        let eos = Eos.Localnet(config)
+        const policyContract = eos.contract(this.account)
+        policyContract.then(contract => {
+          contract.upload({
+            producer: _this.user,
+            ossID: data.data.path,
+            checkcode: ''
+          }).then(res => {
+            console.log(res)
+            this.show = true
+            this.icon = 'success'
+            this.title = '操作成功！'
+            setTimeout(() => {
+              this.$store.commit('set_img_upload_cache', [])
+            }, 1000)
+          }).fetch(() => {
+            this.show = true
+            this.icon = 'warn'
+            this.title = '上传失败！'
+            setTimeout(() => {
+              this.$store.commit('set_img_upload_cache', [])
+            }, 500)
+          })
+        })
+      } else {
+        this.show = true
+        this.icon = 'warn'
+        this.title = '上传失败！'
+        setTimeout(() => {
+          this.$store.commit('set_img_upload_cache', [])
+        }, 500)
+      }
+    },
     // 提交
     uploadFile () {
+      console.log(this.$store.state)
+      let _this = this
       // this.$store.commit('set_img_status', 'uploading');
       if (this.$store.state.img_upload_cache.length > 0) {
         this.$store.state.img_upload_cache.map(item => {
-          this.formData.body.file.push({
-            fileHash: item.md5,
-            fileUrl: item.url
-          })
+          _this.files.push(item.file)
         })
-        this.show = true
-        this.icon = 'success'
-        this.title = '操作成功！'
-        setTimeout(() => {
-          this.$store.commit('set_img_upload_cache', [])
-        }, 1000)
-        // this.$http.post('/policy/trust', this.formData).then(res => {
-        //   let data = res.data
-        //   if (data.code === 200) {
-        //     this.show = true
-        //     setTimeout(() => {
-        //       this.$store.commit('set_img_upload_cache', [])
-        //     }, 1000)
-        //   } else {
-        //     this.show = true
-        //     this.icon = 'warn'
-        //     this.title = '操作失败！'
-        //   }
-        // })
+        this.uploadXHR()
       } else {
         this.show = true
         this.icon = 'warn'

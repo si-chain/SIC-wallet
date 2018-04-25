@@ -11,6 +11,7 @@
     </group>
     <box gap="30px 15px">
       <x-button type="primary" @click.native="submit" :show-loading="loading">注册</x-button>
+      <a class="has-account" @click="hasAccount">已有账号?</a>
     </box>
     <toast v-model="show" type="warn">{{error}}</toast>
   </div>
@@ -84,7 +85,6 @@ export default{
         let account = this.account
         this.$http.get(`/chain/accounts/eos/${account}`).then(res => {
           let data = res.data
-          console.log(res, data)
           if (data.code === 400) {
             this.show = false
             this.isAccount = true
@@ -114,6 +114,9 @@ export default{
         return true
       }
     },
+    hasAccount () {
+      this.$router.push('/account-import')
+    },
     submit () {
       let _this = this
       this.loading = true
@@ -124,7 +127,7 @@ export default{
           let data = res.data
           if (data.code === 200) {
             let wallets = this.$common.get_wallets()
-            let encryptionWalletArr = this.$common.getStore('account')
+            let encryptionWalletArr = JSON.parse(this.$common.getStore('account'))
             wallets.push(getData.wallet)
             let encryptionWallet = this.$common.encryption(JSON.stringify(getData.wallet), this.password)
             encryptionWalletArr.push({
@@ -149,6 +152,12 @@ export default{
 .account-image-wrap{
   text-align: center;
   padding: 30px 0;
+}
+.has-account{
+  color: #bbbbbb;
+  display: inline-block;
+  padding: 10px 5px;
+  float: right;
 }
 </style>
 

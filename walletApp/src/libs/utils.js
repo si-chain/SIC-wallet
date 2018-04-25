@@ -163,6 +163,7 @@ util.decrypt = (data, password) => {
  * password (String) => 解密的依据
  */
 util.backupPublicKey = (data, password) => {
+  console.log(data, password)
   let str = util.decrypt(data, password)
   console.log(str)
   if (str !== 'unlock.error.invalid_password') {

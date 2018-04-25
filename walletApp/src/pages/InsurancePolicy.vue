@@ -6,7 +6,7 @@
 -->
 <template>
     <div class="insurance-policy">
-      <x-header>{{$t('policy.tip_insurance_policy')}}</x-header>
+      <x-header :left-options="{backText: ''}">{{$t('policy.tip_insurance_policy')}}</x-header>
       <group>
         <cell is-link link="/insurance-policy">
           <span slot="title" style="color:green;"><span style="vertical-align:middle;">{{$t('policy.tip_insurance_policy')}}</span></span>
