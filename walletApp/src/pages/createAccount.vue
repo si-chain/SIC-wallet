@@ -35,6 +35,9 @@
 //   },
 // </i18n>
 import AccountImage from '../components/AccountImage'
+import ecc from 'eosjs-ecc'
+import AES from 'crypto-js/aes'
+import Co from 'co'
 import { XHeader, Box, Group, XButton, XInput, Toast } from 'vux'
 export default{
   components: {
@@ -55,7 +58,8 @@ export default{
       loading: false,
       password: '',
       confirm: '',
-      accountSuccess: false
+      accountSuccess: false,
+      timerInt: null // 时间计时器
     }
   },
   methods: {
@@ -117,32 +121,62 @@ export default{
     hasAccount () {
       this.$router.push('/account-import')
     },
-    submit () {
+    createAccount (account, password) {
       let _this = this
-      this.loading = true
-      if (this.isAccount) {
-        this.accountSuccess = true
-        let getData = this.$common.create_account(this.account, this.password)
-        this.$http.post('/chain/accounts/faucet', getData.params).then(res => {
+      Co(function * () {
+        let activekey = yield ecc.randomKey()
+        let activePubkey = ecc.privateToPublic(activekey)
+        let ownerkey = yield ecc.randomKey()
+        let ownerPubkey = ecc.privateToPublic(ownerkey)
+        let active = AES.encrypt(activekey, password).toString()
+        let owner = AES.encrypt(ownerkey, password).toString()
+        let getData = {
+          params: {
+            'chainName': 'eos',
+            'accountName': account,
+            'keys': {
+              'active': activePubkey,
+              'owner': ownerPubkey
+            }
+          },
+          wallet: {
+            account: account,
+            active,
+            activePubkey,
+            owner,
+            ownerPubkey,
+            backup_date: null
+          }
+        }
+        yield _this.$http.post('/chain/accounts/faucet', getData.params).then(res => {
           let data = res.data
           if (data.code === 200) {
-            let wallets = this.$common.get_wallets()
-            let encryptionWalletArr = JSON.parse(this.$common.getStore('account'))
+            let wallets = _this.$common.get_wallets()
+            let encryptionWalletArr = JSON.parse(_this.$common.getStore('account'))
             wallets.push(getData.wallet)
-            let encryptionWallet = this.$common.encryption(JSON.stringify(getData.wallet), this.password)
+            let encryptionWallet = _this.$common.encryption(JSON.stringify(getData.wallet), _this.password)
             encryptionWalletArr.push({
               account: getData.wallet.account,
               encryption: encryptionWallet
             })
-            this.$common.setStore('account', encryptionWalletArr)
-            this.$common.set_wallets(wallets)
-            this.$store.commit('UPDATE_WALLETS', wallets)
-            this.$router.push({path: '/wallet-create-success', query: {account: this.account}})
+            _this.$common.setStore('account', encryptionWalletArr)
+            _this.$common.set_wallets(wallets)
+            _this.$store.commit('UPDATE_WALLETS', wallets)
+            _this.$router.push({path: '/wallet-create-success', query: {account: _this.account}})
           } else {
             _this.error = '创建账户失败，请重试'
             _this.show = true
           }
         })
+      }).catch(function (err) {
+        console.log(err)
+      })
+    },
+    submit () {
+      this.loading = true
+      if (this.isAccount) {
+        this.accountSuccess = true
+        this.createAccount(this.account, this.password)
       }
     }
   }

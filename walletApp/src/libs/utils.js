@@ -2,7 +2,8 @@
 /* jshint ignore:start */
 import ecc from 'eosjs-ecc'
 import AES from 'crypto-js/aes'
-import CryptoJS from 'crypto-js';
+import CryptoJS from 'crypto-js'
+import Co from 'co'
 import _ from 'lodash'
 let util = {}
 util._ = _
@@ -157,13 +158,21 @@ util.decrypt = (data, password) => {
   // return CryptoJS.enc.Utf8.stringify(AES.decrypt(data, password))
 };
 /**
+ * 导出私钥
+ * @param
+ * data（String） => 需要解密的字符串
+ * password (String) => 解密的依据
+ */
+util.decryptActive = (data, password) => {
+  return util.decrypt(data, password)
+}
+/**
  * 导出公钥
  * @param
  * data（String） => 需要解密的字符串
  * password (String) => 解密的依据
  */
 util.backupPublicKey = (data, password) => {
-  console.log(data, password)
   let str = util.decrypt(data, password)
   console.log(str)
   if (str !== 'unlock.error.invalid_password') {
@@ -211,30 +220,63 @@ util.backupImport = (data, password) => {
  * @returns {bluebird}
  */
 util.create_account = (account, password) => {
-  let activekey = ecc.randomKey()
-  let active_pubkey = ecc.privateToPublic(activekey)
-  let ownerkey = ecc.randomKey()
-  let owner_pubkey = ecc.privateToPublic(ownerkey)
-  let active = AES.encrypt(activekey, password).toString()
-  let owner = AES.encrypt(ownerkey, password).toString()
-  let data = {
-    params: {
-      'chainName': 'eos',
-      'accountName': account,
-      'keys': {
-        'active': active_pubkey,
-        'owner': owner_pubkey
+  Co(function* () {
+    let activekey = yield ecc.randomKey()
+    let active_pubkey = ecc.privateToPublic(activekey)
+
+    let ownerkey = yield ecc.randomKey();
+    let owner_pubkey = ecc.privateToPublic(ownerkey)
+    let active = AES.encrypt(activekey, password).toString()
+    let owner = AES.encrypt(ownerkey, password).toString()
+    let data = {
+      params: {
+        'chainName': 'eos',
+        'accountName': account,
+        'keys': {
+          'active': active_pubkey,
+          'owner': owner_pubkey
+        }
+      },
+      wallet: {
+        account: account,
+        active,
+        active_pubkey,
+        owner,
+        owner_pubkey,
+        backup_date: null
       }
-    },
-    wallet: {
-      account: account,
-      active,
-      active_pubkey,
-      owner,
-      owner_pubkey,
-      backup_date: null
     }
-  }
-  return data
+    return data
+  }).catch(function (err) {
+    console.log(err);
+  });
+  // ecc.randomKey().then(activekey => {
+  //   console.log(activekey)
+  //   active_pubkey = ecc.privateToPublic(activekey)
+
+  // })
+  // ecc.randomKey().then(ownerkey =>{
+  //   console.log(ownerkey)
+  //   owner_pubkey = ecc.privateToPublic(ownerkey)
+
+  // })
+  // let data = {
+  //   params: {
+  //     'chainName': 'eos',
+  //     'accountName': account,
+  //     'keys': {
+  //       'active': active_pubkey,
+  //       'owner': owner_pubkey
+  //     }
+  //   },
+  //   wallet: {
+  //     account: account,
+  //     active,
+  //     active_pubkey,
+  //     owner,
+  //     owner_pubkey,
+  //     backup_date: null
+  //   }
+  // }
 }
 export default util

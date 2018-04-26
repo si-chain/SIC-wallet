@@ -109,17 +109,19 @@ export default {
     },
     uploadSuccess (data) {
       if (data.code === 200) {
-        let _this = this
+        // let _this = this
         let zrmPrivateKey = Eos.modules.ecc.seedPrivate('eos')
         let accountStr = JSON.parse(this.$common.getStore('account'))[0]
 
-        console.log(this.$common.backupPublicKey(accountStr.encryption, '111111'))
+        let accountData = JSON.parse(this.$common.decryptActive(accountStr.encryption, '111111'))
+        let activeKey = this.$common.decryptActive(accountData.active, '111111')
+        console.log(activeKey)
         config.keyProvider = zrmPrivateKey
         let eos = Eos.Localnet(config)
         const policyContract = eos.contract(this.account)
         policyContract.then(contract => {
           contract.upload({
-            producer: _this.user,
+            producer: 'eos',
             ossID: data.data.path,
             checkcode: ''
           }).then(res => {
@@ -130,13 +132,6 @@ export default {
             setTimeout(() => {
               this.$store.commit('set_img_upload_cache', [])
             }, 1000)
-          }).fetch(() => {
-            this.show = true
-            this.icon = 'warn'
-            this.title = '上传失败！'
-            setTimeout(() => {
-              this.$store.commit('set_img_upload_cache', [])
-            }, 500)
           })
         })
       } else {
