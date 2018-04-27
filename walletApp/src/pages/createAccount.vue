@@ -1,39 +1,22 @@
 <template>
   <div class="creat-account">
-    <x-header :left-options="{backText: ''}">创建钱包</x-header>
+    <x-header :left-options="{backText: ''}">{{$t('left_panel.create_wallet')}}</x-header>
     <div class="account-image-wrap">
       <account-image class="account-image" :size="40" :account="account"></account-image>
     </div>
     <group>
-      <x-input title="账号" v-model="account" @on-blur="accountOnBlur"></x-input>
-      <x-input title="输入密码" type="password" :max="6" :min="6" v-model="password"></x-input>
-      <x-input title="确认密码" type="password" :max="6" :min="6" v-model="confirm" @on-blur="confirmOnBlur"></x-input>
+      <x-input :title="$t('index.account')" v-model="account" @on-blur="accountOnBlur"></x-input>
+      <x-input :title="$t('wallet_create.two.label.password')" type="password" :max="6" :min="6" v-model="password"></x-input>
+      <x-input :title="$t('wallet_create.two.label.confirm')" type="password" :max="6" :min="6" v-model="confirm" @on-blur="confirmOnBlur"></x-input>
     </group>
     <box gap="30px 15px">
-      <x-button type="primary" @click.native="submit" :show-loading="loading">注册</x-button>
-      <a class="has-account" @click="hasAccount">已有账号?</a>
+      <x-button type="primary" @click.native="submit" :show-loading="loading">{{$t('index.sign_up')}}</x-button>
+      <a class="has-account" @click="hasAccount">{{$t('index.existing_account')}}?</a>
     </box>
     <toast v-model="show" type="warn">{{error}}</toast>
   </div>
 </template>
 <script>
-// <i18n>
-//   query_account_failed:
-//     zn-CN: '查询账户失败，请重试',
-
-//   error: {
-//     query_account_failed: '查询账户失败，请重试',
-//     account_already_exist: '账户已存在',
-//     empty_account: '账户名不可为空',
-//     account_should_be_longer: '账户名至少3位',
-//     account_should_be_shorter: '账户名过长',
-//     account_should_start_with_a_letter: '账户名需以字母开头',
-//     account_format_error: '账户名只能是字母、数字的组合',
-//     account_end_error: '账户名需要以字母或数字结尾',
-//     account_segment_should_be_longer: '账户名长度是1到13位',
-//     premium_name: '你使用的是高级账户名,请选择其他名字，包含至少一个横杠、数字或者不含元音字母'
-//   },
-// </i18n>
 import AccountImage from '../components/AccountImage'
 import ecc from 'eosjs-ecc'
 import AES from 'crypto-js/aes'
@@ -87,7 +70,7 @@ export default{
         return false
       } else {
         let account = this.account
-        this.$http.get(`/chain/accounts/eos/${account}`).then(res => {
+        this.$http.get(`http://10.3.1.135:3000/v1/chain/accounts/eos/${account}`).then(res => {
           let data = res.data
           if (data.code === 400) {
             this.show = false
@@ -148,12 +131,13 @@ export default{
             backup_date: null
           }
         }
-        yield _this.$http.post('/chain/accounts/faucet', getData.params).then(res => {
+        yield _this.$http.post('http://10.3.1.135:3000/v1/chain/accounts/faucet', getData.params).then(res => {
           let data = res.data
           if (data.code === 200) {
             let wallets = _this.$common.get_wallets()
-            let encryptionWalletArr = JSON.parse(_this.$common.getStore('account'))
+            let encryptionWalletArr = _this.$common.getStore('account')
             wallets.push(getData.wallet)
+            _this.$store.commit('setAccount', getData.wallet.account)
             let encryptionWallet = _this.$common.encryption(JSON.stringify(getData.wallet), _this.password)
             encryptionWalletArr.push({
               account: getData.wallet.account,
@@ -173,9 +157,9 @@ export default{
       })
     },
     submit () {
-      this.loading = true
-      if (this.isAccount) {
+      if (this.isAccount && this.confirm === this.password) {
         this.accountSuccess = true
+        this.loading = true
         this.createAccount(this.account, this.password)
       }
     }

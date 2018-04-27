@@ -10,7 +10,24 @@
       <img @click="onClickMore" class="sys" slot="overwrite-left" src="../assets/language.png"/>
       <img @click="qrcode" class="sys" slot="right" src="../assets/sys.png"/>
     </x-header>
-    <account-detail :wallet="wallets[0]"></account-detail>
+    <account-detail></account-detail>
+    <div class="is-backup">
+      <cell :title="$t('index.backup_wallet')" is-link :link="`/wallet-backup?account=${this.$store.state.account}`">
+        <img slot="icon" class="backup-icon" src="../assets/icon_11.png" width="25" height="25" alt="">
+      </cell>
+    </div>
+    <flexbox class="balance">
+      <cell title="SIC">
+        <img slot="icon" class="backup-icon" src="../assets/icon_14.png" width="25" height="25" alt="">
+        <img class="eye" v-if="isShow" @click="showFlag" src="../assets/eyez.png"/>
+        <img class="eye" v-else @click="showFlag" src="../assets/eyeb.png"/>
+      </cell>
+      <flexbox-item></flexbox-item>
+      <flexbox-item>
+        <p v-if="isShow" class="center">{{balance}}</p>
+        <p v-else class="center">******</p>
+        </flexbox-item>
+    </flexbox>
     <div v-transfer-dom>
       <confirm v-model="showConfirm"
       :title="$t('index.authorization')"
@@ -28,7 +45,7 @@
 </template>
 
 <script>
-import { Radio, Group, Cell, Badge, Drawer, Confirm, Alert, Msg, Actionsheet, ButtonTab, ButtonTabItem, ViewBox, XHeader, Tabbar, TabbarItem, Loading, TransferDom } from 'vux'
+import { Radio, Group, Cell, Flexbox, FlexboxItem, Badge, Drawer, Confirm, Alert, Msg, Actionsheet, ButtonTab, ButtonTabItem, ViewBox, XHeader, Tabbar, TabbarItem, Loading, TransferDom } from 'vux'
 import util from '../libs/utils'
 import accountDetail from '../components/accountDetail'
 import AccountImage from '../components/AccountImage'
@@ -45,6 +62,8 @@ export default {
     Alert,
     Msg,
     Badge,
+    Flexbox,
+    FlexboxItem,
     Drawer,
     ButtonTab,
     ButtonTabItem,
@@ -105,6 +124,26 @@ export default {
     onCancel () {
       this.showConfirm = false
     },
+    linkBackup (account) {
+      let query = {
+        account: this.$store.state.account
+      }
+      this.$router.push({path: '/wallet-backup', query})
+    },
+    loadBalance () {
+      let account = this.$store.state.account
+      this.$http.get(`http://10.3.1.135:3000/v1/chain/accounts/eos/${account}`).then(res => {
+        let data = res.data
+        if (data.code === 200) {
+          this.balance = data.data.eos_balance.split(' ')[0]
+        } else {
+          this.balance = '0'
+        }
+      })
+    },
+    showFlag () {
+      this.isShow = !this.isShow
+    },
     onConfirm () {
       let accountArr = JSON.parse(this.$common.getStore('account'))
       let data = ''
@@ -112,7 +151,7 @@ export default {
       accountArr.map(item => {
         if (item.account === this.wallets[0].account) {
           data = { 'data': item.encryption }
-          this.$http.post(`/login/qrCode/${this.code}`, data).then(res => {
+          this.$http.post(`http://10.3.1.135:3000/v1/login/qrCode/${this.code}`, data).then(res => {
             let responese = res.data
             if (responese.code === 200) {
               _this.show = true
@@ -142,6 +181,10 @@ export default {
         this.updateDemoPosition(this.box.scrollTop)
       }
     }
+    if (!this.$route.params.account) {
+      this.$router.push(`/?account=${this.wallets[0].account}`)
+    }
+    this.loadBalance()
   },
   beforeDestroy () {
     this.box && this.box.removeEventListener('scroll', this.handler, false)
@@ -175,12 +218,18 @@ export default {
         type: 'primary',
         text: this.$t('index.success'),
         onClick: this.keepOn.bind(this)
-      }]
+      }],
+      balance: '0',
+      isBackup: true,
+      isShow: true
     }
   }
 }
 </script>
 <style lang="less" scoped>
+.vux-header{
+  background-color: #06319a!important;
+}
 .account-image-wrap{
   text-align: center;
   padding: 30px 0;
@@ -188,6 +237,31 @@ export default {
 .sys{
   width: 25px;
   height: 25px;
+}
+.backup-icon{
+  vertical-align: middle;
+  margin-right: 10px;
+}
+.name{
+  line-height: 30px;
+  img{
+    height: 17px;
+    width: 17px;
+    margin-left: 20px;
+  }
+}
+.is-backup{
+  height: 50px;
+  font-size: 18px;
+  color: #333333;
+}
+.eye{
+  width: 17px;
+  height: 15px;
+  margin-left: 10px;
+}
+.balance{
+  line-height: 21px;
 }
 // @header-background-color:#fff
 </style>

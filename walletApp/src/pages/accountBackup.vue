@@ -61,7 +61,7 @@ export default {
   methods: {
     loadBalance () {
       let account = this.$route.query.account
-      this.$http.get(`chain/accounts/eos/${account}`).then(res => {
+      this.$http.get(`http://10.3.1.135:3000/v1/chain/accounts/eos/${account}`).then(res => {
         let data = res.data
         if (data.code === 200) {
           this.balance = data.data.eos_balance

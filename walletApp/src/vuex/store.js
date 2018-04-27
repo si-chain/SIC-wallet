@@ -4,6 +4,7 @@ Vue.use(Vuex)
 const state = {
   isLoading: false,
   wallets: [],
+  account: '',
   img_upload_cache: [],
   img_paths: [],
   img_status: 'ready'
@@ -28,6 +29,9 @@ export default new Vuex.Store({
     },
     set_img_status (state, arg) {
       state.img_status = arg
+    },
+    setAccount (state, account) {
+      state.account = account
     }
   }
 })

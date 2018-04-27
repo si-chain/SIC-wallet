@@ -3,30 +3,36 @@
     <div v-transfer-dom>
       <loading v-model="isLoading"></loading>
     </div>
-    <account-home :wallet="wallets[0]"></account-home>
-
+    <p class="header">{{$t('index.home')}}</p>
+    <account-detail></account-detail>
+    <div class="is-backup">
+      <cell :title="$t('index.manage_wallets')" is-link :link="`/wallet-manage?account=${this.$store.state.account}`">
+        <img slot="icon" class="backup-icon" src="../assets/icon_01-01.png" width="25" height="25" alt="">
+      </cell>
+      <cell :title="$t('index.transaction_record')" is-link :link="`/trading-record?account=${this.$store.state.account}`">
+        <img slot="icon" class="backup-icon" src="../assets/icon_09.png" width="25" height="25" alt="">
+      </cell>
+    </div>
   </div>
 </template>
 
 <script>
-import { TransferDom, Loading } from 'vux'
-import AccountHome from '../components/AccountHome'
+import { XHeader, TransferDom, Loading, Cell } from 'vux'
+import accountDetail from '../components/accountDetail'
 export default {
   name: 'index',
   directives: {
     TransferDom
   },
   components: {
-    AccountHome,
-    Loading
+    accountDetail,
+    Loading,
+    XHeader,
+    Cell
   },
   methods: {
     onClickMore () {
       this.showMenu = true
-    },
-    changeLocale (locale) {
-      this.$common.setStore('_locale', locale)
-      this.$i18n.locale = locale
     }
   },
   mounted () {
@@ -74,8 +80,29 @@ export default {
   width: 25px;
   height: 25px;
 }
-.vux-header{
-  background-color: #ffffff
+.header{
+  background-color: #06319a!important;
+  color: #ffffff;
+  text-align: center;
+  line-height: 46px;
+  font-size: 18px;
+}
+.backup-icon{
+  vertical-align: middle;
+  margin-right: 10px;
+}
+.name{
+  line-height: 30px;
+  img{
+    height: 17px;
+    width: 17px;
+    margin-left: 20px;
+  }
+}
+.is-backup{
+  height: 50px;
+  font-size: 18px;
+  color: #333333;
 }
 // @header-background-color:#fff
 </style>

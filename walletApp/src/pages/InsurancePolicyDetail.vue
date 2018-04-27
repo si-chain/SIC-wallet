@@ -39,14 +39,19 @@
           <msg slot="default" :title="title" :buttons="buttons" :icon="icon"></msg>
         </alert>
       </div>
+      <div v-transfer-dom>
+        <loading :show="upLoadImg" text=""></loading>
+      </div>
+      <password-confirm v-if="isUnlock" ref="confirm" @setUnlock="setUnlock" @unlocking="unlocking"></password-confirm>
     </div>
 </template>
 
 <script>
 import Eos from 'eosjs'
 import config from '../libs/env'
-import { XHeader, Msg, Alert, Box, XButton, Flexbox, FlexboxItem, TransferDomDirective as TransferDom } from 'vux'
+import { XHeader, Msg, Alert, Box, XButton, Loading, Flexbox, FlexboxItem, TransferDomDirective as TransferDom } from 'vux'
 import upload from '../components/upload-img'
+import passwordConfirm from '../components/PasswordConfirm'
 import { mapState } from 'vuex'
 export default {
   directives: {
@@ -59,6 +64,8 @@ export default {
       user: 'eos',
       imgs: [],
       show: false,
+      isUnlock: false,
+      upLoadImg: false,
       formData: {
         // policyNo: '', // 保单号
         // insuredName: '', // 被保人姓名
@@ -73,14 +80,14 @@ export default {
       },
       files: [],
       icon: 'success',
-      title: '操作成功！',
+      title: this.$t('policy.success'),
       buttons: [{
         type: 'primary',
-        text: '继续上传',
+        text: this.$t('policy.look_detail'),
         onClick: this.keepOn.bind(this)
       }, {
         type: 'default',
-        text: '返回首页',
+        text: this.$t('policy.back_home'),
         link: '/'
       }]
     }
@@ -98,46 +105,62 @@ export default {
         form.append('files', item)
       })
       var xhr = new XMLHttpRequest()
-      xhr.open('post', 'v1/file/uploads', true)
+      xhr.open('post', 'http://10.3.1.135:3000/v1/file/uploads', true)
       let that = this
       xhr.onload = function (res) {
         if (xhr.status === 200) {
           that.uploadSuccess(JSON.parse(res.target.response))
+        } else {
+          this.upLoadImg = false
+          this.show = true
+          this.icon = 'warn'
+          this.title = this.$t('policy.error')
+          setTimeout(() => {
+            this.$store.commit('set_img_upload_cache', [])
+          }, 500)
         }
       }
       xhr.send(form)
     },
+    unlocking (pwd) {
+      this.pwd = pwd
+      this.upLoadImg = true
+      this.uploadXHR()
+    },
     uploadSuccess (data) {
+      let _this = this
+      this.isUnlock = false
       if (data.code === 200) {
-        // let _this = this
-        let zrmPrivateKey = Eos.modules.ecc.seedPrivate('eos')
-        let accountStr = JSON.parse(this.$common.getStore('account'))[0]
-
-        let accountData = JSON.parse(this.$common.decryptActive(accountStr.encryption, '111111'))
-        let activeKey = this.$common.decryptActive(accountData.active, '111111')
-        console.log(activeKey)
-        config.keyProvider = zrmPrivateKey
+        let accountStr = this.$common.getStore('account')[0]
+        let accountData = JSON.parse(this.$common.decryptActive(accountStr.encryption, _this.pwd))
+        let activeKey = this.$common.decryptActive(accountData.active, _this.pwd)
+        config.keyProvider = activeKey
         let eos = Eos.Localnet(config)
-        const policyContract = eos.contract(this.account)
-        policyContract.then(contract => {
-          contract.upload({
-            producer: 'eos',
-            ossID: data.data.path,
-            checkcode: ''
-          }).then(res => {
-            console.log(res)
-            this.show = true
-            this.icon = 'success'
-            this.title = '操作成功！'
-            setTimeout(() => {
+        let t = {}
+        t.files = data.data.files
+        const policyContract = eos.contract('sic.policy')
+        try {
+          policyContract.then(contract => {
+            contract.upload({
+              id: data.data.id,
+              ossAddr: JSON.stringify(t),
+              upload_num: data.data.num,
+              producer: accountData.account
+            }, {authorization: accountData.account}).then(res => {
+              this.show = true
+              this.upLoadImg = false
+              this.icon = 'success'
+              this.title = this.$t('policy.success')
               this.$store.commit('set_img_upload_cache', [])
-            }, 1000)
+            })
           })
-        })
+        } catch (err) {
+          alert(err)
+        }
       } else {
         this.show = true
         this.icon = 'warn'
-        this.title = '上传失败！'
+        this.title = this.$t('policy.error')
         setTimeout(() => {
           this.$store.commit('set_img_upload_cache', [])
         }, 500)
@@ -145,18 +168,17 @@ export default {
     },
     // 提交
     uploadFile () {
-      console.log(this.$store.state)
       let _this = this
       // this.$store.commit('set_img_status', 'uploading');
       if (this.$store.state.img_upload_cache.length > 0) {
         this.$store.state.img_upload_cache.map(item => {
           _this.files.push(item.file)
         })
-        this.uploadXHR()
+        this.isUnlock = true
       } else {
         this.show = true
         this.icon = 'warn'
-        this.title = '请选择上传的图片！'
+        this.title = this.$t('policy.upload_select')
       }
     },
     submit () {
@@ -171,7 +193,12 @@ export default {
     },
     keepOn () {
       this.confirm()
+      this.files = []
       this.show = false
+      this.$router.push('/policy')
+    },
+    setUnlock (val) {
+      this.isUnlock = val
     }
   },
   watch: {
@@ -192,7 +219,9 @@ export default {
     XHeader,
     Flexbox,
     Box,
-    FlexboxItem
+    Loading,
+    FlexboxItem,
+    passwordConfirm
   }
 }
 </script>

@@ -73,6 +73,7 @@ export default {
     unlocking (pwd) {
       let self = this
       if (!pwd.trim()) {
+        console.log(11)
         this.error.common = this.$t('unlock.error.invalid_password')
         return
       }
@@ -84,7 +85,7 @@ export default {
         return w.account === account
       })
       let publicWallet = this.$common.backupPublicKey(wallet.active, pwd)
-      let activePubkey = wallet.active_pubkey
+      let activePubkey = wallet.activePubkey
       if (wallet == null) {
         self.isUnlock = false
         self.error.common = self.$t('unlock.account_not_found')

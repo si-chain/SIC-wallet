@@ -1,106 +1,87 @@
 <template>
   <div class="detail">
-    <div class="account-home">
-      <div class="image-wrap">
-        <account-image :account="wallet.account" :size="40"></account-image>
-      </div>
-      <div class="account-info">
-        <flexbox>    
-          <flexbox-item>
-            <p class="center"  @click="manage">
-              
-              <img slot="icon"  class="icon" src="../assets/wallet-active.png">
-              <p class="label">管理钱包</p>
-            </p>  
-          </flexbox-item>
-           <flexbox-item>
-            <p class="center"  @click="deal">
-              <img slot="icon"  class="icon" src="../assets/upload-active.png">
-              <p class="label">交易记录</p>
-            </p>
-          </flexbox-item>
-        </flexbox>
-      </div>
+    <div class="account-img-wrap">
+      <account-image :account="account" :size="28"></account-image>
     </div>
+    <div class="info-content">
+      <span style="margin-left: 10px;">{{account}}</span>
+      <span class="icon-c"> > </span>
+      <span v-if="!accountData.backup" class="backup-date">{{$t('wallet_manage.tip_backup')}}</span>
+    </div>
+    <p class="sic">
+      <span class="num">{{accountData.balance}}</span>
+      <span class="type">SIC</span>
+    </p>
   </div>
-  
+
 </template>
 <script>
-import {Flexbox, FlexboxItem} from 'vux'
-import AccountImage from '../components/AccountImage'
 export default{
   props: {
-    wallet: {
-      type: Object,
-      default: {}
+    account: {
+      type: String,
+      default: ''
     }
-  },
-  components: {
-    AccountImage,
-    Flexbox,
-    FlexboxItem
   },
   data () {
     return {
-      balance: '0',
-      isShow: true
+      accountData: {
+        balance: '0',
+        backup: false
+      }
     }
   },
   created () {
-  },
-  methods: {
-    show () {
-      this.isShow = !this.isShow
-    },
-    manage () {
-      let query = {
-        account: this.wallet.account
-      }
-      this.$router.push({path: '/wallet-manage', query})
-    },
-    deal () {
-      let query = {
-        account: this.wallet.account
-      }
-      this.$router.push({path: '/trading-record', query})
+    if (this.account) {
+      let account = this.account
+      this.$http.get(`http://10.3.1.135:3000/v1/chain/accounts/eos/${account}`).then(res => {
+        let data = res.data
+        if (data.code === 200) {
+          this.accountData.balance = data.data.eos_balance.split(' ')[0]
+        } else {
+          this.accountData.balance = '0'
+        }
+      })
     }
-  },
-  mounted () {
+    this.$common.get_wallets().map(item => {
+      item.backup_date ? this.accountData.backup = true : this.accountData.backup = false
+    })
   }
 }
 </script>
 <style lang="less" scoped>
-.image-wrap{
-  text-align: center;
-  padding-top: 40px;
-  padding-bottom: 40px;
+.info-content{
+  float: left;
+  width: 75%;
+  line-height: 2rem;
+  font-size: 26px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #e7e7e7;
+  .backup-date{
+    font-size: 16px;
+    color: #ed3f14;
+    font-weight: bold;
+    float: right;
+  }
+  .icon-c{
+    float: right;
+    margin: 0 20px;
+    color: #cccccc;
+  }
 }
-.account-info{
-  text-align: center;
-  font-size: 20px;
-  color: #ffffff;
-}
-.center{
-  text-align: center
-}
-.icon{
-  width: 50px;
-  height: 50px;
-}
-.balance{
-  line-height: 100px;
-}
-.account-home{
-  background: -webkit-linear-gradient(white, #244983); /* Safari 5.1 - 6.0 */
-  background: -o-linear-gradient(white, #244983); /* Opera 11.1 - 12.0 */
-  background: -moz-linear-gradient(white, #244983); /* Firefox 3.6 - 15 */
-  background: linear-gradient(white, #244983); /* 标准的语法 */
-}
-.label{
-    text-align: center;
-    font-size: 14px;
-    line-height: 30px;
-    margin-bottom: 10%;
+.sic{
+  text-align: right;
+  float: right;
+  width: 50%;
+  .num{
+    font-size: 1.5rem;
+    color: #0001fe;
+  }
+  .type{
+    font-size: .9rem;
+    color: #333333;
+    margin-right: 20px
+  }
 }
 </style>
 

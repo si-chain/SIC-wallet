@@ -8,13 +8,14 @@ import store from './vuex/store'
 import { AjaxPlugin, ToastPlugin, ConfirmPlugin } from 'vux'
 import i18n from './language/index'
 import util from './libs/utils'
+
 Vue.use(ToastPlugin)
 Vue.use(AjaxPlugin)
 Vue.use(ConfirmPlugin)
 FastClick.attach(document.body)
 
 Vue.config.productionTip = false
-Vue.prototype.$http.defaults.baseURL = 'http://10.3.1.135:3000/v1'
+// Vue.prototype.$http.defaults.baseURL = 'http://10.3.1.135:3000/v1'
 Vue.prototype.$common = util
 /* eslint-disable no-new */
 new Vue({

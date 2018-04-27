@@ -5,15 +5,7 @@
           <div class="account-img-wrap">
             <account-image :account="wallet.account" :size="28"></account-image>
           </div>
-          <div class="info-content">
-            <span style="margin-left: 10px;">{{wallet.account}}</span>
-            <span class="icon-c"> > </span>
-            <span v-if="!wallet.backup_date" class="backup-date">{{$t('wallet_manage.tip_backup')}}</span>
-          </div>
-          <p class="sic">
-            <span class="num">{{wallet.balance}}</span>
-            <span class="type">SIC</span>
-          </p>
+          <account-home :account="wallet.account"></account-home>
         </div>
          <div class="content-block button-block bom" v-if="!this.$route.query.account">
           <flexbox>
@@ -30,7 +22,7 @@
 <script>
 import { XHeader, Group, Cell, Flexbox, FlexboxItem, XButton } from 'vux'
 import AccountImage from '../components/AccountImage'
-
+import AccountHome from '../components/AccountHome'
 export default {
   components: {
     XHeader,
@@ -38,6 +30,7 @@ export default {
     Cell,
     Flexbox,
     FlexboxItem,
+    AccountHome,
     AccountImage,
     XButton
   },
@@ -64,7 +57,7 @@ export default {
     loadBalance (wallet, index) {
       if (wallet.account) {
         let account = wallet.account
-        this.$http.get(`chain/accounts/eos/${account}`).then(res => {
+        this.$http.get(`http://10.3.1.135:3000/v1/chain/accounts/eos/${account}`).then(res => {
           let data = res.data
           if (data.code === 200) {
             this.wallets[index].balance = data.data.eos_balance.split(' ')[0]
@@ -76,6 +69,7 @@ export default {
     },
     goDetail (account) {
       this.$router.push({path: '/wallet-backup', query: {account: account}})
+      this.$store.commit('setAccount', account)
     }
   },
   mounted () {
@@ -107,40 +101,8 @@ export default {
 .clearfix{
   overflow: hidden;
   background: #ffffff;
-}
-.info-content{
-  float: left;
-  width: 75%;
-  line-height: 4rem;
-  font-size: 26px;
-  border-bottom: 1px solid #e7e7e7;
-  .backup-date{
-    font-size: 16px;
-    color: #ed3f14;
-    font-weight: bold;
-    float: right;
-  }
-  .icon-c{
-    float: right;
-    margin: 0 20px;
-    line-height: 60px;
-    color: #cccccc;
-  }
-}
-.sic{
-  text-align: right;
-  float: left;
-  width: 100%;
-  .num{
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: #6699ff;
-  }
-  .type{
-    font-size: .7rem;
-    color: #cccccc;
-    margin-right: 20px
-  }
+  margin-top: 10px;
+  padding: 10px 0;
 }
 .bom {
        position: fixed;

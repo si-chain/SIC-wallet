@@ -22,12 +22,18 @@ util.setStore = (name, content) => {
  * 获取localStorage
  */
 util.getStore = name => {
-  if (name === 'account' && !window.localStorage.getItem('account')) {
-    return []
-  } else if (!name) {
-    return
+  if (name === 'account') {
+    let store = localStorage.getItem('account')
+    if (!store) {
+      store = []
+    } else {
+      store = JSON.parse(store)
+    }
+    return store
+  } else {
+    if (!name) return;
+    return window.localStorage.getItem(name);
   }
-  return window.localStorage.getItem(name)
 }
 
 /**
@@ -174,9 +180,9 @@ util.decryptActive = (data, password) => {
  */
 util.backupPublicKey = (data, password) => {
   let str = util.decrypt(data, password)
-  console.log(str)
   if (str !== 'unlock.error.invalid_password') {
     let publicKey = ecc.privateToPublic(str)
+    console.log(str, publicKey)
     return publicKey
   } else {
     return 'unlock.error.invalid_password'
