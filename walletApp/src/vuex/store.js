@@ -7,7 +7,8 @@ const state = {
   account: '',
   img_upload_cache: [],
   img_paths: [],
-  img_status: 'ready'
+  img_status: 'ready',
+  index: 0
 }
 export default new Vuex.Store({
   state,
@@ -32,6 +33,9 @@ export default new Vuex.Store({
     },
     setAccount (state, account) {
       state.account = account
+    },
+    setIndex (state, val) {
+      state.index = val
     }
   }
 })
