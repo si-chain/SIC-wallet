@@ -54,18 +54,19 @@ export default{
       let account = this.account
       var length = account.length
       if (!account) {
-        this.error = '账户名不可为空'
+        this.error = this.$t('wallet_creat.one.error.empty_account')
         this.show = true
         return false
       } else if (length < 1) {
-        this.error = '账户名至少3位'
+        this.error = this.$t('wallet_creat.one.error.account_should_be_longer')
         this.show = true
-      } else if (length > 13) {
-        this.error = '账户名过长'
+      } else if (length > 10) {
+        console.log(11111)
+        this.error = this.$t('wallet_creat.one.error.account_should_be_shorter')
         this.show = true
         return false
       } else if (!/^[.12345a-z]+$/.test(this.account)) {
-        this.error = '账户名只能是字母、数字的组合'
+        this.error = this.$t('wallet_creat.one.error.account_format_error')
         this.show = true
         return false
       } else {
@@ -77,12 +78,12 @@ export default{
             this.isAccount = true
             return true
           } else {
-            this.error = '账户已存在'
+            this.error = this.$t('wallet_creat.one.error.account_already_exist')
             this.show = true
             return false
           }
         }).catch(ex => {
-          this.error = '请求错误，请稍后再试'
+          this.error = this.$t('wallet_creat.one.error.query_account_failed')
           this.show = true
           return false
         })
@@ -90,11 +91,11 @@ export default{
     },
     confirmOnBlur () {
       if (this.password === '') {
-        this.error = '请输入密码'
+        this.error = this.$t('wallet_creat.two.label.password')
         this.show = true
         return false
       } else if (this.password !== this.confirm) {
-        this.error = '两次密码输入不一致！'
+        this.error = this.$t('wallet_creat.two.error.password_not_equal')
         this.show = true
         return false
       } else {
@@ -148,7 +149,7 @@ export default{
             _this.$store.commit('UPDATE_WALLETS', wallets)
             _this.$router.push({path: '/wallet-create-success', query: {account: _this.account}})
           } else {
-            _this.error = '创建账户失败，请重试'
+            _this.error = _this.$t('wallet_creat.two.error.account_create_failed')
             _this.show = true
           }
         })

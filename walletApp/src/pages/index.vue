@@ -85,41 +85,41 @@ export default {
       this.$i18n.locale = locale
     },
     qrcode () {
-      // let _this = this
-      // let permissions = cordova.plugins.permissions
-      // permissions.hasPermission(permissions.CAMERA, checkPermissionCallback, null)
-      // function checkPermissionCallback (status) {
-      //   if (!status.hasPermission) {
-      //     let errorCallback = function () {
-      //       alert('请在系统设置中打开本应用的相机权限')
-      //     }
-      //     permissions.requestPermission(
-      //       permissions.CAMERA,
-      //       function (status) {
-      //         if (!status.hasPermission) errorCallback()
-      //         cordova.plugins.barcodeScanner.scan(
-      //           function (result) {
-      //             // alert('result.text:' + result.text, result.text.indexOf('webpolicy') === 0)
-      //             // if (result.text.indexOf('webpolicy') === 0) {
-      //             _this.showConfirm = true
-      //             _this.code = result
-      //             // }
-      //           }, null, 'QRCode', 'scan', []
-      //         )
-      //       },
-      //       errorCallback)
-      //   } else {
-      //     cordova.plugins.barcodeScanner.scan(
-      //       function (result) {
-      //         // alert('result.text:' + result.text, result.text.indexOf('webpolicy') === 0)
-      //         // if (result.text.indexOf('webpolicy') === 0) {
-      //         _this.showConfirm = true
-      //         _this.code = result.text
-      //         // }
-      //       }, null, 'QRCode', 'scan', []
-      //     )
-      //   }
-      // }
+      let _this = this
+      let permissions = cordova.plugins.permissions
+      permissions.hasPermission(permissions.CAMERA, checkPermissionCallback, null)
+      function checkPermissionCallback (status) {
+        if (!status.hasPermission) {
+          let errorCallback = function () {
+            alert('请在系统设置中打开本应用的相机权限')
+          }
+          permissions.requestPermission(
+            permissions.CAMERA,
+            function (status) {
+              if (!status.hasPermission) errorCallback()
+              cordova.plugins.barcodeScanner.scan(
+                function (result) {
+                  // alert('result.text:' + result.text, result.text.indexOf('webpolicy') === 0)
+                  // if (result.text.indexOf('webpolicy') === 0) {
+                  _this.showConfirm = true
+                  _this.code = result
+                  // }
+                }, null, 'QRCode', 'scan', []
+              )
+            },
+            errorCallback)
+        } else {
+          cordova.plugins.barcodeScanner.scan(
+            function (result) {
+              // alert('result.text:' + result.text, result.text.indexOf('webpolicy') === 0)
+              // if (result.text.indexOf('webpolicy') === 0) {
+              _this.showConfirm = true
+              _this.code = result.text
+              // }
+            }, null, 'QRCode', 'scan', []
+          )
+        }
+      }
     },
     onCancel () {
       this.showConfirm = false
@@ -251,9 +251,16 @@ export default {
   }
 }
 .is-backup{
-  height: 50px;
   font-size: 18px;
   color: #333333;
+  background-color:#fff;
+  .weui-cell{
+    border-bottom: 1px solid #D9D9D9;
+  }
+}
+.balance{
+  border-bottom: 1px solid #D9D9D9;
+  background-color:#fff;
 }
 .eye{
   width: 17px;

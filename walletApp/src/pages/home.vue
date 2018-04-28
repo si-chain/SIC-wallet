@@ -99,9 +99,13 @@ export default {
   }
 }
 .is-backup{
-  height: 50px;
+  // border-bottom: 1px solid #D9D9D9;
   font-size: 18px;
   color: #333333;
+  background-color:#fff;
+  .weui-cell{
+    border-bottom: 1px solid #D9D9D9;
+  }
 }
 // @header-background-color:#fff
 </style>

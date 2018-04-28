@@ -79,7 +79,7 @@ const locale = {
                 account_already_exist: '账户已存在',
                 empty_account: '账户名不可为空',
                 account_should_be_longer: '账户名至少3位',
-                account_should_be_shorter: '账户名过长',
+                account_should_be_shorter: '账户名小于10位',
                 account_should_start_with_a_letter: '账户名需以字母开头',
                 account_format_error: '账户名只能是字母、数字的组合',
                 account_end_error: '账户名需要以字母或数字结尾',
