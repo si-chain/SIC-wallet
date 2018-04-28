@@ -48,7 +48,6 @@ export default {
   },
   created () {
     this.wallets = this.$common.get_wallets()
-    console.log(this.$route.path)
   },
   data () {
     return {

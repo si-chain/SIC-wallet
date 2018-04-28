@@ -1,5 +1,6 @@
 <template>
   <div class="detail">
+    <img class="background" src="../assets/top_bg.jpg" alt="">
     <div class="account-detail">
       <div class="image-wrap">
         <account-image :account="wallet.account" :size="40"></account-image>
@@ -56,8 +57,19 @@ export default{
 }
 
 .account-detail{
-  background: url(../assets/top_bg.jpg) no-repeat;
-  background-size: 100% 100%;
+  // background: url(../../static/top_bg.jpg) no-repeat;
+  // background-size: 100% 100%;
+  height: 200px;
+  z-index: 999;
+  position: absolute;
+}
+.detail{
+  position: relative;
+  height: 200px;
+}
+.background{
+  position: absolute;
+  width: 100%;
   height: 200px;
 }
 </style>
