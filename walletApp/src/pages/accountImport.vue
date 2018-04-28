@@ -74,10 +74,6 @@ export default {
       buttons: [{
         type: 'primary',
         text: '',
-        onClick: this.keepOn.bind(this)
-      }, {
-        type: 'default',
-        text: '',
         link: '/'
       }]
     }
@@ -134,7 +130,6 @@ export default {
     createByWifKey () {
       setTimeout(() => {
         let setData = this.$common.backupImport(this.wifKey, this.pwd1)
-        this.buttons[1].text = this.$t('wallet_import.success.detail')
         if (!setData) {
           this.submitting = true
           this.icon = 'warn'
@@ -148,15 +143,23 @@ export default {
           setData.owner_pubkey = this.$common.backupPublicKey(setData.owner, this.pwd1)
           setData.backup_date = null
           let wallets = this.$common.get_wallets()
-          if (!this.$common.IsInArray(wallets, setData)) {
-            wallets.push(setData)
-            this.$common.set_wallets(wallets)
-          }
+          wallets.push(setData)
+          this.$common.set_wallets(wallets)
           this.submitting = true
           this.icon = 'success'
-          this.title = '操作成功！'
-          this.buttons[0].type = 'success'
+          this.title = this.$t('wallet_import.success.title')
+          this.buttons[0].type = 'primary'
           this.buttons[0].text = this.$t('wallet_import.success.title')
+          wallets.map(item => {
+            if (item.account === setData.account) {
+              this.submitting = true
+              this.icon = 'warn'
+              this.title = this.$t('wallet_import.error.account_already_exist')
+              this.buttons[0].type = 'warn'
+              this.buttons[0].text = this.$t('wallet_import.error.account_already_exist')
+              this.$common.set_wallets(this.$common.unique(wallets))
+            }
+          })
         }
       }, 50)
     },
