@@ -6,7 +6,8 @@
 -->
 <template>
     <div class="insurance-policy">
-      <x-header :left-options="{backText: ''}">{{$t('policy.tip_insurance_policy')}}</x-header>
+      <x-header v-if="account === 'sic.policy'" :left-options="{backText: ''}">{{$t('policy.tip_insurance_policy')}}</x-header>
+      <x-header v-else :left-options="{backText: ''}">{{$t('policy.tip_insurance_claim')}}</x-header>
       <div class="content">
           <div class="list-block">
               <ul>
@@ -14,7 +15,7 @@
                     <div class="item-content">
                     <div class="item-media"><i class="icon icon-form-comment"></i></div>
                     <div class="item-inner">
-                        <div class="item-title label">{{$t('policy.policy_img')}}</div>
+                        <div class="item-title label">{{$t('policy.upload_select')}}</div>
                     </div>
                     </div>
                     <div class="item-input">
@@ -61,7 +62,6 @@ export default {
     return {
       account: 'sic.policy',
       table: 'policy',
-      user: 'eos',
       imgs: [],
       show: false,
       isUnlock: false,
@@ -98,6 +98,9 @@ export default {
       imgPaths: state => state.img_paths
     })
   },
+  created () {
+    this.$route.path === '/insurance-policy' ? this.account = 'sic.policy' : this.account = 'sic.claim'
+  },
   methods: {
     uploadXHR () {
       var form = new FormData()
@@ -105,7 +108,7 @@ export default {
         form.append('files', item)
       })
       var xhr = new XMLHttpRequest()
-      xhr.open('post', 'http://10.3.1.135:3000/v1/file/uploads', true)
+      xhr.open('post', `${this.basePath}/v1/file/uploads`, true)
       let that = this
       xhr.onload = function (res) {
         if (xhr.status === 200) {
@@ -138,7 +141,7 @@ export default {
         let eos = Eos.Localnet(config)
         let t = {}
         t.files = data.data.files
-        const policyContract = eos.contract('sic.policy')
+        const policyContract = eos.contract(this.account)
         try {
           policyContract.then(contract => {
             contract.upload({
@@ -169,7 +172,6 @@ export default {
     // 提交
     uploadFile () {
       let _this = this
-      // this.$store.commit('set_img_status', 'uploading');
       if (this.$store.state.img_upload_cache.length > 0) {
         this.$store.state.img_upload_cache.map(item => {
           _this.files.push(item.file)
@@ -195,6 +197,7 @@ export default {
       this.confirm()
       this.files = []
       this.show = false
+      this.$route.path === '/insurance-policy' ? this.$store.commit('setIndex', 0) : this.$store.commit('setIndex', 1)
       this.$router.push('/policy')
     },
     setUnlock (val) {

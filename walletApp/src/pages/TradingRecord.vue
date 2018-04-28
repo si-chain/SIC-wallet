@@ -1,9 +1,9 @@
 <template>
     <div class="page-group">
-      <x-header :left-options="{backText: '返回'}">记录</x-header>
+      <x-header :left-options="{backText: ''}">记录</x-header>
       <form-preview :header-label="'交易金额'" header-value="10.000 sic" :body-items="list"></form-preview>
     </div>
-    
+
 </template>
 <script>
 import { XHeader, FormPreview } from 'vux'

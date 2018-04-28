@@ -70,7 +70,7 @@ export default{
         return false
       } else {
         let account = this.account
-        this.$http.get(`http://10.3.1.135:3000/v1/chain/accounts/eos/${account}`).then(res => {
+        this.$http.get(`${this.basePath}/v1/chain/accounts/eos/${account}`).then(res => {
           let data = res.data
           if (data.code === 400) {
             this.show = false
@@ -131,7 +131,8 @@ export default{
             backup_date: null
           }
         }
-        yield _this.$http.post('http://10.3.1.135:3000/v1/chain/accounts/faucet', getData.params).then(res => {
+        console.log(_this.basePath)
+        yield _this.$http.post(`${_this.basePath}/v1/chain/accounts/faucet`, getData.params).then(res => {
           let data = res.data
           if (data.code === 200) {
             let wallets = _this.$common.get_wallets()

@@ -1,8 +1,8 @@
 <template>
   <div class="detail">
-    <div class="account-img-wrap">
+    <!-- <div class="account-img-wrap">
       <account-image :account="account" :size="28"></account-image>
-    </div>
+    </div> -->
     <div class="info-content">
       <span style="margin-left: 10px;">{{account}}</span>
       <span class="icon-c"> > </span>
@@ -34,7 +34,7 @@ export default{
   created () {
     if (this.account) {
       let account = this.account
-      this.$http.get(`http://10.3.1.135:3000/v1/chain/accounts/eos/${account}`).then(res => {
+      this.$http.get(`${this.basePath}/v1/chain/accounts/eos/${account}`).then(res => {
         let data = res.data
         if (data.code === 200) {
           this.accountData.balance = data.data.eos_balance.split(' ')[0]

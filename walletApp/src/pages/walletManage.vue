@@ -7,7 +7,7 @@
           </div>
           <account-home :account="wallet.account"></account-home>
         </div>
-         <div class="content-block button-block bom" v-if="!this.$route.query.account">
+         <div class="content-block button-block bom">
           <flexbox>
             <flexbox-item>
               <x-button type="primary" :link="`/create-account?account=${$route.query.account}`">{{$t('wallet_create.index.button_create')}}</x-button>
@@ -57,7 +57,7 @@ export default {
     loadBalance (wallet, index) {
       if (wallet.account) {
         let account = wallet.account
-        this.$http.get(`http://10.3.1.135:3000/v1/chain/accounts/eos/${account}`).then(res => {
+        this.$http.get(`${this.basePath}/v1/chain/accounts/eos/${account}`).then(res => {
           let data = res.data
           if (data.code === 200) {
             this.wallets[index].balance = data.data.eos_balance.split(' ')[0]
@@ -82,9 +82,6 @@ export default {
   background: #efeff4;
   height: 100%;
 }
-.vux-header{
-  background-color: #ffffff
-}
 .page,
 .content {}
 .pull-to-refresh-layer {
@@ -105,11 +102,12 @@ export default {
   padding: 10px 0;
 }
 .bom {
-       position: fixed;
-       bottom: 1%;
-       left: 0%;
-       right: 0%;
-    }
+  position: fixed;
+  bottom: 1%;
+  left: 0%;
+  right: 0%;
+  padding:0 10px;
+}
 .wallets {
     margin-top: 0;
     margin-bottom: 3.8rem;
