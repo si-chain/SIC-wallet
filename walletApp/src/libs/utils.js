@@ -12,14 +12,19 @@ util._ = _
  * @return  //返回去重之后的新数组
  * */
 util.unique = function (arr) {
-  let res = [];
-  let json = {};
-  for (var i = 0; i < arr.length; i++) {
-    if (!json[arr[i]]) {
-      res.push(arr[i]);
-      json[arr[i]] = 1;
+  var res = [arr[0]];
+  for (var i = 1; i < arr.length; i++) {
+    var repeat = false;　　　
+    for (var j = 0; j < res.length; j++) {
+      if (arr[i].account == res[j].account) {　　
+        repeat = true;　　　　　
+        break; 　　　　　　
+      }  　　　　
     }
-  }
+    if (!repeat) {
+      res.push(arr[i]); 　　　　
+    } 　　
+  }　　
   return res;
 };
 /**
@@ -240,10 +245,10 @@ util.backupImport = (data, password) => {
 util.create_account = (account, password) => {
   Co(function* () {
     let activekey = yield ecc.randomKey()
-    let active_pubkey = ecc.privateToPublic(activekey)
+    let activePubkey = ecc.privateToPublic(activekey)
 
     let ownerkey = yield ecc.randomKey();
-    let owner_pubkey = ecc.privateToPublic(ownerkey)
+    let ownerPubkey = ecc.privateToPublic(ownerkey)
     let active = AES.encrypt(activekey, password).toString()
     let owner = AES.encrypt(ownerkey, password).toString()
     let data = {
@@ -251,16 +256,16 @@ util.create_account = (account, password) => {
         'chainName': 'eos',
         'accountName': account,
         'keys': {
-          'active': active_pubkey,
-          'owner': owner_pubkey
+          'active': activePubkey,
+          'owner': ownerPubkey
         }
       },
       wallet: {
         account: account,
         active,
-        active_pubkey,
+        activePubkey,
         owner,
-        owner_pubkey,
+        ownerPubkey,
         backup_date: null
       }
     }

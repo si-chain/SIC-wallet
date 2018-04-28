@@ -139,12 +139,21 @@ export default {
         } else {
           setData.active = this.$common.encryption(setData.active, this.pwd1)
           setData.owner = this.$common.encryption(setData.owner, this.pwd1)
-          setData.active_pubkey = this.$common.backupPublicKey(setData.active, this.pwd1)
-          setData.owner_pubkey = this.$common.backupPublicKey(setData.owner, this.pwd1)
+          setData.activePubkey = this.$common.backupPublicKey(setData.active, this.pwd1)
+          setData.ownerPubkey = this.$common.backupPublicKey(setData.owner, this.pwd1)
           setData.backup_date = null
           let wallets = this.$common.get_wallets()
+          let encryptionWalletArr = this.$common.getStore('account')
           wallets.push(setData)
+          let encryptionWallet = this.$common.encryption(JSON.stringify(setData), this.pwd1)
+          encryptionWalletArr.push({
+            account: setData.account,
+            encryption: encryptionWallet
+          })
+          this.$common.setStore('account', this.$common.unique(encryptionWalletArr))
           this.$common.set_wallets(wallets)
+          this.$store.commit('setAccount', setData.account)
+          console.log(this.$store.state.account)
           this.submitting = true
           this.icon = 'success'
           this.title = this.$t('wallet_import.success.title')
@@ -152,11 +161,6 @@ export default {
           this.buttons[0].text = this.$t('wallet_import.success.title')
           wallets.map(item => {
             if (item.account === setData.account) {
-              this.submitting = true
-              this.icon = 'warn'
-              this.title = this.$t('wallet_import.error.account_already_exist')
-              this.buttons[0].type = 'warn'
-              this.buttons[0].text = this.$t('wallet_import.error.account_already_exist')
               this.$common.set_wallets(this.$common.unique(wallets))
             }
           })

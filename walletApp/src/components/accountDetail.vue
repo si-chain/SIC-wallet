@@ -27,12 +27,13 @@ export default{
     }
   },
   created () {
-    this.$store.state.wallets.map(item => {
-      if (item.account === this.wallet.account && item.isBackUp) {
-        this.isBackup = false
-      }
-      item.account === this.$store.state.account ? this.wallet = item : this.wallet = this.$store.state.wallets[0]
-    })
+    this.wallet.account = this.$store.state.account
+    // this.$store.state.wallets.map(item => {
+    //   if (item.account === this.wallet.account && item.isBackUp) {
+    //     this.isBackup = false
+    //   }
+    //   item.account === this.$store.state.account ? this.wallet = item : this.wallet = this.$store.state.wallets[0]
+    // })
   },
   methods: {
   }

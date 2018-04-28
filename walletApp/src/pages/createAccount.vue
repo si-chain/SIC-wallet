@@ -131,7 +131,6 @@ export default{
             backup_date: null
           }
         }
-        console.log(_this.basePath)
         yield _this.$http.post(`${_this.basePath}/v1/chain/accounts/faucet`, getData.params).then(res => {
           let data = res.data
           if (data.code === 200) {

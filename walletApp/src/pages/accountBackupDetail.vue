@@ -86,14 +86,13 @@ export default {
       })
       let publicWallet = this.$common.backupPublicKey(wallet.active, pwd)
       let activePubkey = wallet.activePubkey
+      console.log(publicWallet, activePubkey)
       if (wallet == null) {
         self.isUnlock = false
         self.error.common = self.$t('unlock.account_not_found')
       } else if (activePubkey !== publicWallet) {
         self.isUnlock = false
-        self.error.common = self.$t(
-          'wallet_backup.detail.error.invalid_password'
-        )
+        self.error.common = self.$t('wallet_backup.detail.error.invalid_password')
       } else {
         self.error.common = ''
         let data = {
