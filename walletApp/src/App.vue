@@ -10,7 +10,7 @@
       <tabbar-item :selected="$route.path === '/policy'" link="/policy">
         <img slot="icon" src="./assets/icon_01-06.png">
         <img slot="icon-active" src="./assets/icon_01-04.png">
-        <span slot="label">{{$t('policy.tip_insurance_policy')}}</span>
+        <span slot="label">{{$t('policy.tip_insurance')}}</span>
       </tabbar-item>
       <tabbar-item :selected="$route.path === '/home'" link="/home">
         <img slot="icon" src="./assets/icon_01-05.png">
