@@ -12,7 +12,7 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       // '/v1': {
-      //   target: 'http://10.3.1.135:3000', //api
+      //   target: '${this.basePath}', //api
       //   changeOrigin: true,
       //   pathRewrite: {
       //     // '^/v1': ''

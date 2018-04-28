@@ -15,8 +15,9 @@ Vue.use(ConfirmPlugin)
 FastClick.attach(document.body)
 
 Vue.config.productionTip = false
-// Vue.prototype.$http.defaults.baseURL = 'http://10.3.1.135:3000/v1'
+// Vue.prototype.$http.defaults.baseURL = '${this.basePath}/v1'
 Vue.prototype.$common = util
+Vue.prototype.basePath = 'http://124.65.100.178:3000'
 /* eslint-disable no-new */
 new Vue({
   i18n,
