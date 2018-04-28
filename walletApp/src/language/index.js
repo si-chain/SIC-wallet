@@ -55,7 +55,6 @@ const dateTimeFormats = {
   }
 }
 let locale = util.getStore('_locale') || navigator.language
-console.log(locale)
 locale === 'zh' || locale === 'zh-CN' ? locale = 'zh-CN' : locale = 'en-US'
 locale = locale.split('-')[0].toLowerCase() + '-' + locale.split('-')[1].toUpperCase()
 util.setStore('_locale', locale)

@@ -7,6 +7,7 @@ const locale = {
         success: 'success',
         error: 'error',
         sign_up:'Sign Up',
+        claim_trusteeship:'Claim Trusteeship',
         existing_account:'Existing Account',
         authorization: 'To grant authorization',
         confirm_authorization: 'Do you confirm the authorization？',
@@ -29,7 +30,9 @@ const locale = {
         transaction_record: 'Transaction record'
     },
     policy: {
+      tip_insurance: 'Data Escrow',
       tip_insurance_policy: 'Insurance Policy',
+      tip_insurance_claim: 'Insurance Claim',
       policy_list: 'Policy record',
       success: 'success!',
       error: 'error!',

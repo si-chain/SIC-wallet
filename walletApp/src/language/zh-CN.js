@@ -4,6 +4,7 @@ const locale = {
         home:'我',
         account:'账号',
         authorization: '授权',
+        claim_trusteeship:'理赔托管',
         success: '成功',
         error: '失败',
         sign_up:'注册',
@@ -29,13 +30,15 @@ const locale = {
         transaction_record: '交易记录'
     },
     policy: {
+      tip_insurance: '数据托管',
       tip_insurance_policy: '保单托管',
+      tip_insurance_claim: '理赔托管',
       policy_list: '保单记录',
       success:'成功！',
       error:'失败',
       look_detail: '查看详情',
       back_home: '返回首页',
-      policy_more: '已无更多',
+      policy_more: '暂无更多',
       upload_select:'选择上传的图片',
       policy_img: '保单图片',
       upload_time: '上传时间',
@@ -129,7 +132,7 @@ const locale = {
         error: {
             title:'导入失败',
             password_not_equal: '两次输入密码不一致',
-            account_already_exist: '账户已存在，请勿重复导入',
+            account_already_exist: '账户已存在',
             account_not_found: '账户不存在',
             invalid_key: '私钥格式错误',
             no_reference_account: '导入失败，私钥对应账户不存在'
