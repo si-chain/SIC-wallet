@@ -8,6 +8,21 @@ import _ from 'lodash'
 let util = {}
 util._ = _
 /**
+ * @param arr//需要去重的数组
+ * @return  //返回去重之后的新数组
+ * */
+util.unique = function (arr) {
+  let res = [];
+  let json = {};
+  for (var i = 0; i < arr.length; i++) {
+    if (!json[arr[i]]) {
+      res.push(arr[i]);
+      json[arr[i]] = 1;
+    }
+  }
+  return res;
+};
+/**
  * 存储localStorage
  */
 util.setStore = (name, content) => {
@@ -144,7 +159,6 @@ util.encryption = (data, password) => {
   try {
     return AES.encrypt(data, password).toString()
   } catch (exception) {
-    console.log(exception)
     return 'index.import_error'
   }
 };
@@ -158,7 +172,6 @@ util.decrypt = (data, password) => {
   try {
     return CryptoJS.enc.Utf8.stringify(AES.decrypt(data, password))
   } catch (exception) {
-    console.log(exception)
     return 'unlock.error.invalid_password'
   }
   // return CryptoJS.enc.Utf8.stringify(AES.decrypt(data, password))
@@ -182,7 +195,6 @@ util.backupPublicKey = (data, password) => {
   let str = util.decrypt(data, password)
   if (str !== 'unlock.error.invalid_password') {
     let publicKey = ecc.privateToPublic(str)
-    console.log(str, publicKey)
     return publicKey
   } else {
     return 'unlock.error.invalid_password'
