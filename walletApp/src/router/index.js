@@ -62,6 +62,11 @@ export default new Router({
       component: insurancePolicy
     },
     {
+      path: '/insurance-claim',
+      name: 'insurancePolicy',
+      component: insurancePolicy
+    },
+    {
       path: '/account-import',
       name: 'accountImport',
       component: accountImport
