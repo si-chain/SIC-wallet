@@ -7,7 +7,7 @@
     <div class="content">
       <div class="list-block">
         <p class="info-alert text-center" v-if="tips">{{tips}}</p>
-        <x-input class="weui-vcode" :max="6" :min="6" type="password" :placeholder="$t('transfer.confirm.enter_password')" v-model="password" @on-enter="onEnter">
+        <x-input class="weui-vcode" type="password" :placeholder="$t('transfer.confirm.enter_password')" v-model="password" @on-enter="onEnter">
           <x-button slot="right" @click.native="onPasswordConfirm" type="primary" mini>{{$t('transfer.next')}}</x-button>
         </x-input>
         <!-- <p class="tip-error text-center" v-if="error.common">{{error.common}}</p> -->

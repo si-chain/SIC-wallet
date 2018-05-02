@@ -6,8 +6,8 @@
     </div>
     <group>
       <x-input :title="$t('index.account')" v-model="account" @on-blur="accountOnBlur"></x-input>
-      <x-input :title="$t('wallet_create.two.label.password')" type="password" :max="6" :min="6" v-model="password"></x-input>
-      <x-input :title="$t('wallet_create.two.label.confirm')" type="password" :max="6" :min="6" v-model="confirm" @on-blur="confirmOnBlur"></x-input>
+      <x-input :title="$t('wallet_create.two.label.password')" type="password" v-model="password"></x-input>
+      <x-input :title="$t('wallet_create.two.label.confirm')" type="password" v-model="confirm" @on-blur="confirmOnBlur"></x-input>
     </group>
     <box gap="30px 15px">
       <x-button type="primary" @click.native="submit" :show-loading="loading">{{$t('index.sign_up')}}</x-button>
