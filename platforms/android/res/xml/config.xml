@@ -18,7 +18,7 @@
     <feature name="BarcodeScanner">
         <param name="android-package" value="com.phonegap.plugins.barcodescanner.BarcodeScanner" />
     </feature>
-    <name>HelloBarcode</name>
+    <name>SIC Wallet</name>
     <description>
         A sample Apache Cordova application that responds to the deviceready event.
     </description>
