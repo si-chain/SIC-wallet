@@ -1,29 +1,29 @@
 <template>
     <div class="page-group">
-      <x-header :left-options="{backText: ''}">记录</x-header>
-      <form-preview :header-label="'交易金额'" header-value="10.000 sic" :body-items="list"></form-preview>
+      <x-header :left-options="{backText: ''}">{{$t('index.transaction_record')}}</x-header>
+      <div v-for="(item,index) in transferData" :key="index">
+        <form-preview :header-label="$t('index.transaction_sum')" :header-value="transferData[index]" :body-items="list[index]"></form-preview>
+        <br>
+      </div>
+      <divider class="no-more">{{ $t('policy.policy_more') }}</divider>
     </div>
 
 </template>
 <script>
-import { XHeader, FormPreview } from 'vux'
+import { XHeader, FormPreview, Divider } from 'vux'
 
 export default {
   components: {
     XHeader,
-    FormPreview
+    FormPreview,
+    Divider
   },
   data () {
     let wallets = this.$common.get_wallets()
     return {
       wallets: wallets,
-      list: [{
-        label: '交易账户',
-        value: 'yyt'
-      }, {
-        label: '备注',
-        value: '交易费'
-      }]
+      list: [],
+      transferData: []
     }
   },
   methods: {
@@ -31,7 +31,22 @@ export default {
       this.$router.push({path: '/wallet-backup', query: {account: account}})
     }
   },
-  mounted () {
+  created () {
+    let account = this.$route.query.account
+    let _this = this
+    this.$http.get(`${this.basePath}/v1/chain/accounts/actions/transfer/${account}`).then(res => {
+      let data = res.data.data
+      data.map(item => {
+        _this.list.push([{
+          label: _this.$t('transfer.to'),
+          value: item.data.to
+        }, {
+          label: _this.$t('transfer.memo'),
+          value: item.data.memo
+        }])
+        _this.transferData.push(item.data.quantity)
+      })
+    })
   }
 }
 </script>

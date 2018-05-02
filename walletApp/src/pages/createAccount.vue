@@ -60,8 +60,7 @@ export default{
       } else if (length < 1) {
         this.error = this.$t('wallet_creat.one.error.account_should_be_longer')
         this.show = true
-      } else if (length > 10) {
-        console.log(11111)
+      } else if (length > 12) {
         this.error = this.$t('wallet_creat.one.error.account_should_be_shorter')
         this.show = true
         return false
