@@ -27,7 +27,7 @@
           <box gap="10px 15px">
             <flexbox>
               <flexbox-item>
-                <x-button type="warn" @click.native="confirm">{{$t('index.cancel')}}</x-button>
+                <x-button type="warn" @click.native="confirm" link="/policy">{{$t('index.cancel')}}</x-button>
               </flexbox-item>
               <flexbox-item>
                 <x-button type="primary" @click.native="uploadFile">{{$t('index.confirm')}}</x-button>

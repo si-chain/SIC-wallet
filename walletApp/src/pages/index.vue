@@ -156,13 +156,13 @@ export default {
             if (responese.code === 200) {
               _this.show = true
               _this.icon = 'success'
-              _this.title = this.$t('index.success')
+              _this.title = _this.$t('index.success')
               _this.buttons[0].type = 'primary'
               _this.buttons[0].text = _this.$t('index.success')
             } else {
               _this.show = true
               _this.icon = 'warn'
-              _this.title = this.$t('index.error')
+              _this.title = _this.$t('index.error')
               _this.buttons[0].type = 'warn'
               _this.buttons[0].text = _this.$t('index.error')
             }

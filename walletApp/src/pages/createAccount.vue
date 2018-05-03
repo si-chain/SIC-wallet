@@ -54,18 +54,18 @@ export default{
       let account = this.account
       var length = account.length
       if (!account) {
-        this.error = this.$t('wallet_creat.one.error.empty_account')
+        this.error = this.$t('wallet_create.one.error.empty_account')
         this.show = true
         return false
       } else if (length < 1) {
-        this.error = this.$t('wallet_creat.one.error.account_should_be_longer')
+        this.error = this.$t('wallet_create.one.error.account_should_be_longer')
         this.show = true
       } else if (length > 12) {
-        this.error = this.$t('wallet_creat.one.error.account_should_be_shorter')
+        this.error = this.$t('wallet_create.one.error.account_should_be_shorter')
         this.show = true
         return false
       } else if (!/^[.12345a-z]+$/.test(this.account)) {
-        this.error = this.$t('wallet_creat.one.error.account_format_error')
+        this.error = this.$t('wallet_create.one.error.account_format_error')
         this.show = true
         return false
       } else {
@@ -77,12 +77,12 @@ export default{
             this.isAccount = true
             return true
           } else {
-            this.error = this.$t('wallet_creat.one.error.account_already_exist')
+            this.error = this.$t('wallet_create.one.error.account_already_exist')
             this.show = true
             return false
           }
         }).catch(ex => {
-          this.error = this.$t('wallet_creat.one.error.query_account_failed')
+          this.error = this.$t('wallet_create.one.error.query_account_failed')
           this.show = true
           return false
         })
@@ -90,11 +90,11 @@ export default{
     },
     confirmOnBlur () {
       if (this.password === '') {
-        this.error = this.$t('wallet_creat.two.label.password')
+        this.error = this.$t('wallet_create.two.label.password')
         this.show = true
         return false
       } else if (this.password !== this.confirm) {
-        this.error = this.$t('wallet_creat.two.error.password_not_equal')
+        this.error = this.$t('wallet_create.two.error.password_not_equal')
         this.show = true
         return false
       } else {
@@ -148,7 +148,7 @@ export default{
             _this.$store.commit('UPDATE_WALLETS', wallets)
             _this.$router.push({path: '/wallet-create-success', query: {account: _this.account}})
           } else {
-            _this.error = _this.$t('wallet_creat.two.error.account_create_failed')
+            _this.error = _this.$t('wallet_create.two.error.account_create_failed')
             _this.show = true
           }
         })
