@@ -1,5 +1,5 @@
 <template>
-  <div style="height:100%;">
+  <div style="height:100%;overflow:hidden">
     <div v-transfer-dom>
       <loading v-model="isLoading"></loading>
     </div>
@@ -19,14 +19,14 @@
     <flexbox class="balance">
       <cell title="SIC">
         <img slot="icon" class="backup-icon" src="../assets/icon_14.png" width="25" height="25" alt="">
-        <img class="eye" v-if="isShow" @click="showFlag" src="../assets/eyez.png"/>
-        <img class="eye" v-else @click="showFlag" src="../assets/eyeb.png"/>
+        <!-- <img class="eye" v-if="isShow" @click="showFlag" src="../assets/eyez.png"/>
+        <img class="eye" v-else @click="showFlag" src="../assets/eyeb.png"/> -->
       </cell>
       <flexbox-item></flexbox-item>
       <flexbox-item>
-        <p v-if="isShow" class="center">{{balance}}</p>
-        <p v-else class="center">******</p>
-        </flexbox-item>
+        <span v-if="isShow" class="center">{{balance}}</span>
+        <span v-else class="center">******</span>
+      </flexbox-item>
     </flexbox>
     <div v-transfer-dom>
       <confirm v-model="showConfirm"
@@ -85,6 +85,8 @@ export default {
       this.$i18n.locale = locale
     },
     qrcode () {
+      // this.showConfirm = true
+      // this.code = 'fea99830-49f6-11e8-9edc-1148db96233a'
       // let _this = this
       // let permissions = cordova.plugins.permissions
       // permissions.hasPermission(permissions.CAMERA, checkPermissionCallback, null)
@@ -99,11 +101,12 @@ export default {
       //         if (!status.hasPermission) errorCallback()
       //         cordova.plugins.barcodeScanner.scan(
       //           function (result) {
-      //             // alert('result.text:' + result.text, result.text.indexOf('webpolicy') === 0)
-      //             // if (result.text.indexOf('webpolicy') === 0) {
-      //             _this.showConfirm = true
-      //             _this.code = result
-      //             // }
+      //             let resultStr = result.text.replace('qr://sic/login/', '')
+      //             // alert('result.text:' + result.text.replace('qr://sic/login/', ''), resultStr.length)
+      //             if (resultStr.length === 36) {
+      //               _this.showConfirm = true
+      //               _this.code = resultStr
+      //             }
       //           }, null, 'QRCode', 'scan', []
       //         )
       //       },
@@ -111,11 +114,12 @@ export default {
       //   } else {
       //     cordova.plugins.barcodeScanner.scan(
       //       function (result) {
-      //         // alert('result.text:' + result.text, result.text.indexOf('webpolicy') === 0)
-      //         // if (result.text.indexOf('webpolicy') === 0) {
-      //         _this.showConfirm = true
-      //         _this.code = result.text
-      //         // }
+      //         let resultStr = result.text.replace('qr://sic/login/', '')
+      //         // alert('result.text:' + result.text.replace('qr://sic/login/', ''), resultStr.length === 36)
+      //         if (resultStr.length === 36) {
+      //           _this.showConfirm = true
+      //           _this.code = resultStr
+      //         }
       //       }, null, 'QRCode', 'scan', []
       //     )
       //   }
@@ -145,12 +149,12 @@ export default {
       this.isShow = !this.isShow
     },
     onConfirm () {
-      let accountArr = JSON.parse(this.$common.getStore('account'))
+      let accountArr = this.$common.get_wallets()
       let data = ''
       let _this = this
       accountArr.map(item => {
         if (item.account === this.wallets[0].account) {
-          data = { 'data': item.encryption }
+          data = { 'data': item }
           this.$http.post(`${this.basePath}/v1/login/qrCode/${this.code}`, data).then(res => {
             let responese = res.data
             if (responese.code === 200) {
@@ -166,6 +170,12 @@ export default {
               _this.buttons[0].type = 'warn'
               _this.buttons[0].text = _this.$t('index.error')
             }
+          }).catch(er => {
+            _this.show = true
+            _this.icon = 'warn'
+            _this.title = _this.$t('index.error')
+            _this.buttons[0].type = 'warn'
+            _this.buttons[0].text = _this.$t('index.error')
           })
         }
       })

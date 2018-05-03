@@ -1,5 +1,5 @@
 <template>
-  <div class="page-group">
+  <div class="page-group" style="overflow:hidden">
     <x-header :left-options="{backText: ''}">备份私钥</x-header>
     <div class="page">
       <div class="content">

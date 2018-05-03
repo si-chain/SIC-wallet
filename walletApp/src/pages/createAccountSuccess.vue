@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="overflow:hidden">
     <x-header :left-options="{backText: ''}">创建成功</x-header>
     <div class="page-group">
       <div class="svg-wrap">

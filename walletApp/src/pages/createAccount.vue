@@ -1,5 +1,5 @@
 <template>
-  <div class="creat-account">
+  <div class="creat-account" style="overflow:hidden">
     <x-header :left-options="{backText: ''}">{{$t('left_panel.create_wallet')}}</x-header>
     <div class="account-image-wrap">
       <account-image class="account-image" :size="40" :account="account"></account-image>

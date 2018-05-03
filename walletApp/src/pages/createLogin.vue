@@ -1,7 +1,7 @@
 <template>
     <div class="page-group">
       <x-header :left-options="{backText: ''}">{{$t('wallet_manage.title')}}</x-header>
-         
+
          <div class="content-block button-block bom" v-if="!this.$route.query.account">
           <flexbox>
             <flexbox-item>
@@ -41,6 +41,7 @@ export default {
 .page-group{
   background: #efeff4;
   height: 100%;
+  overflow:hidden
 }
 .vux-header{
   background-color: #ffffff
