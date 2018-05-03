@@ -1,19 +1,19 @@
 {
-  "_from": "cordova-plugin-file-transfer",
+  "_from": "cordova-plugin-file-transfer@^1.7.1",
   "_id": "cordova-plugin-file-transfer@1.7.1",
   "_inBundle": false,
   "_integrity": "sha1-p12L4uvDu5sjxbG70ZkhTsJnWGs=",
   "_location": "/cordova-plugin-file-transfer",
   "_phantomChildren": {},
   "_requested": {
-    "type": "tag",
+    "type": "range",
     "registry": true,
-    "raw": "cordova-plugin-file-transfer",
+    "raw": "cordova-plugin-file-transfer@^1.7.1",
     "name": "cordova-plugin-file-transfer",
     "escapedName": "cordova-plugin-file-transfer",
-    "rawSpec": "",
+    "rawSpec": "^1.7.1",
     "saveSpec": null,
-    "fetchSpec": "latest"
+    "fetchSpec": "^1.7.1"
   },
   "_requiredBy": [
     "#USER",
@@ -21,8 +21,8 @@
   ],
   "_resolved": "http://r.cnpmjs.org/cordova-plugin-file-transfer/download/cordova-plugin-file-transfer-1.7.1.tgz",
   "_shasum": "a75d8be2ebc3bb9b23c5b1bbd199214ec267586b",
-  "_spec": "cordova-plugin-file-transfer",
-  "_where": "/Users/jinhaidi/Documents/doubao/walletApp-android",
+  "_spec": "cordova-plugin-file-transfer@^1.7.1",
+  "_where": "/Users/jinhaidi/Documents/doubao/walletApp-android/node_modules",
   "author": {
     "name": "Apache Software Foundation"
   },

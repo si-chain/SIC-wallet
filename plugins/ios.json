@@ -1,15 +1,28 @@
 {
-  "prepare_queue": {
-    "installed": [],
-    "uninstalled": []
-  },
-  "config_munge": {
-    "files": {}
-  },
-  "installed_plugins": {
-    "cordova-plugin-android-permissions": {
-      "PACKAGE_NAME": "com.rensanning.cordova"
+    "prepare_queue": {
+        "installed": [],
+        "uninstalled": []
+    },
+    "config_munge": {
+        "files": {}
+    },
+    "installed_plugins": {
+        "cordova-plugin-android-permissions": {
+            "PACKAGE_NAME": "com.rensanning.cordova"
+        },
+        "cordova-plugin-file-transfer": {
+            "PACKAGE_NAME": "com.rensanning.cordova"
+        },
+        "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "com.rensanning.cordova"
+        },
+        "phonegap-plugin-barcodescanner": {
+            "PACKAGE_NAME": "com.rensanning.cordova"
+        }
+    },
+    "dependent_plugins": {
+        "cordova-plugin-file": {
+            "PACKAGE_NAME": "com.rensanning.cordova"
+        }
     }
-  },
-  "dependent_plugins": {}
 }
