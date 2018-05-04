@@ -18,6 +18,9 @@
         },
         "cordova-plugin-file-transfer": {
             "PACKAGE_NAME": "com.rensanning.cordova"
+        },
+        "cordova-plugin-splashscreen": {
+            "PACKAGE_NAME": "com.rensanning.cordova"
         }
     },
     "dependent_plugins": {
