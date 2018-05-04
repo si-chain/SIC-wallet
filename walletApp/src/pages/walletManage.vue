@@ -1,12 +1,15 @@
 <template>
     <div class="page-group">
       <x-header :left-options="{backText: ''}">{{$t('wallet_manage.title')}}</x-header>
-        <div class="page clearfix" id="page-wallet-manage" v-for="(wallet,index) in wallets" :key="index" @click="goDetail(wallet.account)">
+      <div style="padding:50px 0 60px 0">
+        <div class="page clearfix" ref="wallet-manage" id="page-wallet-manage" v-for="(wallet,index) in wallets" :key="index" @click="goDetail(wallet.account)">
           <div class="account-img-wrap">
             <account-image :account="wallet.account" :size="28"></account-image>
           </div>
           <account-home :account="wallet.account"></account-home>
         </div>
+      </div>
+
          <div class="content-block button-block bom">
           <flexbox>
             <flexbox-item>
@@ -81,6 +84,12 @@ export default {
 .page-group{
   background: #efeff4;
   height: 100%;
+}
+.vux-header{
+  position: absolute;
+  width: 100%;
+  z-index: 9999;
+  top:0;
 }
 .page,
 .content {}

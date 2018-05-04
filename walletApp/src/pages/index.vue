@@ -85,8 +85,6 @@ export default {
       this.$i18n.locale = locale
     },
     qrcode () {
-      // this.showConfirm = true
-      // this.code = 'fea99830-49f6-11e8-9edc-1148db96233a'
       // let _this = this
       // let permissions = cordova.plugins.permissions
       // permissions.hasPermission(permissions.CAMERA, checkPermissionCallback, null)

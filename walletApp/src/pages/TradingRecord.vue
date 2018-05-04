@@ -1,13 +1,14 @@
 <template>
     <div class="page-group">
       <x-header :left-options="{backText: ''}">{{$t('index.transaction_record')}}</x-header>
-      <div v-for="(item,index) in transferData" :key="index">
-        <form-preview :header-label="$t('index.transaction_sum')" :header-value="transferData[index]" :body-items="list[index]"></form-preview>
-        <br>
+      <div style="padding-top:50px">
+        <div v-for="(item,index) in transferData" :key="index">
+          <form-preview :header-label="$t('index.transaction_sum')" :header-value="transferData[index]" :body-items="list[index]"></form-preview>
+          <br>
+        </div>
+        <divider class="no-more">{{ $t('policy.policy_more') }}</divider>
       </div>
-      <divider class="no-more">{{ $t('policy.policy_more') }}</divider>
     </div>
-
 </template>
 <script>
 import { XHeader, FormPreview, Divider } from 'vux'
@@ -54,5 +55,11 @@ export default {
 .page-group{
   background: #efeff4;
   height: 100%;
+}
+.vux-header{
+  position: absolute;
+  width: 100%;
+  z-index: 9999;
+  top:0;
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div style="height:100%">
+  <div style="height:100%;overflow-y:auto">
     <router-view class="router-view"></router-view>
     <tabbar v-if="$route.path === '/' || $route.path === '/home' || $route.path === '/policy'">
       <tabbar-item :selected="$route.path === '/'" link="/" @on-index-change="onIndexChange">
