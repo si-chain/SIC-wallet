@@ -5,7 +5,6 @@
 	};
 	objectVersion = 46;
 	objects = {
-
 /* Begin PBXBuildFile section */
 		0207DA581B56EA530066E2B4 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0207DA571B56EA530066E2B4 /* Images.xcassets */; };
 		1D3623260D0F684500981E51 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* AppDelegate.m */; };
@@ -28,6 +27,8 @@
 		C7A3B75D886A43A499A9299D /* CDVLocalFilesystem.m in Sources */ = {isa = PBXBuildFile; fileRef = 249DC6713A614D7F83932C5D /* CDVLocalFilesystem.m */; };
 		F0500022C62B4785B792BE30 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 712D376812A14F648212D6A7 /* AVFoundation.framework */; };
 		FD3962970E774C6FA9E3F4DF /* scannerOverlay.xib in Resources */ = {isa = PBXBuildFile; fileRef = 37DDD3F8EDE9488A9B30FAB9 /* scannerOverlay.xib */; };
+		E12BE30C0CA549769DA24B44 /* CDVSplashScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = FE4001912392430593D78328 /* CDVSplashScreen.m */; };
+		943D822A4D8E4118AB0230A9 /* CDVViewController+SplashScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = EAE03FD8E1844F8F842A01DC /* CDVViewController+SplashScreen.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -94,6 +95,10 @@
 		EB87FDF41871DAF40020F90C /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = config.xml; path = ../../config.xml; sourceTree = "<group>"; };
 		ED33DF2A687741AEAF9F8254 /* Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
 		F840E1F0165FE0F500CFE078 /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = config.xml; path = "SIC Wallet/config.xml"; sourceTree = "<group>"; };
+		FE4001912392430593D78328 /* CDVSplashScreen.m */ = {isa = PBXFileReference; name = "CDVSplashScreen.m"; path = "cordova-plugin-splashscreen/CDVSplashScreen.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
+		EAE03FD8E1844F8F842A01DC /* CDVViewController+SplashScreen.m */ = {isa = PBXFileReference; name = "CDVViewController+SplashScreen.m"; path = "cordova-plugin-splashscreen/CDVViewController+SplashScreen.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
+		741089A62DAF4A5696F567D9 /* CDVSplashScreen.h */ = {isa = PBXFileReference; name = "CDVSplashScreen.h"; path = "cordova-plugin-splashscreen/CDVSplashScreen.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
+		64D19B52BEE349A4814AFA3C /* CDVViewController+SplashScreen.h */ = {isa = PBXFileReference; name = "CDVViewController+SplashScreen.h"; path = "cordova-plugin-splashscreen/CDVViewController+SplashScreen.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -223,6 +228,10 @@
 				59953B4A274F4DF68409DCFA /* CDVBarcodeScanner.mm */,
 				9852D1B0527F4FC4A933DDA4 /* zxing-all-in-one.cpp */,
 				C57757FD1651455B8EABE462 /* zxing-all-in-one.h */,
+				FE4001912392430593D78328 /* CDVSplashScreen.m */,
+				EAE03FD8E1844F8F842A01DC /* CDVViewController+SplashScreen.m */,
+				741089A62DAF4A5696F567D9 /* CDVSplashScreen.h */,
+				64D19B52BEE349A4814AFA3C /* CDVViewController+SplashScreen.h */,
 			);
 			name = Plugins;
 			path = "SIC Wallet/Plugins";
@@ -358,6 +367,8 @@
 				62CAF9280B5D4A9D93A521F3 /* CDVFileTransfer.m in Sources */,
 				732CD922AC0F49DDB774E575 /* CDVBarcodeScanner.mm in Sources */,
 				825CDD7B107840A88C40DA0B /* zxing-all-in-one.cpp in Sources */,
+				E12BE30C0CA549769DA24B44 /* CDVSplashScreen.m in Sources */,
+				943D822A4D8E4118AB0230A9 /* CDVViewController+SplashScreen.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -445,6 +456,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = NO;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 			};
 			name = Debug;
 		};
@@ -470,6 +482,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = NO;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 			};
 			name = Release;
 		};
