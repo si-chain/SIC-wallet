@@ -1,5 +1,5 @@
 <template>
-  <div class="detail">
+  <div class="detail" @click="goIndex">
     <img class="background" src="../assets/top_bg.jpg" alt="">
     <div class="account-detail">
       <div class="image-wrap">
@@ -36,6 +36,13 @@ export default{
     // })
   },
   methods: {
+    goIndex () {
+      if (this.wallet.account) {
+        this.$router.push(`/wallet-backup?account=${this.wallet.account}`)
+      } else {
+        this.$router.push('/create-account')
+      }
+    }
   }
 }
 </script>

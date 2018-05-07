@@ -1,13 +1,14 @@
 <template>
   <div class="creat-account" style="overflow:hidden">
-    <x-header :left-options="{backText: ''}">{{$t('left_panel.create_wallet')}}</x-header>
+    <x-header v-if="$store.state.account" :left-options="{backText: ''}">{{$t('left_panel.create_wallet')}}</x-header>
+    <x-header v-else :left-options="{showBack: false}">{{$t('left_panel.create_wallet')}}</x-header>
     <div class="account-image-wrap">
       <account-image class="account-image" :size="40" :account="account"></account-image>
     </div>
     <group>
-      <x-input :title="$t('index.account')" v-model="account" @on-blur="accountOnBlur"></x-input>
-      <x-input :title="$t('wallet_create.two.label.password')" type="password" v-model="password"></x-input>
-      <x-input :title="$t('wallet_create.two.label.confirm')" type="password" v-model="confirm" @on-blur="confirmOnBlur"></x-input>
+      <x-input :title="$t('index.account')" novalidate :icon-type="iconType" v-model="account" @on-blur="accountOnBlur"></x-input>
+      <x-input :title="$t('wallet_create.two.label.password')" type="password" novalidate :icon-type="iconTypePwd" v-model="password"></x-input>
+      <x-input :title="$t('wallet_create.two.label.confirm')" type="password" novalidate :icon-type="iconTypePwd" v-model="confirm" @on-blur="confirmOnBlur"></x-input>
     </group>
     <box gap="30px 15px">
       <x-button type="primary" @click.native="submit" :show-loading="loading">{{$t('index.sign_up')}}</x-button>
@@ -41,6 +42,8 @@ export default{
       loading: false,
       password: '',
       confirm: '',
+      iconType: '',
+      iconTypePwd: '',
       accountSuccess: false,
       timerInt: null // 时间计时器
     }
@@ -56,17 +59,21 @@ export default{
       if (!account) {
         this.error = this.$t('wallet_create.one.error.empty_account')
         this.show = true
+        this.iconType = ''
         return false
       } else if (length < 1) {
         this.error = this.$t('wallet_create.one.error.account_should_be_longer')
         this.show = true
+        this.iconType = 'error'
       } else if (length > 12) {
         this.error = this.$t('wallet_create.one.error.account_should_be_shorter')
         this.show = true
+        this.iconType = 'error'
         return false
       } else if (!/^[.12345a-z]+$/.test(this.account)) {
         this.error = this.$t('wallet_create.one.error.account_format_error')
         this.show = true
+        this.iconType = 'error'
         return false
       } else {
         let account = this.account
@@ -75,15 +82,18 @@ export default{
           if (data.code === 400) {
             this.show = false
             this.isAccount = true
+            this.iconType = 'success'
             return true
           } else {
             this.error = this.$t('wallet_create.one.error.account_already_exist')
             this.show = true
+            this.iconType = 'error'
             return false
           }
         }).catch(ex => {
           this.error = this.$t('wallet_create.one.error.query_account_failed')
           this.show = true
+          this.iconType = 'error'
           return false
         })
       }
@@ -92,12 +102,15 @@ export default{
       if (this.password === '') {
         this.error = this.$t('wallet_create.two.label.password')
         this.show = true
+        this.iconTypePwd = 'error'
         return false
       } else if (this.password !== this.confirm) {
         this.error = this.$t('wallet_create.two.error.password_not_equal')
         this.show = true
+        this.iconTypePwd = 'error'
         return false
       } else {
+        this.iconTypePwd = 'success'
         return true
       }
     },
@@ -147,6 +160,7 @@ export default{
             _this.$common.set_wallets(wallets)
             _this.$store.commit('UPDATE_WALLETS', wallets)
             _this.$router.push({path: '/wallet-create-success', query: {account: _this.account}})
+            _this.$store.commit('upDataMsg', false)
           } else {
             _this.error = _this.$t('wallet_create.two.error.account_create_failed')
             _this.show = true

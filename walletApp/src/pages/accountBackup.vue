@@ -14,6 +14,12 @@
           <cell :title="$t('wallet_backup.index.label.account')" :value="$route.query.account"></cell>
           <cell :title="$t('wallet_backup.index.label.asset')" :value="balance"></cell>
           <cell :title="$t('wallet_backup.index.label.private_key')" :link="`/wallet-backup-key?account=${$route.query.account}`" is-link></cell>
+          <cell :title="$t('index.authorization_record')" is-link :link="`/authorization-record?account=${this.$store.state.account}`">
+            <div class="badge-value">
+              <span class="vertical-middle">{{ $t('index.message') }}</span>
+              <badge text="8"></badge>
+            </div>
+          </cell>
         </group>
         <p class="tip-error text-center" v-if="error.common">{{error.common}}</p>
         <div class="content-block button-block">
@@ -32,7 +38,7 @@
   </div>
 </template>
 <script>
-import { XButton, XHeader, Group, Cell, Flexbox, FlexboxItem } from 'vux'
+import { XButton, XHeader, Group, Cell, Flexbox, FlexboxItem, Badge } from 'vux'
 import AccountImage from '../components/AccountImage.vue'
 import PasswordConfirm from '../components/PasswordConfirm.vue'
 export default {
@@ -44,7 +50,8 @@ export default {
     Flexbox,
     FlexboxItem,
     AccountImage,
-    PasswordConfirm
+    PasswordConfirm,
+    Badge
   },
   mounted () {
     this.loadBalance()

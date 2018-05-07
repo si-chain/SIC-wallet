@@ -2,53 +2,64 @@
     <div class="page-group">
       <x-header :left-options="{backText: ''}">{{$t('index.authorization_record')}}</x-header>
       <div style="padding-top:50px">
-        <div v-for="(item,index) in transferData" :key="index">
-          <form-preview :header-label="$t('index.transaction_sum')" :header-value="transferData[index]" :body-items="list[index]"></form-preview>
-          <br>
-        </div>
+        <card class="wrap-item" v-for="(item,index) in authorizationData" :key="index">
+          <cell slot="header" :title="$t('authorization.msg')">{{item.msg}}</cell>
+          <group slot="content">
+            <cell :title="$t('authorization.applicant')">{{item.applicant}}</cell>
+            <cell :title="$t('authorization.time')">{{item.dt}}</cell>
+            <cell :title="$t('authorization.type')">{{item.type | msgTyep}}</cell>
+            <cell :title="$t('authorization.num')">{{item.reward | msgTyep}}</cell>
+            <cell :title="$t('authorization.status')">{{item.status | msgStatus}}</cell>
+          </group>
+          <div slot="footer" style="padding:10px" v-if="item.status === 0">
+            <flexbox>
+              <flexbox-item>
+                <x-button type="warn">{{$t('authorization.Reject')}}</x-button>
+              </flexbox-item>
+              <flexbox-item>
+                <x-button type="primary">{{$t('authorization.Agree')}}</x-button>
+              </flexbox-item>
+            </flexbox>
+          </div>
+        </card>
         <divider class="no-more">{{ $t('policy.policy_more') }}</divider>
       </div>
     </div>
 </template>
 <script>
-import { XHeader, FormPreview, Divider } from 'vux'
+import { XHeader, XButton, FormPreview, Divider, Card, Cell, Group, Flexbox, FlexboxItem } from 'vux'
 
 export default {
   components: {
     XHeader,
     FormPreview,
-    Divider
+    Divider,
+    Card,
+    Cell,
+    Group,
+    Flexbox,
+    FlexboxItem,
+    XButton
   },
   data () {
     let wallets = this.$common.get_wallets()
     return {
       wallets: wallets,
       list: [],
-      transferData: []
+      account: this.$route.query.account,
+      authorizationData: []
     }
   },
   methods: {
-    goDetail (account) {
-      this.$router.push({path: '/wallet-backup', query: {account: account}})
+    getData () {
+      this.$http.get(`${this.basePath}/v1/msg/user/${this.account}`).then(res => {
+        this.authorizationData = res.data.data.rows
+      })
     }
   },
   created () {
-    let account = this.$route.query.account
-    console.log(account)
-    let _this = this
-    this.$http.get(`${this.basePath}/v1/chain/accounts/actions/transfer/${account}`).then(res => {
-      let data = res.data.data
-      data.map(item => {
-        _this.list.push([{
-          label: _this.$t('transfer.to'),
-          value: item.data.to
-        }, {
-          label: _this.$t('transfer.memo'),
-          value: item.data.memo
-        }])
-        _this.transferData.push(item.data.quantity)
-      })
-    })
+    this.getData()
+    window.addEventListener('scroll', this.handleScroll, true)
   }
 }
 </script>

@@ -12,7 +12,7 @@
         <img slot="icon-active" src="./assets/icon_01-04.png">
         <span slot="label">{{$t('policy.tip_insurance')}}</span>
       </tabbar-item>
-      <tabbar-item :selected="$route.path === '/home'" link="/home">
+      <tabbar-item :selected="$route.path === '/home'" :show-dot="$store.state.hasMsg" link="/home">
         <img slot="icon" src="./assets/icon_01-05.png">
         <img slot="icon-active" src="./assets/icon_01-02.png">
         <span slot="label">{{$t('index.home')}}</span>
@@ -31,6 +31,11 @@ export default {
   components: {
     Tabbar,
     TabbarItem
+  },
+  data () {
+    return {
+      isMsg: false
+    }
   },
   methods: {
     /***
@@ -126,6 +131,18 @@ export default {
       if (this.$store.state.account === '') {
         this.$store.state.account = this.$common.get_wallets()[0].account
       }
+    }
+    if (!this.$store.state.hasMsg) {
+      this.$http.get(`${this.basePath}/v1/msg/user/${this.$store.state.account}`, { lowerBound: 0 }).then(res => {
+        let data = res.data.data.rows
+        data.map(item => {
+          if (item.status === 0) {
+            this.$store.commit('upDataMsg', true)
+          }
+        })
+      })
+    } else {
+      this.$store.commit('upDataMsg', false)
     }
   }
 }

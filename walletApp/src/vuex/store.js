@@ -8,7 +8,8 @@ const state = {
   img_upload_cache: [],
   img_paths: [],
   img_status: 'ready',
-  index: 0
+  index: 0,
+  hasMsg: false
 }
 export default new Vuex.Store({
   state,
@@ -36,6 +37,9 @@ export default new Vuex.Store({
     },
     setIndex (state, val) {
       state.index = val
+    },
+    upDataMsg (state, flag) {
+      state.hasMsg = flag
     }
   }
 })

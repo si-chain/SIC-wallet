@@ -115,7 +115,7 @@ export default {
       })
     },
     handleScroll () {
-      if (this.maor) {
+      if (this.more) {
         this.getData()
       }
     },

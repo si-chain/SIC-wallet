@@ -32,6 +32,16 @@ const locale = {
       message:'新消息',
       authorization_record:'授权记录'
     },
+    authorization:{
+      time:'请求时间',
+      applicant: '申请账户',
+      msg:'授权内容',
+      num:'奖励金额',
+      status:'状态',
+      type:'授权类型',
+      Agree:'同意',
+      Reject:'拒绝'
+    },
     policy: {
       tip_insurance: '数据托管',
       tip_insurance_policy: '保单托管',

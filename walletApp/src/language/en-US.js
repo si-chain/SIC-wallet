@@ -32,6 +32,16 @@ const locale = {
       message:'New Message',
       authorization_record:'Authorization record'
     },
+    authorization: {
+      time: 'Request time',
+      applicant: 'Applicant',
+      msg: 'Info',
+      num: 'Reward',
+      status: 'Status',
+      type: 'Type',
+      Agree: 'Agree',
+      Reject: 'Reject'
+    },
     policy: {
       tip_insurance: 'Data Escrow',
       tip_insurance_policy: 'Insurance Policy',
