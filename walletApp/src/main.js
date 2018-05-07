@@ -8,7 +8,9 @@ import store from './vuex/store'
 import { AjaxPlugin, ToastPlugin, ConfirmPlugin } from 'vux'
 import i18n from './language/index'
 import util from './libs/utils'
+import Filters from './libs/filters'
 
+Filters(Vue)
 Vue.use(ToastPlugin)
 Vue.use(AjaxPlugin)
 Vue.use(ConfirmPlugin)
