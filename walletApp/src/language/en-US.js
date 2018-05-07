@@ -29,6 +29,8 @@ const locale = {
       manage_wallets: 'Manage Wallets',
       transaction_record: 'Transaction record',
       transaction_sum: 'Transaction amount',
+      message:'New Message',
+      authorization_record:'Authorization record'
     },
     policy: {
       tip_insurance: 'Data Escrow',

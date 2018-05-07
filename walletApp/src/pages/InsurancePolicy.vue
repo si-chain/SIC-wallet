@@ -7,7 +7,7 @@
 <template>
     <div class="insurance-policy">
       <x-header :left-options="{showBack: false}">{{$t('policy.tip_insurance')}}</x-header>
-      <div class="list-box" ref="wrapper">
+      <div class="list-box" ref="wrapper" id="vux_view_box_body">
         <group>
           <cell is-link link="/insurance-policy">
             <img slot="icon" class="policy-icon" src="../assets/icon_031.png" width="25" height="25" alt="">
@@ -18,12 +18,16 @@
             <span slot="title"><span style="vertical-align:middle;">{{$t('index.claim_trusteeship')}}</span></span>
           </cell>
         </group>
-        <tab style="margin-top:10px;" v-model="index" prevent-default @on-before-index-change="switchTabItem">
-          <tab-item v-if="index === 0" selected>{{$t('policy.tip_insurance_policy')}}</tab-item>
-          <tab-item v-else>{{$t('policy.tip_insurance_policy')}}</tab-item>
-          <tab-item v-if="index === 1" selected>{{$t('index.claim_trusteeship')}}</tab-item>
-          <tab-item v-else>{{$t('index.claim_trusteeship')}}</tab-item>
-        </tab>
+        <div style="height:44px;">
+          <sticky ref="sticky" scroll-box="vux_view_box_body" :offset="46" :check-sticky-support="false">
+            <tab style="margin-top:10px;" v-model="index" prevent-default @on-before-index-change="switchTabItem">
+              <tab-item v-if="index === 0" selected>{{$t('policy.tip_insurance_policy')}}</tab-item>
+              <tab-item v-else>{{$t('policy.tip_insurance_policy')}}</tab-item>
+              <tab-item v-if="index === 1" selected>{{$t('index.claim_trusteeship')}}</tab-item>
+              <tab-item v-else>{{$t('index.claim_trusteeship')}}</tab-item>
+            </tab>
+          </sticky>
+        </div>
         <p class="list-title" v-if="index === 0">
           <img src="../assets/list.png" width="20" height="25" alt="">
           {{ $t('policy.policy_list') }}
@@ -57,7 +61,7 @@
 // import Bscroll from 'better-scroll'
 import Step from '../components/step'
 import StepItem from '../components/step-Item'
-import { XHeader, Group, Box, Tab, TabItem, Cell, Divider, Scroller, Card } from 'vux'
+import { XHeader, Group, Box, Tab, TabItem, Cell, Divider, Scroller, Card, Sticky } from 'vux'
 export default {
   components: {
     XHeader,
@@ -70,7 +74,8 @@ export default {
     StepItem,
     Scroller,
     Tab,
-    TabItem
+    TabItem,
+    Sticky
   },
   data () {
     return {
@@ -78,6 +83,7 @@ export default {
       policyList: [],
       more: true,
       lowerBound: 1,
+      disabled: typeof navigator !== 'undefined' && /iphone/i.test(navigator.userAgent) && /ucbrowser/i.test(navigator.userAgent),
       url: `${this.basePath}/v1/policy/list/${this.$store.state.account}`
     }
   },
@@ -140,6 +146,9 @@ export default {
     index (val) {
       // this.getData()
     }
+  },
+  mounted () {
+    this.$refs.sticky.bindSticky()
   }
 }
 </script>

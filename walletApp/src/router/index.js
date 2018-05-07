@@ -11,6 +11,7 @@ import insurancePolicy from '../pages/InsurancePolicyDetail.vue'
 import Policy from '../pages/InsurancePolicy.vue'
 import accountImport from '../pages/accountImport.vue'
 import TradingRecord from '../pages/TradingRecord.vue'
+import AuthorizationRecord from '../pages/authorizationRecord.vue'
 import CreateLogin from '../pages/createLogin.vue'
 Vue.use(Router)
 
@@ -80,6 +81,11 @@ export default new Router({
       path: '/create-login',
       name: 'CreateLogin',
       component: CreateLogin
+    },
+    {
+      path: '/authorization-record',
+      name: 'AuthorizationRecord',
+      component: AuthorizationRecord
     }
   ]
 })

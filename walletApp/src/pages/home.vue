@@ -6,18 +6,27 @@
     <p class="header">{{$t('index.home')}}</p>
     <account-detail></account-detail>
     <div class="is-backup">
-      <cell :title="$t('index.manage_wallets')" is-link :link="`/wallet-manage?account=${this.$store.state.account}`">
-        <img slot="icon" class="backup-icon" src="../assets/icon_01-01.png" width="25" height="25" alt="">
-      </cell>
-      <cell :title="$t('index.transaction_record')" is-link :link="`/trading-record?account=${this.$store.state.account}`">
-        <img slot="icon" class="backup-icon" src="../assets/icon_09.png" width="25" height="25" alt="">
-      </cell>
+      <group>
+        <cell :title="$t('index.manage_wallets')" is-link :link="`/wallet-manage?account=${this.$store.state.account}`">
+          <img slot="icon" class="backup-icon" src="../assets/icon_01-01.png" width="25" height="25" alt="">
+        </cell>
+        <cell :title="$t('index.transaction_record')" is-link :link="`/trading-record?account=${this.$store.state.account}`">
+          <img slot="icon" class="backup-icon" src="../assets/icon_09.png" width="25" height="25" alt="">
+        </cell>
+        <cell :title="$t('index.authorization_record')" is-link :link="`/authorization-record?account=${this.$store.state.account}`">
+          <img slot="icon" class="backup-icon" src="../assets/icon_icon011.png" width="25" height="25" alt="">
+          <div class="badge-value">
+            <span class="vertical-middle">{{ $t('index.message') }} &nbsp;</span>
+            <badge text="8"></badge>
+          </div>
+        </cell>
+      </group>
     </div>
   </div>
 </template>
 
 <script>
-import { XHeader, TransferDom, Loading, Cell } from 'vux'
+import { XHeader, TransferDom, Loading, Cell, Badge, Group } from 'vux'
 import accountDetail from '../components/accountDetail'
 export default {
   name: 'index',
@@ -28,7 +37,9 @@ export default {
     accountDetail,
     Loading,
     XHeader,
-    Cell
+    Cell,
+    Badge,
+    Group
   },
   methods: {
     onClickMore () {

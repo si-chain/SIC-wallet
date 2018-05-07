@@ -28,7 +28,9 @@ const locale = {
       import_key_isnull: '请填写活跃权限私钥',
       manage_wallets: '管理钱包',
       transaction_record: '交易记录',
-      transaction_sum: '交易金额'
+      transaction_sum: '交易金额',
+      message:'新消息',
+      authorization_record:'授权记录'
     },
     policy: {
       tip_insurance: '数据托管',
