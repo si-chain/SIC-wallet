@@ -9,7 +9,8 @@ const state = {
   img_paths: [],
   img_status: 'ready',
   index: 0,
-  hasMsg: false
+  hasMsg: false,
+  msgList: []
 }
 export default new Vuex.Store({
   state,
@@ -40,6 +41,9 @@ export default new Vuex.Store({
     },
     upDataMsg (state, flag) {
       state.hasMsg = flag
+    },
+    upDataMsgList (state, item) {
+      state.msgList.push(item)
     }
   }
 })

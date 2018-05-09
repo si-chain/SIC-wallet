@@ -1,5 +1,5 @@
 <template>
-  <div style="padding-bottom:10px">
+  <div style="padding: 15px 10px">
     <card class="wrap-item">
       <cell slot="header" :title="$t('authorization.msg')">{{itemData.msg}}</cell>
       <group slot="content">

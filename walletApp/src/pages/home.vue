@@ -15,9 +15,9 @@
         </cell>
         <cell :title="$t('index.authorization_record')" is-link :link="`/authorization-record?account=${this.$store.state.account}`">
           <img slot="icon" class="backup-icon" src="../assets/icon_icon011.png" width="25" height="25" alt="">
-          <div class="badge-value">
+          <div class="badge-value" v-if="$store.state.msgList > 0">
             <span class="vertical-middle">{{ $t('index.message') }} &nbsp;</span>
-            <badge text="8"></badge>
+            <badge :text="$store.state.msgList"></badge>
           </div>
         </cell>
       </group>

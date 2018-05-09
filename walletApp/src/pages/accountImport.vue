@@ -20,7 +20,7 @@
                                 <div class="item-inner">
                                     <div class="item-input">
                                       <group>
-                                        <x-input v-model="pwd1" :title="$t('wallet_import.label.password')" :required="true" type="password" :placeholder="$t('wallet_import.placeholder.password')">
+                                        <x-input v-model="pwd1" :title="$t('wallet_import.label.password')" :required="true" type="password" :placeholder="$t('wallet_import.label.password')">
                                           <x-button slot="right" type="primary" mini @click.native="onSubmit">{{$t('wallet_import.confirm')}}</x-button>
                                         </x-input>
                                       </group>

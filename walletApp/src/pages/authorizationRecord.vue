@@ -1,10 +1,11 @@
 <template>
     <div class="page-group">
       <x-header :left-options="{backText: ''}">{{$t('index.authorization_record')}}</x-header>
-      <div style="padding-top:50px" ref="authorization">
+      <div style="padding-top:50px" ref="authorization" v-if="authorizationData.length > 0">
         <authorization-item v-if="authorizationData.length > 0" @setPwdShow="setPwdShow" v-for="(item,index) in authorizationData" :key="index" :itemData="item"></authorization-item>
+        <divider class="no-more">{{ $t('policy.policy_more') }}</divider>
       </div>
-      <divider class="no-more">{{ $t('policy.policy_more') }}</divider>
+      <loading :show="authorizationData.length === 0" text=""></loading>
       <div v-transfer-dom>
         <alert v-model="showModal" button-text=" ">
           <msg slot="default" :title="title" :buttons="buttons" :icon="icon"></msg>
@@ -244,7 +245,6 @@ export default {
 </script>
 <style scoped lang="less">
 .page-group{
-  background: #efeff4;
   height: 100%;
 }
 .vux-header{
@@ -252,5 +252,8 @@ export default {
   width: 100%;
   z-index: 9999;
   top:0;
+}
+.no-more {
+  padding:10px 70px
 }
 </style>

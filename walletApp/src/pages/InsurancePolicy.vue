@@ -36,7 +36,7 @@
           <img src="../assets/list.png" width="20" height="25" alt="">
           {{ $t('index.claim_trusteeship') }}
         </p>
-        <div class="wrapper">
+        <div class="wrapper" v-if="policyList.length > 0">
           <div>
             <card class="wrap-item" v-if="policyList.length > 0" v-for="(item,index) in policyList" :key="index">
               <cell slot="header" :title="$t('policy.upload_time')">{{item.upload_time.replace('T', ' ')}}</cell>
@@ -51,8 +51,9 @@
               </step>
             </card>
           </div>
+          <divider class="no-more" v-if="!more">{{ $t('policy.policy_more') }}</divider>
         </div>
-        <divider class="no-more" v-if="!more">{{ $t('policy.policy_more') }}</divider>
+        <loading :show="policyList.length === 0" text=""></loading>
       </div>
 
     </div>
@@ -62,7 +63,7 @@
 // import Bscroll from 'better-scroll'
 import Step from '../components/step'
 import StepItem from '../components/step-Item'
-import { XHeader, Group, Box, Tab, TabItem, Cell, Divider, Scroller, Card, Sticky } from 'vux'
+import { XHeader, Group, Loading, Box, Tab, TabItem, Cell, Divider, Scroller, Card, Sticky } from 'vux'
 export default {
   components: {
     XHeader,
@@ -76,7 +77,8 @@ export default {
     Scroller,
     Tab,
     TabItem,
-    Sticky
+    Sticky,
+    Loading
   },
   data () {
     return {
@@ -159,7 +161,7 @@ export default {
 
 <style scoped lang="less">
 .insurance-policy{
-  padding:40px 0 60px 0;
+  padding:40px 0 5px 0;
 }
 .no-more {
   padding:10px 70px

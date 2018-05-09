@@ -133,11 +133,13 @@ export default {
       }
     }
     if (!this.$store.state.hasMsg) {
+      this.$store.state.msgList = []
       this.$http.get(`${this.basePath}/v1/msg/user/${this.$store.state.account}?limit=100`, { lowerBound: 0 }).then(res => {
         let data = res.data.data.rows
         data.map(item => {
           if (item.status === 0) {
             this.$store.commit('upDataMsg', true)
+            this.$store.commit('upDataMsgList', item)
           }
         })
       })
