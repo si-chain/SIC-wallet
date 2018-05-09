@@ -57,6 +57,7 @@ const locale = {
       upload_time: '上传时间',
       policy_num: '保单编号',
       policy_file: '文件编号',
+      policy_value: '拒绝原因',
       policy_status_step1: '已上传',
       policy_status_step2: '审核中',
       policy_status_step3: '完成',

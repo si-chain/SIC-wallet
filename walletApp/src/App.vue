@@ -1,7 +1,7 @@
 <template>
-  <div style="height:100%;overflow-y:auto">
+  <view-box ref="viewBox" style="height:100%;width:100%;overflow-y:auto;">
     <router-view class="router-view"></router-view>
-    <tabbar v-if="$route.path === '/' || $route.path === '/home' || $route.path === '/policy'">
+    <tabbar v-if="$route.path === '/' || $route.path === '/home' || $route.path === '/policy'" slot="bottom" style="width:100%;position:absolute;left:0;bottom:0;z-index:100;">
       <tabbar-item :selected="$route.path === '/'" link="/" @on-index-change="onIndexChange">
         <img slot="icon" src="./assets/icon_01-03.png">
         <img slot="icon-active" src="./assets/icon_01-01.png">
@@ -18,7 +18,7 @@
         <span slot="label">{{$t('index.home')}}</span>
       </tabbar-item>
     </tabbar>
-  </div>
+  </view-box>
 </template>
 
 <script>
@@ -133,7 +133,7 @@ export default {
       }
     }
     if (!this.$store.state.hasMsg) {
-      this.$http.get(`${this.basePath}/v1/msg/user/${this.$store.state.account}`, { lowerBound: 0 }).then(res => {
+      this.$http.get(`${this.basePath}/v1/msg/user/${this.$store.state.account}?limit=100`, { lowerBound: 0 }).then(res => {
         let data = res.data.data.rows
         data.map(item => {
           if (item.status === 0) {

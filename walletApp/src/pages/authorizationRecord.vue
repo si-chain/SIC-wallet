@@ -1,35 +1,32 @@
 <template>
     <div class="page-group">
       <x-header :left-options="{backText: ''}">{{$t('index.authorization_record')}}</x-header>
-      <div style="padding-top:50px">
-        <card class="wrap-item" v-for="(item,index) in authorizationData" :key="index">
-          <cell slot="header" :title="$t('authorization.msg')">{{item.msg}}</cell>
-          <group slot="content">
-            <cell :title="$t('authorization.applicant')">{{item.applicant}}</cell>
-            <cell :title="$t('authorization.time')">{{item.dt}}</cell>
-            <cell :title="$t('authorization.type')">{{item.type | msgTyep}}</cell>
-            <cell :title="$t('authorization.num')">{{item.reward | msgTyep}}</cell>
-            <cell :title="$t('authorization.status')">{{item.status | msgStatus}}</cell>
-          </group>
-          <div slot="footer" style="padding:10px" v-if="item.status === 0">
-            <flexbox>
-              <flexbox-item>
-                <x-button type="warn">{{$t('authorization.Reject')}}</x-button>
-              </flexbox-item>
-              <flexbox-item>
-                <x-button type="primary">{{$t('authorization.Agree')}}</x-button>
-              </flexbox-item>
-            </flexbox>
-          </div>
-        </card>
-        <divider class="no-more">{{ $t('policy.policy_more') }}</divider>
+      <div style="padding-top:50px" ref="authorization">
+        <authorization-item v-if="authorizationData.length > 0" @setPwdShow="setPwdShow" v-for="(item,index) in authorizationData" :key="index" :itemData="item"></authorization-item>
       </div>
+      <divider class="no-more">{{ $t('policy.policy_more') }}</divider>
+      <div v-transfer-dom>
+        <alert v-model="showModal" button-text=" ">
+          <msg slot="default" :title="title" :buttons="buttons" :icon="icon"></msg>
+        </alert>
+      </div>
+      <div v-transfer-dom>
+        <loading :show="upLoadImg" text=""></loading>
+      </div>
+      <password-confirm v-if="isUnlock" ref="confirm" @setUnlock="setUnlock" @unlocking="unlocking"></password-confirm>
     </div>
 </template>
 <script>
-import { XHeader, XButton, FormPreview, Divider, Card, Cell, Group, Flexbox, FlexboxItem } from 'vux'
+import Eos from 'eosjs'
+import config from '../libs/env'
+import authorizationItem from '../components/authorizationItem'
+import { XHeader, XButton, Alert, Loading, Msg, FormPreview, Divider, Card, Cell, Group, Flexbox, FlexboxItem, Checklist, TransferDomDirective as TransferDom } from 'vux'
+import passwordConfirm from '../components/PasswordConfirm'
 
 export default {
+  directives: {
+    TransferDom
+  },
   components: {
     XHeader,
     FormPreview,
@@ -39,27 +36,209 @@ export default {
     Group,
     Flexbox,
     FlexboxItem,
-    XButton
+    XButton,
+    Checklist,
+    authorizationItem,
+    Alert,
+    Msg,
+    passwordConfirm,
+    Loading
   },
   data () {
     let wallets = this.$common.get_wallets()
     return {
       wallets: wallets,
       list: [],
+      show: false,
+      more: true,
+      policyData: [],
+      isUnlock: false,
+      upLoadImg: false,
+      pwd: '',
+      id: '',
+      reqKey: '',
+      submitData: [],
       account: this.$route.query.account,
-      authorizationData: []
+      type: 'Agree',
+      authorizationData: [],
+      inlineDescList: [
+        {key: '1', value: 'Tiger is good', inlineDesc: 'Tiger is the king of mountain'},
+        {key: '2', value: 'Lion is better', inlineDesc: 'Lion is the king of woods'},
+        {key: '3', value: 'Camel is best, no inline-desc'}
+      ],
+      inlineDescListValue: [],
+      showModal: false,
+      icon: 'success',
+      title: this.$t('policy.success'),
+      buttons: [{
+        type: 'default',
+        text: this.$t('index.confirm'),
+        onClick: this.keepOn.bind(this)
+      }],
+      scrollData: {
+        noFlag: false
+      }
     }
   },
   methods: {
     getData () {
-      this.$http.get(`${this.basePath}/v1/msg/user/${this.account}`).then(res => {
-        this.authorizationData = res.data.data.rows
+      this.$http.get(`${this.basePath}/v1/msg/user/${this.account}?limit=100`).then(res => {
+        this.authorizationData = this.authorizationData.concat(res.data.data.rows)
+        this.more = res.data.data.more
+        this.authorizationData.map(item => {
+          item.isShow = false
+          item.inlineDescList = this.inlineDescList
+          item.inlineDescListValue = this.inlineDescListValue
+        })
       })
+    },
+    change (val, label) {
+      console.log('change', val, label)
+    },
+    isShow (idx) {
+      this.authorizationData[idx].isShow = !this.authorizationData[idx].isShow
+    },
+    authHandleScroll () {
+      // console.log(this.$refs.authorization.scrollTop)
+      if (this.more) {
+        this.getData()
+      }
+    },
+    setPwdShow (index, type, reqKey) {
+      this.isUnlock = true
+      this.id = index
+      this.reqKey = reqKey
+      this.type = type
+      this.getPolicyList()
+    },
+    getPolicyList () {
+      let _this = this
+      this.$http.get(`${this.basePath}/v1/policy/list/${this.$store.state.account}?limit=100`).then(res => {
+        let data = res.data.data
+        _this.policyData = _this.policyData.concat(data.rows)
+        if (data.more) {
+          _this.getPolicyList()
+        } else {
+          _this.policyData.map(item => {
+            if (item.status === 20) {
+              _this.submitData.push(item)
+            }
+          })
+        }
+      })
+    },
+    setUnlock (val) {
+      this.isUnlock = val
+    },
+    unlocking (pwd) {
+      this.pwd = pwd
+      this.isUnlock = false
+      if (this.type === 'Agree') {
+        this.agressAuth()
+      } else {
+        this.rejectAuth()
+      }
+    },
+    agressAuth () {
+      let _this = this
+      try {
+        this.upLoadImg = true
+        let accountStr = this.$common.getStore('account')[0]
+        let accountData = JSON.parse(this.$common.decryptActive(accountStr.encryption, _this.pwd))
+        let activeKey = this.$common.decryptActive(accountData.active, _this.pwd)
+        config.keyProvider = activeKey
+        let value = this.$common.encryption(JSON.stringify({t: _this.submitData}), this.pwd)
+        let eos = Eos.Localnet(config)
+        // 合约名
+        const contractName = 'sic.auth'
+        // const user = 'sic.auditor';
+        const policyContract = eos.contract(contractName)
+
+        policyContract.then(contract => {
+          contract.agreeauth({
+            // 请求ID
+            id: _this.id,
+            user: accountData.account,
+            // 使用reqKey加密数据
+            value: value
+          }, {authorization: accountData.account}).then(res => {
+            _this.upLoadImg = false
+            _this.showModal = true
+            _this.icon = 'success'
+            _this.title = _this.$t('policy.success')
+            _this.$http.get(`${_this.basePath}/v1/msg/user/${_this.account}?limit=100`).then(res => {
+              _this.authorizationData = []
+              _this.authorizationData = _this.authorizationData.concat(res.data.data.rows)
+              _this.more = res.data.data.more
+              _this.authorizationData.map(item => {
+                item.isShow = false
+                item.inlineDescList = _this.inlineDescList
+                item.inlineDescListValue = _this.inlineDescListValue
+              })
+            })
+          })
+        })
+      } catch (error) {
+        _this.showModal = true
+        _this.upLoadImg = false
+        _this.icon = 'warn'
+        _this.title = _this.$t('policy.error')
+      }
+    },
+    rejectAuth () {
+      let _this = this
+      try {
+        this.upLoadImg = true
+        let accountStr = this.$common.getStore('account')[0]
+        let accountData = JSON.parse(this.$common.decryptActive(accountStr.encryption, _this.pwd))
+        let activeKey = this.$common.decryptActive(accountData.active, _this.pwd)
+        config.keyProvider = activeKey
+        let eos = Eos.Localnet(config)
+        // 合约名
+        const contractName = 'sic.auth'
+        const policyContract = eos.contract(contractName)
+        policyContract.then(contract => {
+          contract.rejectauth({
+            id: _this.id,
+            user: accountData.account
+          }, {authorization: accountData.account}).then(res => {
+            _this.authorizationData = []
+            _this.upLoadImg = false
+            _this.showModal = true
+            _this.icon = 'success'
+            _this.title = _this.$t('policy.success')
+            _this.$http.get(`${_this.basePath}/v1/msg/user/${_this.account}?limit=100`).then(res => {
+              _this.authorizationData = []
+              _this.authorizationData = _this.authorizationData.concat(res.data.data.rows)
+              _this.more = res.data.data.more
+              _this.authorizationData.map(item => {
+                item.isShow = false
+                item.inlineDescList = _this.inlineDescList
+                item.inlineDescListValue = _this.inlineDescListValue
+              })
+            })
+          })
+        })
+      } catch (error) {
+        _this.showModal = true
+        _this.upLoadImg = false
+        _this.icon = 'warn'
+        _this.title = _this.$t('policy.error')
+      }
+    },
+    keepOn () {
+      // this.getData()
+      this.showModal = false
     }
   },
   created () {
     this.getData()
-    window.addEventListener('scroll', this.handleScroll, true)
+    window.addEventListener('scroll', this.authHandleScroll, true)
+  },
+  watch: {
+    authorizationData (newData, vla) {
+      this.authorizationData = newData
+    }
   }
 }
 </script>

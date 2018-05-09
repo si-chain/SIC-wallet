@@ -19,7 +19,7 @@
           </cell>
         </group>
         <div style="height:44px;">
-          <sticky ref="sticky" scroll-box="vux_view_box_body" :offset="46" :check-sticky-support="false">
+          <sticky ref="sticky" scroll-box="vux_view_box_body" :offset="38" :check-sticky-support="false">
             <tab style="margin-top:10px;" v-model="index" prevent-default @on-before-index-change="switchTabItem">
               <tab-item v-if="index === 0" selected>{{$t('policy.tip_insurance_policy')}}</tab-item>
               <tab-item v-else>{{$t('policy.tip_insurance_policy')}}</tab-item>
@@ -40,12 +40,13 @@
           <div>
             <card class="wrap-item" v-if="policyList.length > 0" v-for="(item,index) in policyList" :key="index">
               <cell slot="header" :title="$t('policy.upload_time')">{{item.upload_time.replace('T', ' ')}}</cell>
-              <cell slot="content" v-if="item.status ===4" :title="$t('policy.policy_num')">{{item.policyID}}</cell>
+              <cell slot="content" v-if="item.status === 5" :title="$t('policy.policy_num')">{{item.policyID}}</cell>
               <cell slot="content" v-else :title="$t('policy.policy_file')">{{item.ID}}</cell>
+              <cell slot="content" v-if="item.status === 5" :title="$t('policy.policy_value')">{{item.value}}</cell>
               <step slot="footer" class="step" v-model="item.status" background-color='#fbf9fe'>
                 <step-item :title="$t('policy.policy_status_step1')"></step-item>
                 <step-item :title="$t('policy.policy_status_step2')"></step-item>
-                <step-item v-if="item.status ===4" :title="$t('policy.policy_status_step4')"></step-item>
+                <step-item v-if="item.status === 5" :title="$t('policy.policy_status_step4')"></step-item>
                 <step-item v-else :title="$t('policy.policy_status_step3')"></step-item>
               </step>
             </card>
@@ -88,11 +89,14 @@ export default {
     }
   },
   methods: {
-    getData () {
+    getPolicyData () {
       let _this = this
       this.$http.get(this.url, { lowerBound: this.lowerBound }).then(res => {
         let data = res.data.data
         _this.policyList = _this.policyList.concat(data.rows)
+        _this.policyList.map(item => {
+          item.status === 0 ? item.status = 1 : item.status === 10 ? item.status = 2 : item.status === 20 ? item.status = 4 : item.status === 30 ? item.status = 5 : item.status = 5
+        })
         _this.more = data.more
         if (data.rows.length > 0) {
           _this.lowerBound = data.rows[data.rows.length - 1].ID
@@ -114,33 +118,33 @@ export default {
         }
       })
     },
-    handleScroll () {
+    policyHandleScroll () {
       if (this.more) {
-        this.getData()
+        this.getPolicyData()
       }
     },
     switchTabItem (index) {
       this.index = index
       if (index === 0) {
-        this.url = `${this.basePath}/v1/policy/list/${this.$store.state.account}`
+        this.url = `${this.basePath}/v1/policy/list/${this.$store.state.account}?limit=100`
         this.$store.commit('setIndex', 1)
       } else {
-        this.url = `${this.basePath}/v1/claim/list/${this.$store.state.account}`
+        this.url = `${this.basePath}/v1/claim/list/${this.$store.state.account}?limit=100`
         this.$store.commit('setIndex', 0)
       }
       this.policyList = []
-      this.getData()
+      this.getPolicyData()
     }
   },
   created () {
     this.index = this.$store.state.index
     if (this.index === 0) {
-      this.url = `${this.basePath}/v1/policy/list/${this.$store.state.account}`
+      this.url = `${this.basePath}/v1/policy/list/${this.$store.state.account}?limit=100`
     } else {
-      this.url = `${this.basePath}/v1/claim/list/${this.$store.state.account}`
+      this.url = `${this.basePath}/v1/claim/list/${this.$store.state.account}?limit=100`
     }
-    this.getData()
-    window.addEventListener('scroll', this.handleScroll, true)
+    this.getPolicyData()
+    window.addEventListener('scroll', this.policyHandleScroll, true)
   },
   watch: {
     index (val) {

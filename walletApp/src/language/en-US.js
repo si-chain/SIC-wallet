@@ -57,6 +57,7 @@ const locale = {
       upload_time: 'Upload Time',
       policy_num: 'Policy Number',
       policy_file: 'Document Number',
+      policy_value: 'Refusal',
       policy_status_step1: 'Uploaded',
       policy_status_step2: 'Audit',
       policy_status_step3: 'Complete',

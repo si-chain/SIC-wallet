@@ -5,11 +5,12 @@ import FastClick from 'fastclick'
 import router from './router'
 import App from './App'
 import store from './vuex/store'
-import { AjaxPlugin, ToastPlugin, ConfirmPlugin } from 'vux'
+import { AjaxPlugin, ToastPlugin, ConfirmPlugin, ViewBox } from 'vux'
 import i18n from './language/index'
 import util from './libs/utils'
 import Filters from './libs/filters'
 
+Vue.component('view-box', ViewBox)
 Filters(Vue)
 Vue.use(ToastPlugin)
 Vue.use(AjaxPlugin)
