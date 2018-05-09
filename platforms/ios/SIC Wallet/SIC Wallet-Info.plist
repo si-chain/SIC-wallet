@@ -4,14 +4,6 @@
   <dict>
     <key>CFBundleDevelopmentRegion</key>
     <string>zh_CN</string>
-    <key>NSCameraUsageDescription</key>
-    <string>cameraDesciption</string>
-    <key>NSContactsUsageDescription</key>
-    <string>contactsDesciption</string>
-    <key>NSMicrophoneUsageDescription</key>
-    <string>microphoneDesciption</string>
-    <key>NSPhotoLibraryUsageDescription</key>
-    <string>photoLibraryDesciption</string>
     <key>CFBundleDisplayName</key>
     <string>SIC Wallet</string>
     <key>CFBundleExecutable</key>
@@ -41,10 +33,18 @@
       <key>NSAllowsArbitraryLoads</key>
       <true/>
     </dict>
+    <key>NSCameraUsageDescription</key>
+    <string>cameraDesciption</string>
+    <key>NSContactsUsageDescription</key>
+    <string>contactsDesciption</string>
     <key>NSMainNibFile</key>
     <string/>
     <key>NSMainNibFile~ipad</key>
     <string/>
+    <key>NSMicrophoneUsageDescription</key>
+    <string>microphoneDesciption</string>
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>photoLibraryDesciption</string>
     <key>UIRequiresFullScreen</key>
     <true/>
     <key>UISupportedInterfaceOrientations</key>

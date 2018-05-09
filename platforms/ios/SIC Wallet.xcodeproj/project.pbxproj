@@ -22,13 +22,13 @@
 		825CDD7B107840A88C40DA0B /* zxing-all-in-one.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9852D1B0527F4FC4A933DDA4 /* zxing-all-in-one.cpp */; };
 		8D93D56F61B94FA9AB1475BA /* CDVBarcodeScanner.bundle in Resources */ = {isa = PBXBuildFile; fileRef = AFE4C05D5021407383F9E913 /* CDVBarcodeScanner.bundle */; };
 		8F11DA518DFB4C38BB9E39B3 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C02DBD71E17A4DD4B8F573D1 /* CoreVideo.framework */; };
+		943D822A4D8E4118AB0230A9 /* CDVViewController+SplashScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = EAE03FD8E1844F8F842A01DC /* CDVViewController+SplashScreen.m */; };
 		A914D74F834943D8AD53EDA5 /* CDVFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 738FE15E7FDD4A32AA57B703 /* CDVFile.m */; };
 		AC104E58769447C580B86BD0 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D2AF0141F3844629F2267BC /* AudioToolbox.framework */; };
 		C7A3B75D886A43A499A9299D /* CDVLocalFilesystem.m in Sources */ = {isa = PBXBuildFile; fileRef = 249DC6713A614D7F83932C5D /* CDVLocalFilesystem.m */; };
+		E12BE30C0CA549769DA24B44 /* CDVSplashScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = FE4001912392430593D78328 /* CDVSplashScreen.m */; };
 		F0500022C62B4785B792BE30 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 712D376812A14F648212D6A7 /* AVFoundation.framework */; };
 		FD3962970E774C6FA9E3F4DF /* scannerOverlay.xib in Resources */ = {isa = PBXBuildFile; fileRef = 37DDD3F8EDE9488A9B30FAB9 /* scannerOverlay.xib */; };
-		E12BE30C0CA549769DA24B44 /* CDVSplashScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = FE4001912392430593D78328 /* CDVSplashScreen.m */; };
-		943D822A4D8E4118AB0230A9 /* CDVViewController+SplashScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = EAE03FD8E1844F8F842A01DC /* CDVViewController+SplashScreen.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -78,9 +78,11 @@
 		47530EAD5B974AD588C1849E /* libiconv.dylib */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.dylib; path = usr/lib/libiconv.dylib; sourceTree = SDKROOT; };
 		59953B4A274F4DF68409DCFA /* CDVBarcodeScanner.mm */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = CDVBarcodeScanner.mm; path = "phonegap-plugin-barcodescanner/CDVBarcodeScanner.mm"; sourceTree = "<group>"; };
 		5D2AF0141F3844629F2267BC /* AudioToolbox.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		64D19B52BEE349A4814AFA3C /* CDVViewController+SplashScreen.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = "CDVViewController+SplashScreen.h"; path = "cordova-plugin-splashscreen/CDVViewController+SplashScreen.h"; sourceTree = "<group>"; };
 		6AFF5BF81D6E424B00AB3073 /* CDVLaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = CDVLaunchScreen.storyboard; path = "SIC Wallet/CDVLaunchScreen.storyboard"; sourceTree = SOURCE_ROOT; };
 		712D376812A14F648212D6A7 /* AVFoundation.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		738FE15E7FDD4A32AA57B703 /* CDVFile.m */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.objc; name = CDVFile.m; path = "cordova-plugin-file/CDVFile.m"; sourceTree = "<group>"; };
+		741089A62DAF4A5696F567D9 /* CDVSplashScreen.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = CDVSplashScreen.h; path = "cordova-plugin-splashscreen/CDVSplashScreen.h"; sourceTree = "<group>"; };
 		7D231DCFA0FB497C9872C9DD /* CDVLocalFilesystem.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = CDVLocalFilesystem.h; path = "cordova-plugin-file/CDVLocalFilesystem.h"; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* SIC Wallet-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "SIC Wallet-Info.plist"; path = "SIC Wallet/SIC Wallet-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = SOURCE_ROOT; };
 		9852D1B0527F4FC4A933DDA4 /* zxing-all-in-one.cpp */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "zxing-all-in-one.cpp"; path = "phonegap-plugin-barcodescanner/zxing-all-in-one.cpp"; sourceTree = "<group>"; };
@@ -91,14 +93,12 @@
 		C57757FD1651455B8EABE462 /* zxing-all-in-one.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = "zxing-all-in-one.h"; path = "phonegap-plugin-barcodescanner/zxing-all-in-one.h"; sourceTree = "<group>"; };
 		CF5E28A4D99646598A976CFB /* CDVFileTransfer.m */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.objc; name = CDVFileTransfer.m; path = "cordova-plugin-file-transfer/CDVFileTransfer.m"; sourceTree = "<group>"; };
 		DD463725739B42F2BD504A34 /* CDVAssetLibraryFilesystem.m */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.objc; name = CDVAssetLibraryFilesystem.m; path = "cordova-plugin-file/CDVAssetLibraryFilesystem.m"; sourceTree = "<group>"; };
+		EAE03FD8E1844F8F842A01DC /* CDVViewController+SplashScreen.m */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.objc; name = "CDVViewController+SplashScreen.m"; path = "cordova-plugin-splashscreen/CDVViewController+SplashScreen.m"; sourceTree = "<group>"; };
 		EB87FDF31871DA8E0020F90C /* www */ = {isa = PBXFileReference; lastKnownFileType = folder; name = www; path = ../../www; sourceTree = "<group>"; };
 		EB87FDF41871DAF40020F90C /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = config.xml; path = ../../config.xml; sourceTree = "<group>"; };
 		ED33DF2A687741AEAF9F8254 /* Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
 		F840E1F0165FE0F500CFE078 /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = config.xml; path = "SIC Wallet/config.xml"; sourceTree = "<group>"; };
-		FE4001912392430593D78328 /* CDVSplashScreen.m */ = {isa = PBXFileReference; name = "CDVSplashScreen.m"; path = "cordova-plugin-splashscreen/CDVSplashScreen.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
-		EAE03FD8E1844F8F842A01DC /* CDVViewController+SplashScreen.m */ = {isa = PBXFileReference; name = "CDVViewController+SplashScreen.m"; path = "cordova-plugin-splashscreen/CDVViewController+SplashScreen.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
-		741089A62DAF4A5696F567D9 /* CDVSplashScreen.h */ = {isa = PBXFileReference; name = "CDVSplashScreen.h"; path = "cordova-plugin-splashscreen/CDVSplashScreen.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
-		64D19B52BEE349A4814AFA3C /* CDVViewController+SplashScreen.h */ = {isa = PBXFileReference; name = "CDVViewController+SplashScreen.h"; path = "cordova-plugin-splashscreen/CDVViewController+SplashScreen.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
+		FE4001912392430593D78328 /* CDVSplashScreen.m */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.objc; name = CDVSplashScreen.m; path = "cordova-plugin-splashscreen/CDVSplashScreen.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -403,7 +403,7 @@
 				INFOPLIST_FILE = "SIC Wallet/SIC Wallet-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = cordova.test1;
+				PRODUCT_BUNDLE_IDENTIFIER = cordova.doubao;
 				PRODUCT_NAME = "SIC Wallet";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -427,7 +427,7 @@
 				INFOPLIST_FILE = "SIC Wallet/SIC Wallet-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = cordova.test1;
+				PRODUCT_BUNDLE_IDENTIFIER = cordova.doubao;
 				PRODUCT_NAME = "SIC Wallet";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -437,6 +437,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 3047A5111AB8059700498E2A /* build.xcconfig */;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
@@ -456,7 +457,6 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = NO;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 			};
 			name = Debug;
 		};
@@ -464,6 +464,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 3047A5111AB8059700498E2A /* build.xcconfig */;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
@@ -482,7 +483,6 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = NO;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 			};
 			name = Release;
 		};
