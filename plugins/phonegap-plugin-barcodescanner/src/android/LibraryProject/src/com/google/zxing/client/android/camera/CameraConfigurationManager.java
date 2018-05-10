@@ -74,14 +74,14 @@ final class CameraConfigurationManager {
     TypedValue typedValue = new TypedValue();
     DisplayMetrics displayMetrics = this.context.getResources().getDisplayMetrics();
     if (this.context.getTheme().resolveAttribute(android.R.attr.actionBarSize, typedValue, true)) {
-      height -= TypedValue.complexToDimensionPixelSize(typedValue.data, displayMetrics);
+        int rotation = context.getApplicationContext().getResources().getConfiguration().orientation;
+        if (rotation == Configuration.ORIENTATION_PORTRAIT) {
+            height -= 40 * displayMetrics.density;
+        } else {
+            height -= 48 * displayMetrics.density;
+        }
     } else {
-      int rotation = context.getApplicationContext().getResources().getConfiguration().orientation;
-      if (rotation == Configuration.ORIENTATION_PORTRAIT) {
-        height -= 40 * displayMetrics.density;
-      } else {
-        height -= 48 * displayMetrics.density;
-      }
+        height -= TypedValue.complexToDimensionPixelSize(typedValue.data, displayMetrics);        
     }
 //    height -= statusBarHeight();
     height -= 50;
