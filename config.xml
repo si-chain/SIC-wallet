@@ -17,10 +17,12 @@
     <allow-intent href="geo:*" />
     <platform name="android">
         <allow-intent href="market:*" />
+        <preference name="orientation" value="portrait" />
     </platform>
     <platform name="ios">
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
+        <preference name="orientation" value="portrait" />
         <perference name="WebViewBounce" value="false" />
         <perference name="DisallowOverscroll" value="true" />
         <splash height="480" src="res/screen/ios/Default~iphone.png" width="320" />
