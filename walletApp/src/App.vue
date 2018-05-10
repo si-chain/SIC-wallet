@@ -132,7 +132,7 @@ export default {
         this.$store.state.account = this.$common.get_wallets()[0].account
       }
     }
-    if (!this.$store.state.hasMsg) {
+    if (!this.$store.state.hasMsg && this.$store.state.account) {
       this.$store.state.msgList = []
       this.$http.get(`${this.basePath}/v1/msg/user/${this.$store.state.account}?limit=100`, { lowerBound: 0 }).then(res => {
         let data = res.data.data.rows

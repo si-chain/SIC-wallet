@@ -36,7 +36,7 @@
           <img src="../assets/list.png" width="20" height="25" alt="">
           {{ $t('index.claim_trusteeship') }}
         </p>
-        <div class="wrapper" v-if="policyList.length > 0">
+        <div class="wrapper" v-if="policyList.length > 0 || isLoading">
           <div>
             <card class="wrap-item" v-if="policyList.length > 0" v-for="(item,index) in policyList" :key="index">
               <cell slot="header" :title="$t('policy.upload_time')">{{item.upload_time.replace('T', ' ')}}</cell>
@@ -53,7 +53,7 @@
           </div>
           <divider class="no-more" v-if="!more">{{ $t('policy.policy_more') }}</divider>
         </div>
-        <loading :show="policyList.length === 0" text=""></loading>
+        <loading :show="policyList.length === 0  && !isLoading" text=""></loading>
       </div>
 
     </div>
@@ -86,6 +86,7 @@ export default {
       policyList: [],
       more: true,
       lowerBound: 1,
+      isLoading: false,
       disabled: typeof navigator !== 'undefined' && /iphone/i.test(navigator.userAgent) && /ucbrowser/i.test(navigator.userAgent),
       url: `${this.basePath}/v1/policy/list/${this.$store.state.account}`
     }
@@ -94,6 +95,7 @@ export default {
     getPolicyData () {
       let _this = this
       this.$http.get(this.url, { lowerBound: this.lowerBound }).then(res => {
+        this.isLoading = true
         let data = res.data.data
         _this.policyList = _this.policyList.concat(data.rows)
         _this.policyList.map(item => {

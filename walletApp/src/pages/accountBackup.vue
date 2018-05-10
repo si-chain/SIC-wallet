@@ -80,11 +80,11 @@ export default {
     },
     delWallet () {
       this.error.common = ''
-      if (this.balance === 0.0000) {
-        this.isUnlock = true
-      } else {
-        this.error.common = this.$t('wallet_del.error.invalid_delete')
-      }
+      // if (this.balance === 0.0000) {
+      this.isUnlock = true
+      // } else {
+      //   this.error.common = this.$t('wallet_del.error.invalid_delete')
+      // }
     },
     unlocking (pwd) {
       let self = this
@@ -99,7 +99,7 @@ export default {
         return w.account === account
       })
       let publicWallet = this.$common.backupPublicKey(wallet.active, pwd)
-      let activePubkey = wallet.active_pubkey
+      let activePubkey = wallet.activePubkey
       if (wallet == null) {
         this.isUnlock = false
         self.error.common = self.$t('unlock.account_not_found')
@@ -108,6 +108,15 @@ export default {
         self.error.common = self.$t('wallet_backup.detail.error.invalid_password')
       } else {
         return self.$common.del_wallet(wallet).then(() => {
+          if (wallets.length > 1) {
+            wallets.map(item => {
+              if (item.account !== wallet.account) {
+                self.$store.state.account = item.account
+              }
+            })
+          } else {
+            self.$store.state.account = ''
+          }
           self.$router.replace({
             path: self.$route.query.from || this.$router.push('/')// eslint-disable-line
           })

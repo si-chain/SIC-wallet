@@ -63,6 +63,7 @@ export default {
       account: 'sic.policy',
       table: 'policy',
       imgs: [],
+      type: 1,
       show: false,
       isUnlock: false,
       upLoadImg: false,
@@ -99,7 +100,13 @@ export default {
     })
   },
   created () {
-    this.$route.path === '/insurance-policy' ? this.account = 'sic.policy' : this.account = 'sic.claim'
+    if (this.$route.path === '/insurance-policy') {
+      this.account = 'sic.policy'
+      this.type = 1
+    } else {
+      this.account = 'sic.claim'
+      this.type = 2
+    }
   },
   methods: {
     uploadXHR () {
@@ -114,12 +121,12 @@ export default {
         if (xhr.status === 200) {
           that.uploadSuccess(JSON.parse(res.target.response))
         } else {
-          this.upLoadImg = false
-          this.show = true
-          this.icon = 'warn'
-          this.title = this.$t('policy.error')
+          that.upLoadImg = false
+          that.show = true
+          that.icon = 'warn'
+          that.title = that.$t('policy.error')
           setTimeout(() => {
-            this.$store.commit('set_img_upload_cache', [])
+            that.$store.commit('set_img_upload_cache', [])
           }, 500)
         }
       }
@@ -146,6 +153,7 @@ export default {
           policyContract.then(contract => {
             contract.upload({
               id: data.data.id,
+              type: _this.type,
               ossAddr: JSON.stringify(t),
               upload_num: data.data.num,
               producer: accountData.account

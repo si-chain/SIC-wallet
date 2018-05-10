@@ -53,7 +53,6 @@ export default {
 </script>
 <style scoped lang="less">
 .page-group{
-  background: #efeff4;
   height: 100%;
 }
 .vux-header{

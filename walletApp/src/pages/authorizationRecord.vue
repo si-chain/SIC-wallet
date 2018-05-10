@@ -1,11 +1,11 @@
 <template>
     <div class="page-group">
       <x-header :left-options="{backText: ''}">{{$t('index.authorization_record')}}</x-header>
-      <div style="padding-top:50px" ref="authorization" v-if="authorizationData.length > 0">
+      <div style="padding-top:50px" ref="authorization" v-if="authorizationData.length > 0 || isLoading">
         <authorization-item v-if="authorizationData.length > 0" @setPwdShow="setPwdShow" v-for="(item,index) in authorizationData" :key="index" :itemData="item"></authorization-item>
         <divider class="no-more">{{ $t('policy.policy_more') }}</divider>
       </div>
-      <loading :show="authorizationData.length === 0" text=""></loading>
+      <loading :show="authorizationData.length === 0 && !isLoading" text=""></loading>
       <div v-transfer-dom>
         <alert v-model="showModal" button-text=" ">
           <msg slot="default" :title="title" :buttons="buttons" :icon="icon"></msg>
@@ -55,6 +55,7 @@ export default {
       policyData: [],
       isUnlock: false,
       upLoadImg: false,
+      isLoading: false,
       pwd: '',
       id: '',
       reqKey: '',
@@ -72,7 +73,7 @@ export default {
       icon: 'success',
       title: this.$t('policy.success'),
       buttons: [{
-        type: 'default',
+        type: 'primary',
         text: this.$t('index.confirm'),
         onClick: this.keepOn.bind(this)
       }],
@@ -84,6 +85,7 @@ export default {
   methods: {
     getData () {
       this.$http.get(`${this.basePath}/v1/msg/user/${this.account}?limit=100`).then(res => {
+        this.isLoading = true
         this.authorizationData = this.authorizationData.concat(res.data.data.rows)
         this.more = res.data.data.more
         this.authorizationData.map(item => {
@@ -166,6 +168,7 @@ export default {
             _this.upLoadImg = false
             _this.showModal = true
             _this.icon = 'success'
+            _this.buttons[0].type = 'primary'
             _this.title = _this.$t('policy.success')
             _this.$http.get(`${_this.basePath}/v1/msg/user/${_this.account}?limit=100`).then(res => {
               _this.authorizationData = []
@@ -182,6 +185,7 @@ export default {
       } catch (error) {
         _this.showModal = true
         _this.upLoadImg = false
+        _this.buttons[0].type = 'warn'
         _this.icon = 'warn'
         _this.title = _this.$t('policy.error')
       }
@@ -207,6 +211,7 @@ export default {
             _this.upLoadImg = false
             _this.showModal = true
             _this.icon = 'success'
+            _this.buttons[0].type = 'primary'
             _this.title = _this.$t('policy.success')
             _this.$http.get(`${_this.basePath}/v1/msg/user/${_this.account}?limit=100`).then(res => {
               _this.authorizationData = []
@@ -223,6 +228,7 @@ export default {
       } catch (error) {
         _this.showModal = true
         _this.upLoadImg = false
+        _this.buttons[0].type = 'warn'
         _this.icon = 'warn'
         _this.title = _this.$t('policy.error')
       }

@@ -71,7 +71,7 @@ export default {
       }
     },
     goDetail (account) {
-      this.$router.push({path: '/wallet-backup', query: {account: account}})
+      this.$router.push({path: '/', query: {account: account}})
       this.$store.commit('setAccount', account)
     }
   },

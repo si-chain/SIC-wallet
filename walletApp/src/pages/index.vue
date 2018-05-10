@@ -99,11 +99,10 @@ export default {
       //         if (!status.hasPermission) errorCallback()
       //         cordova.plugins.barcodeScanner.scan(
       //           function (result) {
-      //             let resultStr = result.text.replace('qr://sic/login/', '')
-      //             // alert('result.text:' + result.text.replace('qr://sic/login/', ''), resultStr.length)
-      //             if (resultStr.length === 36) {
+      //             let resultStr = result.text
+      //             if (result.includes('qr://sic/login/')) {
       //               _this.showConfirm = true
-      //               _this.code = resultStr
+      //               _this.code = resultStr.replace('qr://sic/login/', '')
       //             }
       //           }, null, 'QRCode', 'scan', []
       //         )
@@ -112,11 +111,10 @@ export default {
       //   } else {
       //     cordova.plugins.barcodeScanner.scan(
       //       function (result) {
-      //         let resultStr = result.text.replace('qr://sic/login/', '')
-      //         // alert('result.text:' + result.text.replace('qr://sic/login/', ''), resultStr.length === 36)
-      //         if (resultStr.length === 36) {
+      //         let resultStr = result.text
+      //         if (resultStr.includes('qr://sic/login/')) {
       //           _this.showConfirm = true
-      //           _this.code = resultStr
+      //           _this.code = resultStr.replace('qr://sic/login/', '')
       //         }
       //       }, null, 'QRCode', 'scan', []
       //     )
