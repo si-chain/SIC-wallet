@@ -247,6 +247,7 @@ const locale = {
         }
     },
     transfer: {
+        header: 'SIC',
         title: 'Send',
         from: 'From',
         to: 'To',
@@ -265,7 +266,7 @@ const locale = {
             amount: {
                 invalid: 'Invalid amount',
                 insufficient_balance: 'Insufficient balance, Please make sure your balance are more than amount and fee',
-                minimum: 'The minimum amount must not be less than 1'
+                minimum: 'The minimum amount must not be less than 0.0001'
             },
             account: {
                 cannot_send_to_yourself: 'Cannot send to yourself',
@@ -294,7 +295,7 @@ const locale = {
     },
     trade_history: {
         title: 'Trade History',
-        switch: 'Switch',
+        switchs: 'Switch',
         currentAccount: 'Current Account: {account}',
         empty: 'No more record',
         received: 'Received',

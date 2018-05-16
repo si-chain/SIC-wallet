@@ -23,7 +23,7 @@ import config from '../libs/env'
 import authorizationItem from '../components/authorizationItem'
 import { XHeader, XButton, Alert, Loading, Msg, FormPreview, Divider, Card, Cell, Group, Flexbox, FlexboxItem, Checklist, TransferDomDirective as TransferDom } from 'vux'
 import passwordConfirm from '../components/PasswordConfirm'
-
+import SIC from 'sic-ecies'
 export default {
   directives: {
     TransferDom
@@ -150,7 +150,7 @@ export default {
         let accountData = JSON.parse(this.$common.decryptActive(accountStr.encryption, _this.pwd))
         let activeKey = this.$common.decryptActive(accountData.active, _this.pwd)
         config.keyProvider = activeKey
-        let value = this.$common.encryption(JSON.stringify({t: _this.submitData}), this.pwd)
+        let value = SIC().encrypt(JSON.stringify({t: _this.submitData}), _this.reqKey)
         let eos = Eos.Localnet(config)
         // 合约名
         const contractName = 'sic.auth'

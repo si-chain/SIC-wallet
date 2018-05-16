@@ -5,9 +5,9 @@
       <a href="javascript:;" @click="hidden" class="pull-right icon icon-close close-popup">&times;</a>
     </div>
     <div class="content">
-      <div class="list-block">
+      <div class="list-block" style="padding-left:10px">
         <p class="info-alert text-center" v-if="tips">{{tips}}</p>
-        <x-input class="weui-vcode" type="password" :placeholder="$t('transfer.confirm.enter_password')" v-model="password" @on-enter="onEnter">
+        <x-input class="weui-vcode" v-focus label-widt="1em" type="password" :placeholder="$t('transfer.confirm.enter_password')" v-model="password" @on-enter="onEnter">
           <x-button slot="right" @click.native="onPasswordConfirm" type="primary" mini>{{$t('transfer.next')}}</x-button>
         </x-input>
         <!-- <p class="tip-error text-center" v-if="error.common">{{error.common}}</p> -->
@@ -34,6 +34,14 @@ export default {
   props: {
     tips: {
       type: String
+    }
+  },
+  directives: {
+    focus: {
+      // 指令的定义
+      update: function (el) {
+        el.focus()
+      }
     }
   },
   methods: {

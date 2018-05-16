@@ -150,7 +150,8 @@ export default{
             let wallets = _this.$common.get_wallets()
             let encryptionWalletArr = _this.$common.getStore('account')
             wallets.push(getData.wallet)
-            _this.$store.commit('setAccount', getData.wallet.account)
+            _this.$store.commit('setAccount', getData.params.accountName)
+            console.log(_this.$store.state.account)
             let encryptionWallet = _this.$common.encryption(JSON.stringify(getData.wallet), _this.password)
             encryptionWalletArr.push({
               account: getData.wallet.account,
@@ -159,7 +160,7 @@ export default{
             _this.$common.setStore('account', encryptionWalletArr)
             _this.$common.set_wallets(wallets)
             _this.$store.commit('UPDATE_WALLETS', wallets)
-            _this.$router.push({path: '/wallet-create-success', query: {account: _this.account}})
+            _this.$router.push({path: '/wallet-create-success', query: {account: getData.params.accountName}})
             _this.$store.commit('upDataMsg', false)
           } else {
             _this.error = _this.$t('wallet_create.two.error.account_create_failed')

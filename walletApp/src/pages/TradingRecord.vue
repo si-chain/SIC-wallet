@@ -1,7 +1,8 @@
 <template>
     <div class="page-group">
       <x-header :left-options="{backText: ''}">{{$t('index.transaction_record')}}</x-header>
-      <div style="padding-top:50px">
+      <loading :show="transferData.length === 0  && !isLoading" text=""></loading>
+      <div style="padding:50px 3px 0 3px" v-if="transferData.length > 0 || isLoading">
         <div v-for="(item,index) in transferData" :key="index">
           <form-preview :header-label="$t('index.transaction_sum')" :header-value="transferData[index]" :body-items="list[index]"></form-preview>
           <br>
@@ -11,20 +12,22 @@
     </div>
 </template>
 <script>
-import { XHeader, FormPreview, Divider } from 'vux'
+import { XHeader, FormPreview, Divider, Loading } from 'vux'
 
 export default {
   components: {
     XHeader,
     FormPreview,
-    Divider
+    Divider,
+    Loading
   },
   data () {
     let wallets = this.$common.get_wallets()
     return {
       wallets: wallets,
       list: [],
-      transferData: []
+      transferData: [],
+      isLoading: false
     }
   },
   methods: {
@@ -36,16 +39,17 @@ export default {
     let account = this.$route.query.account
     let _this = this
     this.$http.get(`${this.basePath}/v1/chain/accounts/actions/transfer/${account}`).then(res => {
-      let data = res.data.data
+      this.isLoading = true
+      let data = res.data.data.records
       data.map(item => {
         _this.list.push([{
           label: _this.$t('transfer.to'),
-          value: item.data.to
+          value: item.to
         }, {
           label: _this.$t('transfer.memo'),
-          value: item.data.memo
+          value: item.memo
         }])
-        _this.transferData.push(item.data.quantity)
+        _this.transferData.push(item.quantity)
       })
     })
   }
@@ -60,5 +64,8 @@ export default {
   width: 100%;
   z-index: 9999;
   top:0;
+}
+.no-more {
+  padding:10px 70px
 }
 </style>

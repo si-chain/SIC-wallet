@@ -13,6 +13,9 @@ import accountImport from '../pages/accountImport.vue'
 import TradingRecord from '../pages/TradingRecord.vue'
 import AuthorizationRecord from '../pages/authorizationRecord.vue'
 import CreateLogin from '../pages/createLogin.vue'
+import Transfer from '../pages/transfer.vue'
+import TransferDetail from '../pages/transferDetail.vue'
+
 Vue.use(Router)
 
 export default new Router({
@@ -86,6 +89,16 @@ export default new Router({
       path: '/authorization-record',
       name: 'AuthorizationRecord',
       component: AuthorizationRecord
+    },
+    {
+      path: '/transfer',
+      name: 'Transfer',
+      component: Transfer
+    },
+    {
+      path: '/transfer-detail',
+      name: 'TransferDetail',
+      component: TransferDetail
     }
   ]
 })

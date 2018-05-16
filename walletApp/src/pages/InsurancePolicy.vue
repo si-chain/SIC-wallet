@@ -129,6 +129,7 @@ export default {
     },
     switchTabItem (index) {
       this.index = index
+      this.isLoading = false
       if (index === 0) {
         this.url = `${this.basePath}/v1/policy/list/${this.$store.state.account}?limit=100`
         this.$store.commit('setIndex', 1)

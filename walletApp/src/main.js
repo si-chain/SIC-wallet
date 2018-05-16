@@ -21,6 +21,14 @@ Vue.config.productionTip = false
 // Vue.prototype.$http.defaults.baseURL = '${this.basePath}/v1'
 Vue.prototype.$common = util
 Vue.prototype.basePath = 'http://124.65.100.178:3000'
+Vue.directive('focus', {
+  // 当绑定元素插入到 DOM 中。
+  inserted: function (el) {
+    // 聚焦元素
+    el.focus()
+  }
+})
+
 /* eslint-disable no-new */
 new Vue({
   i18n,

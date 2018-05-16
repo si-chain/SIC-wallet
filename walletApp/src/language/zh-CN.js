@@ -248,7 +248,10 @@ const locale = {
         }
     },
     transfer: {
-        title: '发 送',
+        tip:'您输入的信息有误',
+        header: 'SIC',
+        title: '转账',
+        extract: '提现',
         from: '发送账户',
         to: '对方账户',
         to_placeholder: '填写对方账号',
@@ -256,30 +259,31 @@ const locale = {
         amount_placeholder: '填写SIC数量',
         receive_amount: '填写接收SIC数量',
         available: '可用: <span class="color-danger">{amount}</span> SIC',
-        memo: '备注(MEMO)',
+        memo: '备   注',
         fee: '手续费',
         memo_placeholder: '选填',
         next: '下 一 步',
         send: '发送',
         sending: '发送中',
         error: {
-            amount: {
-                invalid: '数量不正确',
-                insufficient_balance: '余额不足,请确认余额大于转账金额+手续费',
-                minimum: '最小数量不能少于1'
-            },
-            account: {
-                cannot_send_to_yourself: '不能向自己转账',
-                from_account_not_exist: '转出账户不存在',
-                to_account_not_exist: '对方账户不存在',
-                empty_account: '账户名不可为空',
-                account_should_be_longer: '账户名至少1位',
-                account_should_be_shorter: '账户名过长，不要超过13位',
-                account_should_start_with_a_letter: '账户名需以字母开头',
-                account_format_error: '账户名只能是字母、数字的组合',
-                account_end_error: '账户名需要以字母或数字结尾',
-                memo_signer_not_exist: '备注私钥不存在，无法添加备注'
-            }
+          tip:'转账失败',
+          amount: {
+              invalid: '数量不正确',
+              insufficient_balance: '余额不足,请确认余额大于转账金额+手续费',
+              minimum: '最小数量不能少于0.0001'
+          },
+          account: {
+              cannot_send_to_yourself: '不能向自己转账',
+              from_account_not_exist: '请输入正确的账号',
+              to_account_not_exist: '对方账户不存在',
+              empty_account: '账户名不可为空',
+              account_should_be_longer: '账户名至少1位',
+              account_should_be_shorter: '账户名过长，不要超过13位',
+              account_should_start_with_a_letter: '账户名需以字母开头',
+              account_format_error: '账户名只能是字母、数字的组合',
+              account_end_error: '账户名需要以字母或数字结尾',
+              memo_signer_not_exist: '备注私钥不存在，无法添加备注'
+          }
         },
         confirm: {
             title: '确认转账',
@@ -295,8 +299,8 @@ const locale = {
     },
     trade_history: {
         title: '转收记录',
-        switch: '切换',
-        currentAccount: '当前账户: {account}',
+        switchs: '切换',
+        currentAccount: '当前账户:',
         empty: '无更多记录',
         received: '转账',
         sent: '发送'
