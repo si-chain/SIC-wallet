@@ -15,6 +15,7 @@ import AuthorizationRecord from '../pages/authorizationRecord.vue'
 import CreateLogin from '../pages/createLogin.vue'
 import Transfer from '../pages/transfer.vue'
 import TransferDetail from '../pages/transferDetail.vue'
+import guidance from '../pages/guidance.vue'
 
 Vue.use(Router)
 
@@ -99,6 +100,11 @@ export default new Router({
       path: '/transfer-detail',
       name: 'TransferDetail',
       component: TransferDetail
+    },
+    {
+      path: '/guidance',
+      name: 'guidance',
+      component: guidance
     }
   ]
 })

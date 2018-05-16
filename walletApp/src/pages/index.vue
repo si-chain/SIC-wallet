@@ -92,41 +92,41 @@ export default {
       this.$i18n.locale = locale
     },
     qrcode () {
-      let _this = this
-      let permissions = cordova.plugins.permissions
-      permissions.hasPermission(permissions.CAMERA, checkPermissionCallback, null)
-      function checkPermissionCallback (status) {
-        if (!status.hasPermission) {
-          let errorCallback = function () {
-            alert('请在系统设置中打开本应用的相机权限')
-          }
-          permissions.requestPermission(
-            permissions.CAMERA,
-            function (status) {
-              if (!status.hasPermission) errorCallback()
-              cordova.plugins.barcodeScanner.scan(
-                function (result) {
-                  let resultStr = result.text
-                  if (result.includes('qr://sic/login/')) {
-                    _this.showConfirm = true
-                    _this.code = resultStr.replace('qr://sic/login/', '')
-                  }
-                }, null, 'QRCode', 'scan', []
-              )
-            },
-            errorCallback)
-        } else {
-          cordova.plugins.barcodeScanner.scan(
-            function (result) {
-              let resultStr = result.text
-              if (resultStr.includes('qr://sic/login/')) {
-                _this.showConfirm = true
-                _this.code = resultStr.replace('qr://sic/login/', '')
-              }
-            }, null, 'QRCode', 'scan', []
-          )
-        }
-      }
+      // let _this = this
+      // let permissions = cordova.plugins.permissions
+      // permissions.hasPermission(permissions.CAMERA, checkPermissionCallback, null)
+      // function checkPermissionCallback (status) {
+      //   if (!status.hasPermission) {
+      //     let errorCallback = function () {
+      //       alert('请在系统设置中打开本应用的相机权限')
+      //     }
+      //     permissions.requestPermission(
+      //       permissions.CAMERA,
+      //       function (status) {
+      //         if (!status.hasPermission) errorCallback()
+      //         cordova.plugins.barcodeScanner.scan(
+      //           function (result) {
+      //             let resultStr = result.text
+      //             if (result.includes('qr://sic/login/')) {
+      //               _this.showConfirm = true
+      //               _this.code = resultStr.replace('qr://sic/login/', '')
+      //             }
+      //           }, null, 'QRCode', 'scan', []
+      //         )
+      //       },
+      //       errorCallback)
+      //   } else {
+      //     cordova.plugins.barcodeScanner.scan(
+      //       function (result) {
+      //         let resultStr = result.text
+      //         if (resultStr.includes('qr://sic/login/')) {
+      //           _this.showConfirm = true
+      //           _this.code = resultStr.replace('qr://sic/login/', '')
+      //         }
+      //       }, null, 'QRCode', 'scan', []
+      //     )
+      //   }
+      // }
     },
     onCancel () {
       this.showConfirm = false
@@ -146,6 +146,8 @@ export default {
         } else {
           this.balance = '0'
         }
+      }).catch(() => {
+        this.$router.push('/create-account')
       })
     },
     showFlag () {

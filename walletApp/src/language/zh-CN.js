@@ -1,6 +1,7 @@
 /*eslint-disable */
 const locale = {
     index: {
+      start:'开始体验',
       home:'我',
       account:'账号',
       authorization: '授权',

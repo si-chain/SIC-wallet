@@ -1,6 +1,7 @@
 /*eslint-disable */
 const locale = {
     index: {
+      start:'Start',
       home:'home',
       account:'Account',
       balance_loading: 'loading..',

@@ -1,7 +1,7 @@
 <template>
-  <view-box ref="viewBox" style="height:100%;width:100%;overflow-y:auto;">
+  <view-box ref="viewBox" :class="$route.path === '/guidance' ? 'tab__panel_guidance' : ''" style="height:100%;width:100%;overflow-y:auto;">
     <router-view class="router-view"></router-view>
-    <tabbar v-if="$route.path === '/' || $route.path === '/home' || $route.path === '/policy'" slot="bottom" style="width:100%;position:absolute;left:0;bottom:0;z-index:100;">
+    <tabbar v-if="($route.path === '/' || $route.path === '/home' || $route.path === '/policy' )&& $route.path !== '/guidance'" slot="bottom" style="width:100%;position:absolute;left:0;bottom:0;z-index:100;">
       <tabbar-item :selected="$route.path === '/'" link="/" @on-index-change="onIndexChange">
         <img slot="icon" src="./assets/icon_01-03.png">
         <img slot="icon-active" src="./assets/icon_01-01.png">
@@ -19,12 +19,16 @@
       </tabbar-item>
     </tabbar>
   </view-box>
+  <!-- <div :class="$route.path === '/guidance' ? 'weui-tab__panel_guidance' : ''">
+
+  </div> -->
 </template>
 
 <script>
 import CryptoJS from 'crypto-js'
 import AES from 'crypto-js/aes'
 import ecc from 'eosjs-ecc'
+import AppConfig from './libs/config'
 import { Tabbar, TabbarItem } from 'vux'
 export default {
   name: 'app',
@@ -34,7 +38,8 @@ export default {
   },
   data () {
     return {
-      isMsg: false
+      isMsg: false,
+      isVersions: AppConfig.versions
     }
   },
   methods: {
@@ -146,6 +151,10 @@ export default {
     } else {
       this.$store.commit('upDataMsg', false)
     }
+    if (!this.$common.getStore(AppConfig.versions)) {
+      this.$common.setStore(AppConfig.versions, AppConfig.versions)
+      this.$router.push('/guidance')
+    }
   }
 }
 </script>
@@ -155,6 +164,11 @@ export default {
   @import '~vux/src/styles/tap.less';
   body {
     background-color: #fbf9fe;
+  }
+  .weui-tab__panel_guidance{
+    box-sizing: border-box;
+    height: 100%;
+    overflow: auto;
   }
   html, body {
     height: 100%;
