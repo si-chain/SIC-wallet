@@ -11,23 +11,29 @@
       <img @click="qrcode" class="sys" slot="right" src="../assets/sys.png"/>
     </x-header>
     <account-detail></account-detail>
-    <div class="is-backup">
-      <cell :title="$t('index.backup_wallet')" is-link :link="`/wallet-backup?account=${this.$store.state.account}`">
-        <img slot="icon" class="backup-icon" src="../assets/icon_11.png" width="25" height="25" alt="">
-      </cell>
-    </div>
-    <flexbox class="balance">
+    <!-- <flexbox class="balance">
       <cell title="SIC">
-        <img slot="icon" class="backup-icon" src="../assets/icon_14.png" width="25" height="25" alt="">
+        <img slot="icon" class="backup-icon" src="../assets/icon_14.png" width="25" height="25" alt=""> -->
         <!-- <img class="eye" v-if="isShow" @click="showFlag" src="../assets/eyez.png"/>
         <img class="eye" v-else @click="showFlag" src="../assets/eyeb.png"/> -->
-      </cell>
+      <!-- </cell>
       <flexbox-item></flexbox-item>
       <flexbox-item>
         <span v-if="isShow" class="center">{{balance}}</span>
         <span v-else class="center">******</span>
       </flexbox-item>
-    </flexbox>
+    </flexbox> -->
+    <div class="is-backup">
+      <cell v-if="isTransfer" title="SIC" :value="balance + '  SIC'" is-link :link="`/transfer?account=${this.$store.state.account}`">
+        <img slot="icon" class="backup-icon" src="../assets/icon_14.png" width="25" height="25" alt="">
+      </cell>
+      <cell v-else title="SIC" :value="balance + '  SIC'" >
+        <img slot="icon" class="backup-icon" src="../assets/icon_14.png" width="25" height="25" alt="">
+      </cell>
+      <cell :title="$t('index.backup_wallet')" is-link :link="`/wallet-backup?account=${this.$store.state.account}`">
+        <img slot="icon" class="backup-icon" src="../assets/icon_11.png" width="25" height="25" alt="">
+      </cell>
+    </div>
     <div v-transfer-dom>
       <confirm v-model="showConfirm"
       :title="$t('index.authorization')"
@@ -47,6 +53,7 @@
 <script>
 import { Radio, Group, Cell, Flexbox, FlexboxItem, Badge, Drawer, Confirm, Alert, Msg, Actionsheet, ButtonTab, ButtonTabItem, ViewBox, XHeader, Tabbar, TabbarItem, Loading, TransferDom } from 'vux'
 import util from '../libs/utils'
+import AppConfig from '../libs/config'
 import accountDetail from '../components/accountDetail'
 import AccountImage from '../components/AccountImage'
 export default {
@@ -85,41 +92,41 @@ export default {
       this.$i18n.locale = locale
     },
     qrcode () {
-      // let _this = this
-      // let permissions = cordova.plugins.permissions
-      // permissions.hasPermission(permissions.CAMERA, checkPermissionCallback, null)
-      // function checkPermissionCallback (status) {
-      //   if (!status.hasPermission) {
-      //     let errorCallback = function () {
-      //       alert('请在系统设置中打开本应用的相机权限')
-      //     }
-      //     permissions.requestPermission(
-      //       permissions.CAMERA,
-      //       function (status) {
-      //         if (!status.hasPermission) errorCallback()
-      //         cordova.plugins.barcodeScanner.scan(
-      //           function (result) {
-      //             let resultStr = result.text
-      //             if (result.includes('qr://sic/login/')) {
-      //               _this.showConfirm = true
-      //               _this.code = resultStr.replace('qr://sic/login/', '')
-      //             }
-      //           }, null, 'QRCode', 'scan', []
-      //         )
-      //       },
-      //       errorCallback)
-      //   } else {
-      //     cordova.plugins.barcodeScanner.scan(
-      //       function (result) {
-      //         let resultStr = result.text
-      //         if (resultStr.includes('qr://sic/login/')) {
-      //           _this.showConfirm = true
-      //           _this.code = resultStr.replace('qr://sic/login/', '')
-      //         }
-      //       }, null, 'QRCode', 'scan', []
-      //     )
-      //   }
-      // }
+      let _this = this
+      let permissions = cordova.plugins.permissions
+      permissions.hasPermission(permissions.CAMERA, checkPermissionCallback, null)
+      function checkPermissionCallback (status) {
+        if (!status.hasPermission) {
+          let errorCallback = function () {
+            alert('请在系统设置中打开本应用的相机权限')
+          }
+          permissions.requestPermission(
+            permissions.CAMERA,
+            function (status) {
+              if (!status.hasPermission) errorCallback()
+              cordova.plugins.barcodeScanner.scan(
+                function (result) {
+                  let resultStr = result.text
+                  if (result.includes('qr://sic/login/')) {
+                    _this.showConfirm = true
+                    _this.code = resultStr.replace('qr://sic/login/', '')
+                  }
+                }, null, 'QRCode', 'scan', []
+              )
+            },
+            errorCallback)
+        } else {
+          cordova.plugins.barcodeScanner.scan(
+            function (result) {
+              let resultStr = result.text
+              if (resultStr.includes('qr://sic/login/')) {
+                _this.showConfirm = true
+                _this.code = resultStr.replace('qr://sic/login/', '')
+              }
+            }, null, 'QRCode', 'scan', []
+          )
+        }
+      }
     },
     onCancel () {
       this.showConfirm = false
@@ -149,7 +156,7 @@ export default {
       let data = ''
       let _this = this
       accountArr.map(item => {
-        if (item.account === this.wallets[0].account) {
+        if (item.account === this.$store.state.account) {
           data = { 'data': item }
           this.$http.post(`${this.basePath}/v1/login/qrCode/${this.code}`, data).then(res => {
             let responese = res.data
@@ -188,7 +195,7 @@ export default {
       }
     }
     if (!this.$route.params.account) {
-      this.$router.push(`/?account=${this.wallets[0].account}`)
+      this.$router.push(`/?account=${this.$store.state.account}`)
     }
     this.loadBalance()
   },
@@ -227,7 +234,8 @@ export default {
       }],
       balance: '0',
       isBackup: true,
-      isShow: true
+      isShow: true,
+      isTransfer: AppConfig.isTransfer
     }
   }
 }
@@ -264,10 +272,6 @@ export default {
     border-bottom: 1px solid #D9D9D9;
   }
 }
-.balance{
-  border-bottom: 1px solid #D9D9D9;
-  background-color:#fff;
-}
 .eye{
   width: 17px;
   height: 15px;
@@ -275,6 +279,9 @@ export default {
 }
 .balance{
   line-height: 21px;
+  border-bottom: 1px solid #D9D9D9;
+  background-color:#fff;
+  padding: 2px 0;
 }
 // @header-background-color:#fff
 </style>
