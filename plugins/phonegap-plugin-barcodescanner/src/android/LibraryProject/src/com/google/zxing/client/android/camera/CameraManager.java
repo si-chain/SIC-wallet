@@ -41,10 +41,10 @@ public final class CameraManager {
 
   private static final String TAG = CameraManager.class.getSimpleName();
 
-  private static final int MIN_FRAME_WIDTH = (int) DP_SP_PX_Utils.dp2px(MyApplication.instance.getResources(), 200);
-  private static final int MIN_FRAME_HEIGHT = (int) DP_SP_PX_Utils.dp2px(MyApplication.instance.getResources(), 240);
-  private static final int MAX_FRAME_WIDTH = (int) DP_SP_PX_Utils.dp2px(MyApplication.instance.getResources(), 200);
-  private static final int MAX_FRAME_HEIGHT = (int) DP_SP_PX_Utils.dp2px(MyApplication.instance.getResources(), 240);
+  private static final int MIN_FRAME_WIDTH = 220;
+  private static final int MIN_FRAME_HEIGHT = 220;
+  private static final int MAX_FRAME_WIDTH = 880;
+  private static final int MAX_FRAME_HEIGHT = 680;
 
   private final Context context;
   private final CameraConfigurationManager configManager;

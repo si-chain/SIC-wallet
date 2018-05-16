@@ -10,16 +10,16 @@
         "cordova-plugin-android-permissions": {
             "PACKAGE_NAME": "com.rensanning.cordova"
         },
-        "cordova-plugin-whitelist": {
-            "PACKAGE_NAME": "com.rensanning.cordova"
-        },
-        "phonegap-plugin-barcodescanner": {
-            "PACKAGE_NAME": "com.rensanning.cordova"
-        },
         "cordova-plugin-file-transfer": {
             "PACKAGE_NAME": "com.rensanning.cordova"
         },
         "cordova-plugin-splashscreen": {
+            "PACKAGE_NAME": "com.rensanning.cordova"
+        },
+        "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "com.rensanning.cordova"
+        },
+        "phonegap-plugin-barcodescanner": {
             "PACKAGE_NAME": "com.rensanning.cordova"
         }
     },

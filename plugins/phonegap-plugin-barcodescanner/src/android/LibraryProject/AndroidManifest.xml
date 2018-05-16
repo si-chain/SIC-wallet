@@ -37,7 +37,7 @@
   <uses-feature android:name="android.hardware.camera.front" android:required="false"/>
   <uses-feature android:name="android.hardware.camera.autofocus" android:required="false"/>
   <uses-feature android:name="android.hardware.camera.flash" android:required="false"/>
-  <uses-feature android:name="android.hardware.screen.portrait"/>
+  <uses-feature android:name="android.hardware.screen.landscape"/>
   <uses-feature android:name="android.hardware.wifi" android:required="false"/>
   <uses-feature android:name="android.hardware.touchscreen" android:required="false"/>
 
@@ -121,7 +121,7 @@
     <activity android:name=".book.SearchBookContentsActivity"
               android:label="@string/sbc_name"
               android:stateNotNeeded="true"
-              android:screenOrientation="portrait"
+              android:screenOrientation="landscape"
               android:configChanges="orientation|keyboardHidden">
       <intent-filter>
         <action android:name="com.google.zxing.client.android.SEARCH_BOOK_CONTENTS"/>

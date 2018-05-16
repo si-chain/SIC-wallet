@@ -2,6 +2,7 @@
   "_from": "git+https://github.com/wildabeast/BarcodeScanner.git",
   "_id": "phonegap-plugin-barcodescanner@4.0.1",
   "_inBundle": false,
+  "_integrity": "",
   "_location": "/phonegap-plugin-barcodescanner",
   "_phantomChildren": {},
   "_requested": {
@@ -18,7 +19,7 @@
   ],
   "_resolved": "git+https://github.com/wildabeast/BarcodeScanner.git#5d0e5956c513cd8efe5e1bcba6cd04dd3f04a9cd",
   "_spec": "https://github.com/wildabeast/BarcodeScanner.git",
-  "_where": "/Users/jinhaidi/Documents/doubao/HelloBarcode",
+  "_where": "/Users/jinhaidi/Documents/doubao/walletApp-android/node_modules",
   "author": {
     "name": "Adobe PhoneGap Team"
   },

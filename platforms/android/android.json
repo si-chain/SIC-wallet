@@ -13,14 +13,6 @@
                             "count": 1
                         },
                         {
-                            "xml": "<feature name=\"Whitelist\"><param name=\"android-package\" value=\"org.apache.cordova.whitelist.WhitelistPlugin\" /><param name=\"onload\" value=\"true\" /></feature>",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<feature name=\"BarcodeScanner\"><param name=\"android-package\" value=\"com.phonegap.plugins.barcodescanner.BarcodeScanner\" /></feature>",
-                            "count": 1
-                        },
-                        {
                             "xml": "<feature name=\"File\"><param name=\"android-package\" value=\"org.apache.cordova.file.FileUtils\" /><param name=\"onload\" value=\"true\" /></feature>",
                             "count": 1
                         },
@@ -35,12 +27,26 @@
                         {
                             "xml": "<feature name=\"SplashScreen\"><param name=\"android-package\" value=\"org.apache.cordova.splashscreen.SplashScreen\" /><param name=\"onload\" value=\"true\" /></feature>",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Whitelist\"><param name=\"android-package\" value=\"org.apache.cordova.whitelist.WhitelistPlugin\" /><param name=\"onload\" value=\"true\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"BarcodeScanner\"><param name=\"android-package\" value=\"com.phonegap.plugins.barcodescanner.BarcodeScanner\" /></feature>",
+                            "count": 1
                         }
                     ]
                 }
             },
             "AndroidManifest.xml": {
                 "parents": {
+                    "/*": [
+                        {
+                            "xml": "<uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\" />",
+                            "count": 2
+                        }
+                    ],
                     "/manifest/application": [
                         {
                             "xml": "<activity android:clearTaskOnLaunch=\"true\" android:configChanges=\"orientation|keyboardHidden\" android:exported=\"false\" android:name=\"com.google.zxing.client.android.CaptureActivity\" android:theme=\"@android:style/Theme.NoTitleBar.Fullscreen\" android:windowSoftInputMode=\"stateAlwaysHidden\"><intent-filter><action android:name=\"com.google.zxing.client.android.SCAN\" /><category android:name=\"android.intent.category.DEFAULT\" /></intent-filter></activity>",
@@ -67,12 +73,6 @@
                         {
                             "xml": "<uses-feature android:name=\"android.hardware.camera\" android:required=\"false\" />",
                             "count": 1
-                        }
-                    ],
-                    "/*": [
-                        {
-                            "xml": "<uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\" />",
-                            "count": 2
                         }
                     ]
                 }
@@ -565,12 +565,6 @@
         "cordova-plugin-android-permissions": {
             "PACKAGE_NAME": "com.rensanning.cordova"
         },
-        "cordova-plugin-whitelist": {
-            "PACKAGE_NAME": "com.rensanning.cordova"
-        },
-        "phonegap-plugin-barcodescanner": {
-            "PACKAGE_NAME": "com.rensanning.cordova"
-        },
         "cordova-plugin-file": {
             "PACKAGE_NAME": "com.rensanning.cordova"
         },
@@ -578,6 +572,12 @@
             "PACKAGE_NAME": "com.rensanning.cordova"
         },
         "cordova-plugin-splashscreen": {
+            "PACKAGE_NAME": "com.rensanning.cordova"
+        },
+        "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "com.rensanning.cordova"
+        },
+        "phonegap-plugin-barcodescanner": {
             "PACKAGE_NAME": "com.rensanning.cordova"
         }
     },
@@ -589,14 +589,6 @@
             "pluginId": "cordova-plugin-android-permissions",
             "clobbers": [
                 "cordova.plugins.permissions"
-            ]
-        },
-        {
-            "id": "phonegap-plugin-barcodescanner.BarcodeScanner",
-            "file": "plugins/phonegap-plugin-barcodescanner/www/barcodescanner.js",
-            "pluginId": "phonegap-plugin-barcodescanner",
-            "clobbers": [
-                "cordova.plugins.barcodeScanner"
             ]
         },
         {
@@ -795,14 +787,22 @@
             "clobbers": [
                 "navigator.splashscreen"
             ]
+        },
+        {
+            "id": "phonegap-plugin-barcodescanner.BarcodeScanner",
+            "file": "plugins/phonegap-plugin-barcodescanner/www/barcodescanner.js",
+            "pluginId": "phonegap-plugin-barcodescanner",
+            "clobbers": [
+                "cordova.plugins.barcodeScanner"
+            ]
         }
     ],
     "plugin_metadata": {
         "cordova-plugin-android-permissions": "1.0.0",
-        "cordova-plugin-whitelist": "1.3.3",
-        "phonegap-plugin-barcodescanner": "4.0.1",
         "cordova-plugin-file": "6.0.1",
         "cordova-plugin-file-transfer": "1.7.1",
-        "cordova-plugin-splashscreen": "5.0.2"
+        "cordova-plugin-splashscreen": "5.0.2",
+        "cordova-plugin-whitelist": "1.3.3",
+        "phonegap-plugin-barcodescanner": "4.0.1"
     }
 }
