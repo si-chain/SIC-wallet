@@ -1,17 +1,21 @@
 <template>
   <div class="guidance">
     <swiper ref="swiper" :list="guidanceList" :aspect-ratio="1" v-model="guidanceIndex" @on-index-change="guidanceOnIndexChange"></swiper>
+    <div style="text-align:center" class="check-box" v-if="guidanceIndex === 2">
+        <check-icon :value.sync="checked" type="plain"> <a style="color:#ffffff;font-weight: 300;" href="#/agreement">我已阅读并同意SIC协议</a></check-icon>
+      </div>
     <box gap="9% 9%" class="btn-box" v-if="guidanceIndex === 2">
-      <x-button plain type="primary" link="/" style="border-radius:99px;">{{$t('index.start')}}</x-button>
+      <x-button :disabled="!checked" plain type="primary" link="/" style="border-radius:99px;">{{$t('index.start')}}</x-button>
     </box>
   </div>
 </template>
 
 <script>
-import { Swiper, SwiperItem, Box, XButton } from 'vux'
+import { CheckIcon, Swiper, SwiperItem, Box, XButton } from 'vux'
 export default {
   data () {
     return {
+      checked: true,
       guidanceList: [{
         url: 'javascript:',
         img: 'https://ww1.sinaimg.cn/large/663d3650gy1fq66vvsr72j20p00gogo2.jpg',
@@ -30,6 +34,7 @@ export default {
     }
   },
   components: {
+    CheckIcon,
     Swiper,
     SwiperItem,
     Box,
@@ -72,6 +77,13 @@ export default {
   position: absolute;
   bottom: 10%;
   width: 80%;
+  text-align: center
+}
+.check-box{
+  position: absolute;
+  bottom: 24%;
+  width: 100%;
+  color: #ffffff;
   text-align: center
 }
 </style>

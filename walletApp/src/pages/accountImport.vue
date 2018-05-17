@@ -129,14 +129,16 @@ export default {
     },
     createByWifKey () {
       setTimeout(() => {
-        let setData = this.$common.backupImport(this.wifKey, this.pwd1)
-        if (!setData) {
-          this.submitting = true
-          this.icon = 'warn'
-          this.title = this.$t('wallet_import.error.no_reference_account')
-          this.buttons[0].type = 'warn'
-          this.buttons[0].text = this.$t('wallet_import.error.title')
-        } else {
+        try {
+          let setData = this.$common.backupImport(this.wifKey, this.pwd1)
+          // if (!setData) {
+          //   this.submitting = true
+          //   this.icon = 'warn'
+          //   this.title = this.$t('wallet_import.error.no_reference_account')
+          //   this.buttons[0].type = 'warn'
+          //   this.buttons[0].text = this.$t('wallet_import.error.title')
+          //   this.buttons[0].link = '/account-import'
+          // } else {
           setData.active = this.$common.encryption(setData.active, this.pwd1)
           setData.owner = this.$common.encryption(setData.owner, this.pwd1)
           setData.activePubkey = this.$common.backupPublicKey(setData.active, this.pwd1)
@@ -153,17 +155,20 @@ export default {
           this.$common.setStore('account', this.$common.unique(encryptionWalletArr))
           this.$common.set_wallets(wallets)
           this.$store.commit('setAccount', setData.account)
-          console.log(this.$store.state.account)
           this.submitting = true
           this.icon = 'success'
           this.title = this.$t('wallet_import.success.title')
           this.buttons[0].type = 'primary'
           this.buttons[0].text = this.$t('wallet_import.success.title')
+          this.buttons[0].link = '/'
           wallets.map(item => {
             if (item.account === setData.account) {
               this.$common.set_wallets(this.$common.unique(wallets))
             }
           })
+          // }
+        } catch (error) {
+          this.error.common = this.$t('wallet_import.error.no_reference_account')
         }
       }, 50)
     },
