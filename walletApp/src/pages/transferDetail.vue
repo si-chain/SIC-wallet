@@ -94,23 +94,24 @@ export default {
                 }, 500)
               }).catch((req) => {
                 let data = JSON.parse(req)
-                this.loading = false
-                this.show = true
-                this.isSuccess = 'warn'
-                this.error = data.message
-                this.ToAccount = ''
-                this.amount = ''
-                this.memo = ''
+                _this.btnTitle = _this.$t('transfer.next')
+                _this.loading = false
+                _this.show = true
+                _this.isSuccess = 'warn'
+                _this.error = data.message
+                _this.ToAccount = ''
+                _this.amount = ''
+                _this.memo = ''
               })
             })
           } catch (error) {
-            this.loading = false
-            this.show = true
-            this.isSuccess = 'warn'
-            this.error = this.$t('transfer.tip')
-            this.ToAccount = ''
-            this.amount = ''
-            this.memo = ''
+            _this.loading = false
+            _this.show = true
+            _this.isSuccess = 'warn'
+            _this.error = _this.$t('transfer.tip')
+            _this.ToAccount = ''
+            _this.amount = ''
+            _this.memo = ''
           }
         } catch (error) {
           _this.loading = false

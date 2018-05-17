@@ -4,6 +4,7 @@ const locale = {
       start:'Start',
       home:'home',
       SIC:'Fund Manage',
+      agreement: 'User Agreement',
       account:'Account',
       balance_loading: 'loading..',
       success: 'success',

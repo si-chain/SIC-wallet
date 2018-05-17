@@ -21,6 +21,11 @@
           </div>
         </cell>
       </group>
+      <group>
+        <cell :title="$t('index.agreement')" is-link :link="`/user-agreement`">
+          <img slot="icon" class="backup-icon" src="../assets/agreement.png" width="25" height="25" alt="">
+        </cell>
+      </group>
     </div>
   </div>
 </template>

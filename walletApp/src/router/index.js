@@ -16,6 +16,7 @@ import CreateLogin from '../pages/createLogin.vue'
 import Transfer from '../pages/transfer.vue'
 import TransferDetail from '../pages/transferDetail.vue'
 import guidance from '../pages/guidance.vue'
+import agreement from '../pages/agreement.vue'
 
 Vue.use(Router)
 
@@ -105,6 +106,16 @@ export default new Router({
       path: '/guidance',
       name: 'guidance',
       component: guidance
+    },
+    {
+      path: '/agreement',
+      name: 'agreement',
+      component: agreement
+    },
+    {
+      path: '/user-agreement',
+      name: 'user-agreement',
+      component: agreement
     }
   ]
 })

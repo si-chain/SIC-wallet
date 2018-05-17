@@ -1,5 +1,5 @@
 <template>
-  <view-box ref="viewBox" :class="$route.path === '/guidance' ? 'tab__panel_guidance' : ''" :body-padding-bottom="$route.path === '/guidance' ? '0' : '50px'" style="height:100%;width:100%;overflow-y:auto;">
+  <view-box ref="viewBox" :class="$route.path === '/guidance' ? 'tab__panel_guidance' : ''" :body-padding-bottom="$route.path === '/guidance' || $route.path === '/agreement' || $route.path === '/user-agreement' ? '0' : '50px'" style="height:100%;width:100%;overflow-y:auto;">
     <router-view class="router-view"></router-view>
     <tabbar v-if="($route.path === '/' || $route.path === '/home' || $route.path === '/policy' )&& $route.path !== '/guidance'" slot="bottom" style="width:100%;position:absolute;left:0;bottom:0;z-index:100;">
       <tabbar-item :selected="$route.path === '/'" link="/" @on-index-change="onIndexChange">
