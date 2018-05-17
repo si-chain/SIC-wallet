@@ -35,6 +35,40 @@ const locale = {
       message:'新消息',
       authorization_record:'授权记录'
     },
+    withdraw:{
+      tip: '您输入的信息有误',
+        header: 'SIC',
+        extract: '提现',
+        from: '发送账户',
+        to: '对方账户',
+        to_placeholder: '填写对方账号',
+        amount: '数量',
+        amount_placeholder: '填写SIC数量',
+        receive_amount: '填写接收SIC数量',
+        available: '可用: <span class="color-danger">{amount}</span> SIC',
+        memo: '备注',
+        fee: '手续费',
+        memo_placeholder: '选填',
+        next: '下 一 步',
+        send: '发送',
+        sending: '发送中',
+        error: {
+          tip: '提现失败',
+          amount: {
+            invalid: '数量不正确',
+            insufficient_balance: '余额不足,请确认余额大于提现金额+手续费',
+            minimum: '最小数量不能少于0.0001'
+          },
+        },
+        confirm: {
+          title: '确认提现',
+          title_password: '密码',
+          enter_password: '请输入密码'
+        },
+        success: {
+          title: '操作成功'
+        }
+    },
     authorization:{
       time:'请求时间',
       applicant: '申请账户',

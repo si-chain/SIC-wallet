@@ -2,12 +2,12 @@
   <div>
     <x-header :left-options="{backText: ''}">{{$t('transfer.title')}}</x-header>
     <group>
-      <x-input :title="$t('transfer.to')" label-width="4.5em" required :placeholder="$t('transfer.to_placeholder')" :is-type="validateAccount" v-model="ToAccount"></x-input>
+      <x-input :title="$t('transfer.to')" novalidate :icon-type="iconType" label-width="4.5em" required :placeholder="$t('transfer.to_placeholder')" :is-type="validateAccount" v-model="ToAccount" @on-blur="transferAccount"></x-input>
       <x-input :title="$t('transfer.amount')" type="number" label-width="4.5em" required :placeholder="$t('transfer.amount_placeholder')" :is-type="validateAmount" v-model="amount"></x-input>
       <x-input :title="$t('transfer.memo')" label-width="4.5em" :placeholder="$t('transfer.memo')" v-model="memo"></x-input>
     </group>
     <box gap="30px 15px">
-      <x-button type="primary" @click.native="next" :show-loading="loading">{{btnTitle}}</x-button>
+      <x-button :disabled="iconType === 'error' || iconType === ''" type="primary" @click.native="next" :show-loading="loading">{{btnTitle}}</x-button>
     </box>
     <toast v-model="show" :type="isSuccess">{{error}}</toast>
     <password-confirm v-if="isUnlock" ref="confirm" @setUnlock="setUnlock" @unlocking="unlocking"></password-confirm>
@@ -29,6 +29,7 @@ export default {
       memo: '',
       show: false,
       loading: false,
+      iconType: '',
       isUnlock: false,
       btnTitle: this.$t('transfer.next'),
       pwd: '',
@@ -51,6 +52,56 @@ export default {
   methods: {
     setUnlock (val) {
       this.isUnlock = val
+    },
+    transferAccount () {
+      let account = this.ToAccount
+      var length = account.length
+      if (!account) {
+        this.error = this.$t('wallet_create.one.error.empty_account')
+        this.show = true
+        this.iconType = ''
+      } else if (length < 1) {
+        this.error = this.$t('wallet_create.one.error.account_should_be_longer')
+        this.show = true
+        this.iconType = 'error'
+      } else if (length > 12) {
+        this.error = this.$t('wallet_create.one.error.account_should_be_shorter')
+        this.show = true
+        this.iconType = 'error'
+      } else if (!/^[.12345a-z]+$/.test(this.ToAccount)) {
+        this.error = this.$t('wallet_create.one.error.account_format_error')
+        this.show = true
+        this.iconType = 'error'
+      } else {
+        this.$http.get(`${this.basePath}/v1/chain/accounts/eos/${account}`).then(res => {
+          let data = res.data
+          if (data.code === 200) {
+            this.show = false
+            this.isAccount = true
+            this.iconType = 'success'
+            return true
+          } else {
+            this.error = this.$t('wallet_import.error.account_not_found')
+            this.show = true
+            this.iconType = 'error'
+          }
+        }).catch(ex => {
+          this.error = this.$t('wallet_create.one.error.query_account_failed')
+          this.show = true
+          this.iconType = 'error'
+        })
+      }
+      // this.$http.get(`${this.basePath}/v1/chain/accounts/eos/${this.ToAccount}`).then(res => {
+      //   let data = res.data
+      //   if (data.code === 200) {
+      //     this.iconType = 'success'
+      //   } else {
+      //     this.iconType = 'error'
+      //   }
+      //   console.log(this.iconType)
+      // }).catch(ex => {
+      //   this.iconType = 'error'
+      // })
     },
     unlocking (pwd) {
       this.pwd = pwd
@@ -98,7 +149,7 @@ export default {
                 _this.loading = false
                 _this.show = true
                 _this.isSuccess = 'warn'
-                _this.error = data.message
+                _this.error = data.error.details[0].message
                 _this.ToAccount = ''
                 _this.amount = ''
                 _this.memo = ''

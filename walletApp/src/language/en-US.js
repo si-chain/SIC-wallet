@@ -35,6 +35,38 @@ const locale = {
       message:'New Message',
       authorization_record:'Authorization record'
     },
+    withdraw: {
+       header: 'SIC',
+         title: 'Send',
+         from: 'From',
+         to: 'To',
+         to_placeholder: 'account name',
+         amount: 'Amount',
+         amount_placeholder: 'Amount to send',
+         receive_amount: 'Amount to receive',
+         available: '<span class="color-danger">{amount}</span> SIC Available',
+         memo: 'Memo',
+         fee: 'Fee',
+         memo_placeholder: 'Optional',
+         next: 'Next',
+         send: 'Send',
+         sending: 'Sending',
+         error: {
+           amount: {
+             invalid: 'Invalid amount',
+             insufficient_balance: 'Insufficient balance, Please make sure your balance are more than amount and fee',
+             minimum: 'The minimum amount must not be less than 0.0001'
+           }
+         },
+         confirm: {
+           title: 'Confirm',
+           title_password: 'Password',
+           enter_password: 'Enter Password'
+         },
+         success: {
+           title: 'Success'
+         }
+    },
     authorization: {
       time: 'Request time',
       applicant: 'Applicant',

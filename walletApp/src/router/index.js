@@ -17,6 +17,7 @@ import Transfer from '../pages/transfer.vue'
 import TransferDetail from '../pages/transferDetail.vue'
 import guidance from '../pages/guidance.vue'
 import agreement from '../pages/agreement.vue'
+import withdraw from '../pages/withdraw.vue'
 
 Vue.use(Router)
 
@@ -116,6 +117,11 @@ export default new Router({
       path: '/user-agreement',
       name: 'user-agreement',
       component: agreement
+    },
+    {
+      path: '/withdraw',
+      name: 'withdraw',
+      component: withdraw
     }
   ]
 })
