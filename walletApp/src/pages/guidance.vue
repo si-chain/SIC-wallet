@@ -26,7 +26,7 @@ export default {
         title: '送你一次旅行',
         fallbackImg: 'https://ww1.sinaimg.cn/large/663d3650gy1fq66vw50iwj20ff0aaaci.jpg'
       }],
-      guidanceIndex: 2
+      guidanceIndex: 0
     }
   },
   components: {

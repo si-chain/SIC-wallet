@@ -3,6 +3,7 @@ const locale = {
     index: {
       start:'Start',
       home:'home',
+      SIC:'Fund Manage',
       account:'Account',
       balance_loading: 'loading..',
       success: 'success',

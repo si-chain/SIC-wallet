@@ -8,9 +8,16 @@
         <cell :title="$t('authorization.type')">{{itemData.type | msgTyep}}</cell>
         <cell :title="$t('authorization.num')">{{itemData.reward | msgTyep}}</cell>
         <cell :title="$t('authorization.status')">{{itemData.status | msgStatus}}</cell>
-        <!-- <checklist style="padding-bottom:10px" v-if="Show" :disabled="itemData.status !==0 " label-position="left" title="list" :options="itemData.inlineDescList" v-model="itemData.inlineDescListValue" @on-change="change"></checklist>
-        <divider v-if="!Show"><x-icon @click="isShow" type="ios-arrow-down" size="30"></x-icon></divider>
-        <divider v-else><x-icon @click="isShow" type="ios-arrow-up" size="30"></x-icon></divider> -->
+        <div v-if="this.itemData.status === 0">
+          <div v-if="Show">
+            <p style="padding:5px 10px" v-for="child in applayList" :key="child.applyId">请求编号：
+              <span style="float:right">{{child.applyId}}</span>
+            </p>
+          </div>
+          <!-- <checklist style="padding-bottom:10px" :disabled="itemData.status !==0 " label-position="left" title="list" :options="itemData.inlineDescList" v-model="itemData.inlineDescListValue" @on-change="change"></checklist> -->
+          <divider v-if="!Show"><x-icon @click="isShow" type="ios-arrow-down" size="30"></x-icon></divider>
+          <divider v-else><x-icon @click="isShow" type="ios-arrow-up" size="30"></x-icon></divider>
+        </div>
       </group>
       <div slot="footer" style="padding:10px" v-if="itemData.status === 0">
         <flexbox>
@@ -37,7 +44,9 @@ export default {
   data () {
     return {
       Show: this.itemData.isShow,
-      status: this.itemData.status
+      status: this.itemData.status,
+      applayList: [],
+      applayListValue: []
     }
   },
   methods: {
@@ -46,13 +55,27 @@ export default {
     },
     isShow () {
       this.Show = !this.Show
-      console.log(this.Show)
     },
     handle (type) {
-      this.$emit('setPwdShow', this.itemData.id, type, this.itemData.reqKey)
+      console.log(this.applayListValue)
+      this.$emit('setPwdShow', this.itemData.id, type, this.itemData.reqKey, this.applayListValue)
     }
   },
   created () {
+    // let applayList = []
+    // applayList = this.itemData.authValue.split('},')
+    if (this.itemData.status === 0) {
+      this.applayList = JSON.parse(this.itemData.authValue)
+      let _this = this
+      this.applayList.map(item => {
+        this.$http.get(`${this.basePath}/v1/policy/account/${this.$store.state.account}/${item.applyId}`).then(res => {
+          _this.applayListValue.push({
+            id: item.applyId,
+            value: res.data.data.value
+          })
+        })
+      })
+    }
     this.itemData.inlineDescList.map(item => {
       this.itemData.inlineDescListValue.push(item.key)
     })

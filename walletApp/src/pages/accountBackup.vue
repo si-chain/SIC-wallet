@@ -98,30 +98,35 @@ export default {
       let wallet = wallets.find(function (w) {
         return w.account === account
       })
-      let publicWallet = this.$common.backupPublicKey(wallet.active, pwd)
-      let activePubkey = wallet.activePubkey
-      if (wallet == null) {
-        this.isUnlock = false
-        self.error.common = self.$t('unlock.account_not_found')
-      } else if (activePubkey !== publicWallet) {
-        this.isUnlock = false
-        self.error.common = self.$t('wallet_backup.detail.error.invalid_password')
-      } else {
-        return self.$common.del_wallet(wallet).then(() => {
-          if (wallets.length > 1) {
-            wallets.map(item => {
-              if (item.account !== wallet.account) {
-                self.$store.state.account = item.account
-              }
-            })
-          } else {
-            self.$store.state.account = ''
-          }
-          self.$router.replace({
-            path: self.$route.query.from || this.$router.push('/')// eslint-disable-line
-          })
+      try {
+        let publicWallet = this.$common.backupPublicKey(wallet.active, pwd)
+        let activePubkey = wallet.activePubkey
+        if (wallet == null) {
           this.isUnlock = false
-        })
+          self.error.common = self.$t('unlock.account_not_found')
+        } else if (activePubkey !== publicWallet) {
+          this.isUnlock = false
+          self.error.common = self.$t('wallet_backup.detail.error.invalid_password')
+        } else {
+          return self.$common.del_wallet(wallet).then(() => {
+            if (wallets.length > 1) {
+              wallets.map(item => {
+                if (item.account !== wallet.account) {
+                  self.$store.state.account = item.account
+                }
+              })
+            } else {
+              self.$store.state.account = ''
+            }
+            self.$router.replace({
+              path: self.$route.query.from || this.$router.push('/')// eslint-disable-line
+            })
+            this.isUnlock = false
+          })
+        }
+      } catch (error) {
+        this.isUnlock = false
+        this.error.common = this.$t('unlock.error.invalid_password')
       }
     }
   },

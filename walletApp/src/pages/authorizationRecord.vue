@@ -50,6 +50,8 @@ export default {
     return {
       wallets: wallets,
       list: [],
+      reqVal: [],
+      valueList: [],
       show: false,
       more: true,
       policyData: [],
@@ -107,11 +109,12 @@ export default {
         this.getData()
       }
     },
-    setPwdShow (index, type, reqKey) {
+    setPwdShow (index, type, reqKey, reqVal) {
       this.isUnlock = true
       this.id = index
       this.reqKey = reqKey
       this.type = type
+      this.reqVal = reqVal
       this.getPolicyList()
     },
     getPolicyList () {
@@ -150,7 +153,15 @@ export default {
         let accountData = JSON.parse(this.$common.decryptActive(accountStr.encryption, _this.pwd))
         let activeKey = this.$common.decryptActive(accountData.active, _this.pwd)
         config.keyProvider = activeKey
-        let value = SIC().encrypt(JSON.stringify({t: _this.submitData}), _this.reqKey)
+        this.reqVal.map(item => {
+          let val = SIC().decrypt(item.value, activeKey)
+          this.valueList.push({
+            applyId: item.id,
+            val: val
+          })
+        })
+        let value = SIC().encrypt(JSON.stringify(_this.valueList), _this.reqKey)
+        // console.log(value)
         let eos = Eos.Localnet(config)
         // 合约名
         const contractName = 'sic.auth'

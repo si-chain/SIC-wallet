@@ -63,7 +63,12 @@ export default {
       if (/^[.12345a-z]+$/.test(this.ToAccount) && this.amount > 0.0001) {
         let _this = this
         try {
-          let accountStr = this.$common.getStore('account')[0]
+          let accountStr
+          this.$common.getStore('account').map(item => {
+            if (item.account === _this.$store.state.account) {
+              accountStr = item
+            }
+          })
           let accountData = JSON.parse(this.$common.decryptActive(accountStr.encryption, this.pwd))
           let activeKey = this.$common.decryptActive(accountData.active, this.pwd)
           config.keyProvider = activeKey
@@ -71,31 +76,48 @@ export default {
           // 合约，固定
           const contractName = 'sic.token'
           const contractPromise = eos.contract(contractName)
-          contractPromise.then(contract => {
-            contract.transfer({
-              from: accountStr.account,
-              to: _this.ToAccount,
-              quantity: _this.amount + ' SIC',
-              memo: _this.memo + Date.now()
-            }, {authorization: accountStr.account}).then(res => {
-              _this.isSuccess = 'success'
-              _this.show = true
-              _this.error = _this.$t('transfer.success.title')
-              _this.loading = false
-              _this.btnTitle = _this.$t('transfer.success.title')
-              setTimeout(() => {
-                _this.$router.push(`/transfer?account=${this.$route.query.account}`)
-              }, 500)
+          try {
+            contractPromise.then(contract => {
+              contract.transfer({
+                from: accountStr.account,
+                to: _this.ToAccount,
+                quantity: _this.amount + ' SIC',
+                memo: _this.memo + Date.now()
+              }, {authorization: accountStr.account}).then(res => {
+                _this.isSuccess = 'success'
+                _this.show = true
+                _this.error = _this.$t('transfer.success.title')
+                _this.loading = false
+                _this.btnTitle = _this.$t('transfer.success.title')
+                setTimeout(() => {
+                  _this.$router.push(`/transfer?account=${this.$route.query.account}`)
+                }, 500)
+              }).catch((req) => {
+                let data = JSON.parse(req)
+                this.loading = false
+                this.show = true
+                this.isSuccess = 'warn'
+                this.error = data.message
+                this.ToAccount = ''
+                this.amount = ''
+                this.memo = ''
+              })
             })
-          })
+          } catch (error) {
+            this.loading = false
+            this.show = true
+            this.isSuccess = 'warn'
+            this.error = this.$t('transfer.tip')
+            this.ToAccount = ''
+            this.amount = ''
+            this.memo = ''
+          }
         } catch (error) {
           _this.loading = false
           _this.show = true
           _this.isSuccess = 'warn'
-          _this.error = _this.$t('transfer.error.tip')
-          _this.ToAccount = ''
-          _this.amount = ''
-          _this.memo = ''
+          _this.error = _this.$t('unlock.error.invalid_password')
+          _this.btnTitle = _this.$t('transfer.next')
         }
       } else {
         this.loading = false

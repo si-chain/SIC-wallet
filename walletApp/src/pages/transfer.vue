@@ -15,7 +15,7 @@
           <x-button type="primary" :text="$t('transfer.title')" :link="`/transfer-detail?account=${$route.query.account}`"></x-button>
         </flexbox-item>
         <flexbox-item>
-          <x-button type="primary" :text="$t('transfer.extract')" :link="`/account-import?account=${$route.query.account}`"></x-button>
+          <x-button type="primary" :text="$t('transfer.extract')" :link="`/transfer-detail?account=${$route.query.account}`"></x-button>
         </flexbox-item>
       </flexbox>
     </div>

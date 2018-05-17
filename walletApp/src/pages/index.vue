@@ -24,10 +24,10 @@
       </flexbox-item>
     </flexbox> -->
     <div class="is-backup">
-      <cell v-if="isTransfer" title="SIC" :value="balance + '  SIC'" is-link :link="`/transfer?account=${this.$store.state.account}`">
+      <cell v-if="isTransfer" :title="$t('index.SIC')" :value="balance + '  SIC'" is-link :link="`/transfer?account=${this.$store.state.account}`">
         <img slot="icon" class="backup-icon" src="../assets/icon_14.png" width="25" height="25" alt="">
       </cell>
-      <cell v-else title="SIC" :value="balance + '  SIC'" >
+      <cell v-else :title="$t('index.SIC')" :value="balance + '  SIC'" >
         <img slot="icon" class="backup-icon" src="../assets/icon_14.png" width="25" height="25" alt="">
       </cell>
       <cell :title="$t('index.backup_wallet')" is-link :link="`/wallet-backup?account=${this.$store.state.account}`">

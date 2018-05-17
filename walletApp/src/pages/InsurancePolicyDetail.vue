@@ -50,7 +50,7 @@
 <script>
 import Eos from 'eosjs'
 import config from '../libs/env'
-import { XHeader, Msg, Alert, Box, XButton, Loading, Flexbox, FlexboxItem, TransferDomDirective as TransferDom } from 'vux'
+import { AlertModule, XHeader, Msg, Alert, Box, XButton, Loading, Flexbox, FlexboxItem, TransferDomDirective as TransferDom } from 'vux'
 import upload from '../components/upload-img'
 import passwordConfirm from '../components/PasswordConfirm'
 import { mapState } from 'vuex'
@@ -147,31 +147,39 @@ export default {
             accountStr = item
           }
         })
-        let accountData = JSON.parse(this.$common.decryptActive(accountStr.encryption, _this.pwd))
-        let activeKey = this.$common.decryptActive(accountData.active, _this.pwd)
-        config.keyProvider = activeKey
-        let eos = Eos.Localnet(config)
-        let t = {}
-        t.files = data.data.files
-        const policyContract = eos.contract(this.account)
         try {
-          policyContract.then(contract => {
-            contract.upload({
-              id: data.data.id,
-              type: _this.type,
-              ossAddr: JSON.stringify(t),
-              upload_num: data.data.num,
-              producer: accountData.account
-            }, {authorization: accountData.account}).then(res => {
-              this.show = true
-              this.upLoadImg = false
-              this.icon = 'success'
-              this.title = this.$t('policy.success')
-              this.$store.commit('set_img_upload_cache', [])
+          let accountData = JSON.parse(this.$common.decryptActive(accountStr.encryption, _this.pwd))
+          let activeKey = this.$common.decryptActive(accountData.active, _this.pwd)
+          config.keyProvider = activeKey
+          let eos = Eos.Localnet(config)
+          let t = {}
+          t.files = data.data.files
+          const policyContract = eos.contract(this.account)
+          try {
+            policyContract.then(contract => {
+              contract.upload({
+                id: data.data.id,
+                type: _this.type,
+                ossAddr: JSON.stringify(t),
+                upload_num: data.data.num,
+                producer: accountData.account
+              }, {authorization: accountData.account}).then(res => {
+                this.show = true
+                this.upLoadImg = false
+                this.icon = 'success'
+                this.title = this.$t('policy.success')
+                this.$store.commit('set_img_upload_cache', [])
+              })
             })
-          })
-        } catch (err) {
-          alert(err)
+          } catch (err) {
+            alert(err)
+          }
+        } catch (error) {
+          this.showModule()
+          this.upLoadImg = false
+          setTimeout(() => {
+            AlertModule.hide()
+          }, 3000)
         }
       } else {
         this.show = true
@@ -195,6 +203,19 @@ export default {
         this.icon = 'warn'
         this.title = this.$t('policy.upload_select')
       }
+    },
+    showModule () {
+      AlertModule.show({
+        title: this.$t('unlock.error.invalid_password'),
+        icon: 'warn',
+        content: '',
+        onShow () {
+          console.log('Module: I\'m showing')
+        },
+        onHide () {
+          console.log('Module: I\'m hiding now')
+        }
+      })
     },
     submit () {
       let values = []
