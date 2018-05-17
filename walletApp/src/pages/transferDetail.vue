@@ -9,7 +9,8 @@
     <box gap="30px 15px">
       <x-button :disabled="iconType === 'error' || iconType === ''" type="primary" @click.native="next" :show-loading="loading">{{btnTitle}}</x-button>
     </box>
-    <toast v-model="show" :type="isSuccess">{{error}}</toast>
+    <toast v-model="showToast" :type="isSuccess">{{error}}</toast>
+    <alert v-model="show" :title="$t('index.notice')" :content="error"></alert>
     <password-confirm v-if="isUnlock" ref="confirm" @setUnlock="setUnlock" @unlocking="unlocking"></password-confirm>
   </div>
 </template>
@@ -17,10 +18,10 @@
 import Eos from 'eosjs'
 import config from '../libs/env'
 import passwordConfirm from '../components/PasswordConfirm'
-import { XHeader, Group, XInput, Box, Toast, XButton } from 'vux'
+import { XHeader, Group, XInput, Box, Toast, XButton, Alert } from 'vux'
 export default {
   components: {
-    Group, XInput, XHeader, Box, Toast, XButton, passwordConfirm
+    Group, XInput, XHeader, Box, Toast, XButton, passwordConfirm, Alert
   },
   data () {
     return {
@@ -28,6 +29,7 @@ export default {
       amount: '',
       memo: '',
       show: false,
+      showToast: false,
       loading: false,
       iconType: '',
       isUnlock: false,
@@ -58,36 +60,36 @@ export default {
       var length = account.length
       if (!account) {
         this.error = this.$t('wallet_create.one.error.empty_account')
-        this.show = true
-        this.iconType = ''
+        this.showToast = true
+        this.iconType = 'error'
       } else if (length < 1) {
         this.error = this.$t('wallet_create.one.error.account_should_be_longer')
-        this.show = true
+        this.showToast = true
         this.iconType = 'error'
       } else if (length > 12) {
         this.error = this.$t('wallet_create.one.error.account_should_be_shorter')
-        this.show = true
+        this.showToast = true
         this.iconType = 'error'
       } else if (!/^[.12345a-z]+$/.test(this.ToAccount)) {
         this.error = this.$t('wallet_create.one.error.account_format_error')
-        this.show = true
+        this.showToast = true
         this.iconType = 'error'
       } else {
         this.$http.get(`${this.basePath}/v1/chain/accounts/eos/${account}`).then(res => {
           let data = res.data
           if (data.code === 200) {
-            this.show = false
+            this.showToast = false
             this.isAccount = true
             this.iconType = 'success'
             return true
           } else {
             this.error = this.$t('wallet_import.error.account_not_found')
-            this.show = true
+            this.showToast = true
             this.iconType = 'error'
           }
         }).catch(ex => {
           this.error = this.$t('wallet_create.one.error.query_account_failed')
-          this.show = true
+          this.showToast = true
           this.iconType = 'error'
         })
       }
@@ -151,6 +153,7 @@ export default {
                 _this.isSuccess = 'warn'
                 _this.error = data.error.details[0].message
                 _this.ToAccount = ''
+                _this.iconType = ''
                 _this.amount = ''
                 _this.memo = ''
               })

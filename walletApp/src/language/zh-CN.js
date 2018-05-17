@@ -4,6 +4,7 @@ const locale = {
       start:'开始体验',
       home:'我',
       SIC:'资金管理',
+      notice: '提示',
       agreement:'用户协议',
       account:'账号',
       authorization: '授权',

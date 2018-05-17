@@ -9,7 +9,8 @@
     <box gap="30px 15px">
       <x-button type="primary" @click.native="next" :show-loading="loading">{{btnTitle}}</x-button>
     </box>
-    <toast v-model="show" :type="isSuccess">{{error}}</toast>
+    <!-- <toast v-model="show" :type="isSuccess">{{error}}</toast> -->
+    <alert v-model="show" :title="$t('index.notice')" :content="error"></alert>
     <password-confirm v-if="isUnlock" ref="confirm" @setUnlock="setUnlock" @unlocking="unlocking"></password-confirm>
   </div>
 </template>
@@ -17,10 +18,10 @@
 import Eos from 'eosjs'
 import config from '../libs/env'
 import passwordConfirm from '../components/PasswordConfirm'
-import { XHeader, Group, XInput, Box, Toast, XButton } from 'vux'
+import { XHeader, Group, XInput, Box, Toast, XButton, Alert } from 'vux'
 export default {
   components: {
-    Group, XInput, XHeader, Box, Toast, XButton, passwordConfirm
+    Group, XInput, XHeader, Box, Toast, XButton, passwordConfirm, Alert
   },
   data () {
     return {

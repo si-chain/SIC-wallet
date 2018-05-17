@@ -9,6 +9,7 @@ const locale = {
       balance_loading: 'loading..',
       success: 'success',
       error: 'error',
+      notice: 'Notice',
       sign_up:'Sign Up',
       claim_trusteeship:'Claim Trusteeship',
       existing_account:'Existing Account',
