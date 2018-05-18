@@ -40,7 +40,7 @@ const locale = {
        header: 'SIC',
          title: 'Send',
          from: 'From',
-         to: 'To',
+         to: 'ethAddress',
          to_placeholder: 'account name',
          amount: 'Amount',
          amount_placeholder: 'Amount to send',
@@ -69,9 +69,9 @@ const locale = {
          }
     },
     authorization: {
-      time: 'Request time',
+      tip: 'warn',
       applicant: 'Applicant',
-      msg: 'Info',
+      msg: 'Error Request',
       num: 'Reward',
       status: 'Status',
       type: 'Type',

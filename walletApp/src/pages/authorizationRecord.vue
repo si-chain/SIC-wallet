@@ -161,7 +161,6 @@ export default {
           })
         })
         let value = SIC().encrypt(JSON.stringify(_this.valueList), _this.reqKey)
-        // console.log(value)
         let eos = Eos.Localnet(config)
         // 合约名
         const contractName = 'sic.auth'

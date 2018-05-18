@@ -22,10 +22,10 @@
       <div slot="footer" style="padding:10px" v-if="itemData.status === 0">
         <flexbox>
           <flexbox-item>
-            <x-button type="warn" @click.native="handle('Reject')">{{$t('authorization.Reject')}}</x-button>
+            <x-button type="warn" :disabled="applayListValue.length === 0" @click.native="handle('Reject')">{{$t('authorization.Reject')}}</x-button>
           </flexbox-item>
           <flexbox-item>
-            <x-button type="primary" @click.native="handle('Agree')">{{$t('authorization.Agree')}}</x-button>
+            <x-button type="primary" :disabled="applayListValue.length === 0" @click.native="handle('Agree')">{{$t('authorization.Agree')}}</x-button>
           </flexbox-item>
         </flexbox>
       </div>
@@ -33,7 +33,7 @@
   </div>
 </template>
 <script>
-import { XButton, Divider, Card, Cell, Group, Flexbox, FlexboxItem, Checklist } from 'vux'
+import { AlertModule, XButton, Divider, Card, Cell, Group, Flexbox, FlexboxItem, Checklist } from 'vux'
 export default {
   props: {
     itemData: Object
@@ -72,6 +72,11 @@ export default {
           _this.applayListValue.push({
             id: item.applyId,
             value: res.data.data.value
+          })
+        }).catch(() => {
+          AlertModule.show({
+            title: this.$t('authorization.tip'),
+            content: this.$t('authorization.msg')
           })
         })
       })

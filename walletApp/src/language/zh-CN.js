@@ -41,7 +41,7 @@ const locale = {
         header: 'SIC',
         extract: '提现',
         from: '发送账户',
-        to: '对方账户',
+        to: 'ethAddress',
         to_placeholder: '填写对方账号',
         amount: '数量',
         amount_placeholder: '填写SIC数量',
@@ -71,9 +71,9 @@ const locale = {
         }
     },
     authorization:{
-      time:'请求时间',
+      tip:'提示',
       applicant: '申请账户',
-      msg:'授权内容',
+      msg:'请求出错',
       num:'奖励金额',
       status:'状态',
       type:'授权类型',
