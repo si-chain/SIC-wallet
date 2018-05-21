@@ -1,23 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import index from '../pages/index.vue'
-import createAccount from '../pages/createAccount.vue'
-import createAccountSuccess from '../pages/createAccountSuccess.vue'
-import accountBackup from '../pages/accountBackup.vue'
-import accountBackupDetail from '../pages/accountBackupDetail.vue'
-import walletManage from '../pages/walletManage.vue'
-import home from '../pages/home.vue'
-import insurancePolicy from '../pages/InsurancePolicyDetail.vue'
-import Policy from '../pages/InsurancePolicy.vue'
-import accountImport from '../pages/accountImport.vue'
-import TradingRecord from '../pages/TradingRecord.vue'
-import AuthorizationRecord from '../pages/authorizationRecord.vue'
-import CreateLogin from '../pages/createLogin.vue'
-import Transfer from '../pages/transfer.vue'
-import TransferDetail from '../pages/transferDetail.vue'
-import guidance from '../pages/guidance.vue'
-import agreement from '../pages/agreement.vue'
-import withdraw from '../pages/withdraw.vue'
 
 Vue.use(Router)
 
@@ -26,102 +8,102 @@ export default new Router({
     {
       path: '/',
       name: 'index',
-      component: index
+      component: () => import('@/pages/index.vue')
     },
     {
       path: '/create-account',
       name: 'createAccount',
-      component: createAccount
+      component: () => import('@/pages/createAccount.vue')
     },
     {
       path: '/wallet-create-success',
       name: 'createAccountSuccess',
-      component: createAccountSuccess
+      component: () => import('@/pages/createAccountSuccess.vue')
     },
     {
       path: '/wallet-backup',
       name: 'accountBackup',
-      component: accountBackup
+      component: () => import('@/pages/accountBackup.vue')
     },
     {
       path: '/wallet-backup-key',
       name: 'accountBackupKey',
-      component: accountBackupDetail
+      component: () => import('@/pages/accountBackupDetail.vue')
     },
     {
       path: '/wallet-manage',
       name: 'walletManage',
-      component: walletManage
+      component: () => import('@/pages/walletManage.vue')
     },
     {
       path: '/home',
       name: 'home',
-      component: home
+      component: () => import('@/pages/home.vue')
     },
     {
       path: '/policy',
       name: 'Policy',
-      component: Policy
+      component: () => import('@/pages/InsurancePolicy.vue')
     },
     {
       path: '/insurance-policy',
       name: 'insurancePolicy',
-      component: insurancePolicy
+      component: () => import('@/pages/InsurancePolicy.vue')
     },
     {
       path: '/insurance-claim',
-      name: 'insurancePolicy',
-      component: insurancePolicy
+      name: 'insuranceClaim',
+      component: () => import('@/pages/accountBackup.vue')
     },
     {
       path: '/account-import',
       name: 'accountImport',
-      component: accountImport
+      component: () => import('@/pages/accountImport.vue')
     },
     {
       path: '/trading-record',
       name: 'TradingRecord',
-      component: TradingRecord
+      component: () => import('@/pages/TradingRecord.vue')
     },
     {
       path: '/create-login',
       name: 'CreateLogin',
-      component: CreateLogin
+      component: () => import('@/pages/createLogin.vue')
     },
     {
       path: '/authorization-record',
       name: 'AuthorizationRecord',
-      component: AuthorizationRecord
+      component: () => import('@/pages/authorizationRecord.vue')
     },
     {
       path: '/transfer',
       name: 'Transfer',
-      component: Transfer
+      component: () => import('@/pages/transfer.vue')
     },
     {
       path: '/transfer-detail',
       name: 'TransferDetail',
-      component: TransferDetail
+      component: () => import('@/pages/transferDetail.vue')
     },
     {
       path: '/guidance',
       name: 'guidance',
-      component: guidance
+      component: () => import('@/pages/accountBackup.vue')
     },
     {
       path: '/agreement',
       name: 'agreement',
-      component: agreement
+      component: () => import('@/pages/guidance.vue')
     },
     {
       path: '/user-agreement',
       name: 'user-agreement',
-      component: agreement
+      component: () => import('@/pages/agreement.vue')
     },
     {
       path: '/withdraw',
       name: 'withdraw',
-      component: withdraw
+      component: () => import('@/pages/withdraw.vue')
     }
   ]
 })
