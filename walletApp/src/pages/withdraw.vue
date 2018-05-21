@@ -2,12 +2,12 @@
   <div>
     <x-header :left-options="{backText: ''}">{{$t('withdraw.extract')}}</x-header>
     <group>
-      <!-- <x-input :title="$t('withdraw.to')" label-width="4.5em" required :placeholder="$t('withdraw.to_placeholder')" :is-type="validateAccount" v-model="ToAccount"></x-input> -->
+      <x-input :title="$t('withdraw.to')" label-width="5.5em" required :placeholder="$t('withdraw.to_placeholder')" v-model="ethAddress"></x-input>
       <x-input :title="$t('withdraw.amount')" type="number" label-width="4.5em" required :placeholder="$t('withdraw.amount_placeholder')" :is-type="validateAmount" v-model="amount"></x-input>
       <x-input :title="$t('withdraw.memo')" label-width="4.5em" :placeholder="$t('withdraw.memo')" v-model="memo"></x-input>
     </group>
     <box gap="30px 15px">
-      <x-button type="primary" @click.native="next" :show-loading="loading">{{btnTitle}}</x-button>
+      <x-button :disabled="!(/^[.12345a-z]+$/.test(this.ethAddress) && this.amount > 0.0001)" type="primary" @click.native="next" :show-loading="loading">{{btnTitle}}</x-button>
     </box>
     <!-- <toast v-model="show" :type="isSuccess">{{error}}</toast> -->
     <alert v-model="show" :title="$t('index.notice')" :content="error"></alert>
@@ -25,7 +25,7 @@ export default {
   },
   data () {
     return {
-      // ToAccount: '',
+      ethAddress: '',
       amount: '',
       memo: '',
       show: false,
@@ -44,6 +44,19 @@ export default {
     }
   },
   methods: {
+    validateAccount () {
+      if (this.ethAddress.length === 42) {
+        let address = this.ethAddress.split('0x')[1]
+        let addArr = address.split('')
+        addArr.map(i => {
+          if (/^[.0123456789a-f]+$/.test(i)) {
+            return true
+          }
+        })
+      } else {
+        return false
+      }
+    },
     setUnlock (val) {
       this.isUnlock = val
     },
@@ -55,7 +68,7 @@ export default {
       this.withdraw()
     },
     withdraw () {
-      if (this.amount > 0.0001) {
+      if (/^[.12345a-z]+$/.test(this.ethAddress) && this.amount > 0.0001) {
         let _this = this
         try {
           let accountStr
@@ -78,14 +91,23 @@ export default {
                 quantity: _this.amount + ' SIC',
                 memo: _this.memo + Date.now()
               }, {authorization: accountStr.account}).then(res => {
-                _this.isSuccess = 'success'
-                _this.show = true
-                _this.error = _this.$t('withdraw.success.title')
-                _this.loading = false
-                _this.btnTitle = _this.$t('withdraw.success.title')
-                setTimeout(() => {
-                  _this.$router.push(`/withdraw?account=${this.$route.query.account}`)
-                }, 500)
+                console.log(res)
+                _this.$http.get(`${this.basePath}/v1/coin/withdraw/${res.transaction_id}/${_this.ethAddress}`).then(res => {
+                  _this.isSuccess = 'success'
+                  _this.show = true
+                  _this.error = _this.$t('withdraw.success.title')
+                  _this.loading = false
+                  _this.btnTitle = _this.$t('withdraw.success.title')
+                  _this.amount = ''
+                  setTimeout(() => {
+                    _this.$router.push(`/withdraw?account=${this.$route.query.account}`)
+                  }, 500)
+                }).catch(() => {
+                  _this.loading = false
+                  _this.show = true
+                  _this.isSuccess = 'warn'
+                  _this.error = _this.$t('withdraw.tip')
+                })
               }).catch((req) => {
                 let data = JSON.parse(req)
                 _this.btnTitle = _this.$t('withdraw.next')
@@ -93,7 +115,6 @@ export default {
                 _this.show = true
                 _this.isSuccess = 'warn'
                 _this.error = data.error.details[0].message
-                _this.ToAccount = ''
                 _this.amount = ''
                 _this.memo = ''
               })

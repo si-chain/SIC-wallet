@@ -54,7 +54,7 @@ export default{
           label: _this.$t('transfer.memo'),
           value: item.memo
         }])
-        _this.transferData.push(item.quantity)
+        account === item.from ? _this.transferData.push('-' + item.quantity) : _this.transferData.push('+' + item.quantity)
       })
     })
   }

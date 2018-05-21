@@ -1,7 +1,7 @@
 <template>
   <div style="padding: 15px 10px">
     <card class="wrap-item">
-      <cell slot="header" :title="$t('authorization.msg')">{{itemData.msg}}</cell>
+      <cell slot="header" :title="$t('authorization.content')">{{itemData.msg}}</cell>
       <group slot="content">
         <cell :title="$t('authorization.applicant')">{{itemData.applicant}}</cell>
         <cell :title="$t('authorization.time')">{{itemData.dt}}</cell>

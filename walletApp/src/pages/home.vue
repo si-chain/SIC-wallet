@@ -6,7 +6,6 @@
     <p class="header">{{$t('index.home')}}</p>
     <account-detail></account-detail>
     <div class="is-backup">
-      <group>
         <cell :title="$t('index.manage_wallets')" is-link :link="`/wallet-manage?account=${this.$store.state.account}`">
           <img slot="icon" class="backup-icon" src="../assets/icon_01-01.png" width="25" height="25" alt="">
         </cell>
@@ -20,18 +19,18 @@
             <badge :text="$store.state.msgList"></badge>
           </div>
         </cell>
-      </group>
-      <group>
         <cell :title="$t('index.agreement')" is-link :link="`/user-agreement`">
           <img slot="icon" class="backup-icon" src="../assets/agreement.png" width="25" height="25" alt="">
         </cell>
-      </group>
+        <cell :title="$t('index.auth')" is-link :link="`/user-agreement`">
+          <img slot="icon" class="backup-icon" src="../assets/auth.png" width="25" height="25" alt="">
+        </cell>
     </div>
   </div>
 </template>
 
 <script>
-import { XHeader, TransferDom, Loading, Cell, Badge, Group } from 'vux'
+import { XHeader, TransferDom, Loading, Cell, Badge } from 'vux'
 import accountDetail from '../components/accountDetail'
 export default {
   name: 'index',
@@ -43,8 +42,7 @@ export default {
     Loading,
     XHeader,
     Cell,
-    Badge,
-    Group
+    Badge
   },
   methods: {
     onClickMore () {

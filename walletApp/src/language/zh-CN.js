@@ -7,6 +7,7 @@ const locale = {
       notice: '提示',
       agreement:'用户协议',
       account:'账号',
+      auth:'短信认证',
       authorization: '授权',
       claim_trusteeship:'理赔托管',
       success: '成功',
@@ -72,7 +73,9 @@ const locale = {
     },
     authorization:{
       tip:'提示',
+      time:'请求时间',
       applicant: '申请账户',
+      content:'请求内容',
       msg:'请求出错',
       num:'奖励金额',
       status:'状态',
