@@ -1,4 +1,5 @@
 'use strict'
+const ora = require('ora')
 const path = require('path')
 const utils = require('./utils')
 const webpack = require('webpack')
@@ -9,8 +10,10 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
+const NyanProgressPlugin = require('nyan-progress-webpack-plugin')
 
 const env = require('../config/prod.env')
+let spinner = ora('building for production...').start()
 
 const webpackConfig = merge(baseWebpackConfig, {
   module: {
@@ -30,6 +33,17 @@ const webpackConfig = merge(baseWebpackConfig, {
     // http://vuejs.github.io/vue-loader/en/workflow/production.html
     new webpack.DefinePlugin({
       'process.env': env
+    }),
+    new NyanProgressPlugin({
+      logger: function () {},
+      getProgressMessage: function (progress, messages, styles) {
+        spinner.text = '进度:' + (progress * 100).toFixed(2) + '%' + '  ' + messages[0] || messages[1];
+        if (progress == 1) {
+          console.log('\n进度:' + (progress * 100).toFixed(2) + '%', messages[0] || messages[1]);
+          spinner.stop();
+        }
+      },
+      restoreCursorPosition: true,
     }),
     // UglifyJs do not support ES6+, you can also use babel-minify for better treeshaking: https://github.com/babel/minify
     new webpack.optimize.UglifyJsPlugin({

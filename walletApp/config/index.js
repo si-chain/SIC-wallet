@@ -6,7 +6,7 @@ const path = require('path')
 
 module.exports = {
   dev: {
-
+    index: 'index.html',
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
@@ -66,14 +66,15 @@ module.exports = {
 
     // Paths
     assetsRoot: path.resolve(__dirname, '../../www'),
-    assetsSubDirectory: '',
+    assetsSubDirectory: './static',
+
     assetsPublicPath: '',
 
     /**
      * Source Maps
      */
 
-    productionSourceMap: true,
+    productionSourceMap: false,
     // https://webpack.js.org/configuration/devtool/#production
     devtool: '#source-map',
 
