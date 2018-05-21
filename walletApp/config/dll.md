@@ -121,11 +121,11 @@ vendor主要是根据项目本身的一下依赖包，去确立build时需要那
   ## 最后需要在package.json里面添加dll 的执行命令
   `"dll": "webpack --config build/webpack.dll.conf.js",`
 
-  <span style="color:red">
+  <p style="color:red">
     需要注意的是在项目dev之前需要先执行dll操作，当项目中配置的 dllConfig.entry 需要进行改动是也需要重新执行dll指令，
     当项目在build的之前执行了dev指令则不需要执行dll操作
-  </span>
-  <span style="color:red">
+  </p>
+  <p style="color:red">
   另外需要注意的是文件路径问题一定要去配置正确，不然开发环境可能是正常的，生产环境可能会出现问题！！！
-  </span>
+  </p>
   亲测有效
