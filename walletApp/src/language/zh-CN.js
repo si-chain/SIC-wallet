@@ -54,6 +54,7 @@ const locale = {
         next: '下 一 步',
         send: '发送',
         sending: '发送中',
+        accountError: '账号错误',
         error: {
           tip: '提现失败',
           amount: {

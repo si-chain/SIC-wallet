@@ -48,12 +48,12 @@ export default new Router({
     {
       path: '/insurance-policy',
       name: 'insurancePolicy',
-      component: () => import('@/pages/InsurancePolicy.vue')
+      component: () => import('@/pages/InsurancePolicyDetail.vue')
     },
     {
       path: '/insurance-claim',
       name: 'insuranceClaim',
-      component: () => import('@/pages/accountBackup.vue')
+      component: () => import('@/pages/InsurancePolicyDetail.vue')
     },
     {
       path: '/account-import',
@@ -88,12 +88,12 @@ export default new Router({
     {
       path: '/guidance',
       name: 'guidance',
-      component: () => import('@/pages/accountBackup.vue')
+      component: () => import('@/pages/guidance.vue')
     },
     {
       path: '/agreement',
       name: 'agreement',
-      component: () => import('@/pages/guidance.vue')
+      component: () => import('@/pages/agreement.vue')
     },
     {
       path: '/user-agreement',

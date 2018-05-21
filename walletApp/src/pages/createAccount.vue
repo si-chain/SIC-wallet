@@ -11,10 +11,10 @@
       <x-input :title="$t('wallet_create.two.label.confirm')" type="password" novalidate :icon-type="iconTypePwd" v-model="confirm" @on-blur="confirmOnBlur"></x-input>
     </group>
     <box gap="30px 15px">
-      <x-button type="primary" @click.native="submit" :show-loading="loading">{{$t('index.sign_up')}}</x-button>
+      <x-button :disabled="!((password === confirm) && confirm !== '')" type="primary" @click.native="submit" :createShow-loading="loading">{{$t('index.sign_up')}}</x-button>
       <a class="has-account" @click="hasAccount">{{$t('index.existing_account')}}?</a>
     </box>
-    <toast v-model="show" type="warn">{{error}}</toast>
+    <toast v-model="createShow" type="warn">{{error}}</toast>
   </div>
 </template>
 <script>
@@ -38,7 +38,7 @@ export default{
       account: '',
       isAccount: false,
       error: '',
-      show: false,
+      createShow: false,
       loading: false,
       password: '',
       confirm: '',
@@ -58,21 +58,21 @@ export default{
       var length = account.length
       if (!account) {
         this.error = this.$t('wallet_create.one.error.empty_account')
-        this.show = true
+        this.createShow = true
         this.iconType = ''
         return false
       } else if (length < 1) {
         this.error = this.$t('wallet_create.one.error.account_should_be_longer')
-        this.show = true
+        this.createShow = true
         this.iconType = 'error'
       } else if (length > 12) {
         this.error = this.$t('wallet_create.one.error.account_should_be_shorter')
-        this.show = true
+        this.createShow = true
         this.iconType = 'error'
         return false
       } else if (!/^[.12345a-z]+$/.test(this.account)) {
         this.error = this.$t('wallet_create.one.error.account_format_error')
-        this.show = true
+        this.createShow = true
         this.iconType = 'error'
         return false
       } else {
@@ -80,19 +80,19 @@ export default{
         this.$http.get(`${this.basePath}/v1/chain/accounts/eos/${account}`).then(res => {
           let data = res.data
           if (data.code === 400) {
-            this.show = false
+            this.createShow = false
             this.isAccount = true
             this.iconType = 'success'
             return true
           } else {
             this.error = this.$t('wallet_create.one.error.account_already_exist')
-            this.show = true
+            this.createShow = true
             this.iconType = 'error'
             return false
           }
         }).catch(ex => {
           this.error = this.$t('wallet_create.one.error.query_account_failed')
-          this.show = true
+          this.createShow = true
           this.iconType = 'error'
           return false
         })
@@ -101,12 +101,12 @@ export default{
     confirmOnBlur () {
       if (this.password === '') {
         this.error = this.$t('wallet_create.two.label.password')
-        this.show = true
+        this.createShow = true
         this.iconTypePwd = 'error'
         return false
       } else if (this.password !== this.confirm) {
         this.error = this.$t('wallet_create.two.error.password_not_equal')
-        this.show = true
+        this.createShow = true
         this.iconTypePwd = 'error'
         return false
       } else {
@@ -151,7 +151,6 @@ export default{
             let encryptionWalletArr = _this.$common.getStore('account')
             wallets.push(getData.wallet)
             _this.$store.commit('setAccount', getData.params.accountName)
-            console.log(_this.$store.state.account)
             let encryptionWallet = _this.$common.encryption(JSON.stringify(getData.wallet), _this.password)
             encryptionWalletArr.push({
               account: getData.wallet.account,
@@ -164,7 +163,7 @@ export default{
             _this.$store.commit('upDataMsg', false)
           } else {
             _this.error = _this.$t('wallet_create.two.error.account_create_failed')
-            _this.show = true
+            _this.createShow = true
           }
         })
       }).catch(function (err) {
@@ -177,6 +176,11 @@ export default{
         this.loading = true
         this.createAccount(this.account, this.password)
       }
+    }
+  },
+  watch: {
+    createShow (val) {
+      console.log(val)
     }
   }
 }

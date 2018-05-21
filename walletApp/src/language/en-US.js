@@ -53,6 +53,7 @@ const locale = {
          next: 'Next',
          send: 'Send',
          sending: 'Sending',
+         accountError: 'Account Error',
          error: {
            amount: {
              invalid: 'Invalid amount',

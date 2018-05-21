@@ -2,14 +2,14 @@
   <div>
     <x-header :left-options="{backText: ''}">{{$t('withdraw.extract')}}</x-header>
     <group>
-      <x-input :title="$t('withdraw.to')" label-width="5.5em" required :placeholder="$t('withdraw.to_placeholder')" v-model="ethAddress"></x-input>
+      <x-input :title="$t('withdraw.to')" label-width="5.5em" required :placeholder="$t('withdraw.to_placeholder')" v-model="ethAddress" :is-type="validateAccount"></x-input>
       <x-input :title="$t('withdraw.amount')" type="number" label-width="4.5em" required :placeholder="$t('withdraw.amount_placeholder')" :is-type="validateAmount" v-model="amount"></x-input>
       <x-input :title="$t('withdraw.memo')" label-width="4.5em" :placeholder="$t('withdraw.memo')" v-model="memo"></x-input>
     </group>
     <box gap="30px 15px">
-      <x-button :disabled="!(/^[.12345a-z]+$/.test(this.ethAddress) && this.amount > 0.0001)" type="primary" @click.native="next" :show-loading="loading">{{btnTitle}}</x-button>
+      <x-button :disabled="!(ethAddress.match('^0x[a-fA-F0-9]{40}$') && amount > 0.001)" type="primary" @click.native="next" :show-loading="loading">{{btnTitle}}</x-button>
     </box>
-    <!-- <toast v-model="show" :type="isSuccess">{{error}}</toast> -->
+    <toast v-model="ethToast" type="warn">{{error}}</toast>
     <alert v-model="show" :title="$t('index.notice')" :content="error"></alert>
     <password-confirm v-if="isUnlock" ref="confirm" @setUnlock="setUnlock" @unlocking="unlocking"></password-confirm>
   </div>
@@ -30,6 +30,7 @@ export default {
       memo: '',
       show: false,
       loading: false,
+      ethToast: false,
       isUnlock: false,
       btnTitle: this.$t('withdraw.next'),
       pwd: '',
@@ -40,20 +41,31 @@ export default {
           valid: value > 0.0001,
           msg: this.$t('withdraw.error.amount.minimum')
         }
+      },
+      validateAccount: function (value) {
+        let valid = null
+        if (value.match('^0x[a-fA-F0-9]{40}$')) {
+          valid = true
+        } else {
+          valid = false
+        }
+        return {
+          valid: valid,
+          msg: this.$t('withdraw.accountError')
+        }
       }
     }
   },
   methods: {
-    validateAccount () {
-      if (this.ethAddress.length === 42) {
-        let address = this.ethAddress.split('0x')[1]
-        let addArr = address.split('')
-        addArr.map(i => {
-          if (/^[.0123456789a-f]+$/.test(i)) {
-            return true
-          }
-        })
+    validateEthAdd () {
+      let _this = this
+      this.ethToast = false
+      if (this.ethAddress.match('^0x[a-fA-F0-9]{40}$')) {
+        return true
       } else {
+        _this.error = _this.$t('withdraw.accountError')
+        _this.ethToast = true
+        console.log(_this.ethToast)
         return false
       }
     },
@@ -68,7 +80,7 @@ export default {
       this.withdraw()
     },
     withdraw () {
-      if (/^[.12345a-z]+$/.test(this.ethAddress) && this.amount > 0.0001) {
+      if (this.amount > 0.0001) {
         let _this = this
         try {
           let accountStr
