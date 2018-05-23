@@ -22,8 +22,14 @@
         <cell :title="$t('index.agreement')" is-link :link="`/user-agreement`">
           <img slot="icon" class="backup-icon" src="../assets/agreement.png" width="25" height="25" alt="">
         </cell>
-        <cell :title="$t('index.auth')" is-link :link="`/user-agreement`">
+        <cell v-if="!isIdentity" :title="$t('index.identity')" is-link :link="`/identity-authentication?account=${this.$store.state.account}`">
           <img slot="icon" class="backup-icon" src="../assets/auth.png" width="25" height="25" alt="">
+        </cell>
+        <cell v-else :title="$t('index.identity')">
+          <img slot="icon" class="backup-icon" src="../assets/auth.png" width="25" height="25" alt="">
+          <div>
+            <img src="../assets/isidentity.png" width="60" height="25" alt="">
+          </div>
         </cell>
     </div>
   </div>
@@ -62,6 +68,12 @@ export default {
   },
   created () {
     this.wallets = this.$common.get_wallets()
+    let isIdentityList = JSON.parse(this.$common.getStore('isIdentityList')) || []
+    isIdentityList.map(item => {
+      if (item.account === this.$store.state.account && item.isIdentity) {
+        this.isIdentity = item.isIdentity
+      }
+    })
   },
   data () {
     return {
@@ -79,7 +91,8 @@ export default {
       showModeValue: 'push',
       showPlacement: 'left',
       wallets: [],
-      showPlacementValue: 'left'
+      showPlacementValue: 'left',
+      isIdentity: false
     }
   }
 }

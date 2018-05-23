@@ -206,6 +206,9 @@ export default {
   },
   created () {
     this.wallets = this.$common.get_wallets()
+    if (this.$route.query.account) {
+      this.$store.state.account = this.$route.query.account
+    }
   },
   data () {
     return {

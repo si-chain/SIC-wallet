@@ -15,15 +15,24 @@
           <x-button type="primary" :text="$t('transfer.title')" :link="`/transfer-detail?account=${$route.query.account}`"></x-button>
         </flexbox-item>
         <flexbox-item>
-          <x-button type="primary" :text="$t('transfer.extract')" :link="`/withdraw?account=${$route.query.account}`"></x-button>
+          <x-button v-if="isIdentity" type="primary" :text="$t('transfer.extract')" :link="`/withdraw?account=${$route.query.account}`"></x-button>
+          <x-button v-else :text="$t('transfer.extract')" type="primary" @click.native="ShowIdentityMsg = !ShowIdentityMsg"></x-button>
         </flexbox-item>
       </flexbox>
+    </div>
+    <div v-transfer-dom>
+        <alert v-model="ShowIdentityMsg" button-text=" ">
+          <msg slot="default" :description="$t('withdraw.msg')" :buttons="buttons" :icon="icon"></msg>
+        </alert>
     </div>
   </div>
 </template>
 <script>
-import { Flexbox, FlexboxItem, XButton, XHeader, FormPreview, Divider, Loading } from 'vux'
+import { Flexbox, FlexboxItem, XButton, XHeader, FormPreview, Divider, Alert, Msg, Loading, TransferDomDirective as TransferDom } from 'vux'
 export default{
+  directives: {
+    TransferDom
+  },
   components: {
     Flexbox,
     FlexboxItem,
@@ -31,13 +40,27 @@ export default{
     XHeader,
     FormPreview,
     Divider,
-    Loading
+    Loading,
+    Alert,
+    Msg
   },
   data () {
     return {
       list: [],
       transferData: [],
-      isLoading: false
+      icon: 'waiting',
+      buttons: [{
+        type: 'primary',
+        text: this.$t('index.goIdentity'),
+        link: `/identity-authentication?account=${this.$route.query.account}`
+      }, {
+        type: 'default',
+        text: this.$t('index.cancel'),
+        onClick: this.cancel.bind(this)
+      }],
+      isLoading: false,
+      isIdentity: false,
+      ShowIdentityMsg: false
     }
   },
   created () {
@@ -57,6 +80,17 @@ export default{
         account === item.from ? _this.transferData.push('-' + item.quantity) : _this.transferData.push('+' + item.quantity)
       })
     })
+    let isIdentityList = JSON.parse(this.$common.getStore('isIdentityList')) || []
+    isIdentityList.map(item => {
+      if (item.account === account && item.isIdentity) {
+        this.isIdentity = item.isIdentity
+      }
+    })
+  },
+  methods: {
+    cancel () {
+      this.ShowIdentityMsg = false
+    }
   }
 }
 </script>

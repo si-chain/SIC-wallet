@@ -65,7 +65,6 @@ export default {
       } else {
         _this.error = _this.$t('withdraw.accountError')
         _this.ethToast = true
-        console.log(_this.ethToast)
         return false
       }
     },
@@ -103,7 +102,6 @@ export default {
                 quantity: _this.amount + ' SIC',
                 memo: _this.memo + Date.now()
               }, {authorization: accountStr.account}).then(res => {
-                console.log(res)
                 _this.$http.get(`${this.basePath}/v1/coin/withdraw/${res.transaction_id}/${_this.ethAddress}`).then(res => {
                   _this.isSuccess = 'success'
                   _this.show = true
