@@ -5,9 +5,10 @@ const locale = {
       home:'我',
       SIC:'资金管理',
       notice: '提示',
+      goIdentity:'立即认证',
       agreement:'用户协议',
       account:'账号',
-      auth:'短信认证',
+      identity: '短信认证',
       authorization: '授权',
       claim_trusteeship:'理赔托管',
       success: '成功',
@@ -37,8 +38,20 @@ const locale = {
       message:'新消息',
       authorization_record:'授权记录'
     },
+    identity:{
+      phone:'手机号码',
+      placeholder:'请输入手机号码',
+      code:'验证码',
+      next:'重置',
+      sendCode:'发送验证码',
+      success_description:'已完成手机验证',
+      error_description:'请确认输入正确的验证码',
+      success: '验证成功',
+      error: '验证码输入错误'
+    },
     withdraw:{
-      tip: '您输入的信息有误',
+        msg:'转账功能只对认证用户开放，请完成认证后在进行此功能的操作！',
+        tip: '您输入的信息有误',
         header: 'SIC',
         extract: '提现',
         from: '发送账户',

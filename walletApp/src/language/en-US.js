@@ -4,9 +4,10 @@ const locale = {
       start:'Start',
       home:'home',
       SIC:'Fund Manage',
+      goIdentity: 'Authentication',
       agreement: 'User Agreement',
       account:'Account',
-      auth: 'Authentication',
+      identity: 'Authentication',
       balance_loading: 'loading..',
       success: 'success',
       error: 'error',
@@ -36,6 +37,17 @@ const locale = {
       transaction_sum: 'Transaction amount',
       message:'New Message',
       authorization_record:'Authorization record'
+    },
+    identity: {
+      phone: 'Phone Number',
+      code: 'Code',
+      placeholder: 'Phone Number',
+      next: 'Resend',
+      sendCode: 'Send Code',
+      success_description: 'Authentication success',
+      error_description: 'Please confirm that the correct validation code is entered',
+      success: 'Success',
+      error: 'Code Error'
     },
     withdraw: {
        header: 'SIC',

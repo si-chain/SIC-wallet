@@ -104,6 +104,11 @@ export default new Router({
       path: '/withdraw',
       name: 'withdraw',
       component: () => import('@/pages/withdraw.vue')
+    },
+    {
+      path: '/identity-authentication',
+      name: 'identityAuthentication',
+      component: () => import('@/pages/identityAuthentication.vue')
     }
   ]
 })
