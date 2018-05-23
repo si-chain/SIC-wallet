@@ -38,8 +38,8 @@ export default {
       error: '',
       validateAmount: function (value) {
         return {
-          valid: value > 0.0001,
-          msg: this.$t('withdraw.error.amount.minimum')
+          valid: value > 20,
+          msg: this.$t('withdraw.error.amount.minwithwrap')
         }
       },
       validateAccount: function (value) {
@@ -79,7 +79,7 @@ export default {
       this.withdraw()
     },
     withdraw () {
-      if (this.amount > 0.0001) {
+      if (this.amount > 20) {
         let _this = this
         try {
           let accountStr

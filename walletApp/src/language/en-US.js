@@ -70,7 +70,8 @@ const locale = {
            amount: {
              invalid: 'Invalid amount',
              insufficient_balance: 'Insufficient balance, Please make sure your balance are more than amount and fee',
-             minimum: 'The minimum amount must not be less than 0.0001'
+             minimum: 'The minimum amount must not be less than 0.0001',
+             minwithwrap: 'The minimum amount must not be less than 20'
            }
          },
          confirm: {

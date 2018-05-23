@@ -73,7 +73,8 @@ const locale = {
           amount: {
             invalid: '数量不正确',
             insufficient_balance: '余额不足,请确认余额大于提现金额+手续费',
-            minimum: '最小数量不能少于0.0001'
+            minimum: '最小数量不能少于0.0001',
+            minwithwrap: '最小数量不能少于20'
           },
         },
         confirm: {
