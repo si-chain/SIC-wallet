@@ -14,7 +14,7 @@
     </box>
     <div v-transfer-dom>
         <alert v-model="isIdentityMsg" button-text=" ">
-          <msg slot="default" :title="$t('identity.success')" :description="description" :buttons="buttons" :icon="icon"></msg>
+          <msg slot="default" :title="title" :description="description" :buttons="buttons" :icon="icon"></msg>
         </alert>
     </div>
   </div>
@@ -36,6 +36,7 @@ export default {
       isIdentityMsg: false,
       description: '',
       buttons: [],
+      title: this.$t('identity.success'),
       icon: ''
     }
   },
@@ -50,6 +51,7 @@ export default {
     },
     getCode () {
       let data = {
+        country: 86,
         mobile: this.phoneNumber
       }
       this.$http.post(`${this.basePath}/v1/msg/sms/code`, data).then(res => {
@@ -67,7 +69,9 @@ export default {
     verifyCode () {
       let data = {
         mobile: this.phoneNumber,
-        code: this.validateCode
+        country: 86,
+        code: this.validateCode,
+        account: this.$store.state.account
       }
       let _this = this
       this.$http.post(`${this.basePath}/v1/msg/sms/code/verify`, data).then(res => {
@@ -77,9 +81,10 @@ export default {
             text: _this.$t('identity.success'),
             link: `/home?account=${_this.$store.state.account}`
           }]
+          _this.title = _this.$t('identity.success')
           _this.icon = 'success'
           _this.isIdentityMsg = true
-          let isIdentityList = _this.$common.getStore('isIdentityList') || []
+          let isIdentityList = JSON.parse(_this.$common.getStore('isIdentityList')) || []
           isIdentityList.push({
             account: _this.$store.state.account,
             isIdentity: true
@@ -92,6 +97,7 @@ export default {
             onClick: _this.nextDo.bind(_this)
           }]
           _this.icon = 'warn'
+          _this.title = _this.$t('identity.error')
           _this.isIdentityMsg = true
         }
       })
