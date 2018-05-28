@@ -5,6 +5,8 @@ platforms/.gradle/
 platforms/assets/
 npm-debug.log
 yarn-error.log
+release-key.keystore
+build.json
 
 # Editor directories and files
 .idea
