@@ -67,11 +67,15 @@ export default {
     this.box && this.box.removeEventListener('scroll', this.handler, false)
   },
   created () {
-    this.wallets = this.$common.get_wallets()
-    let isIdentityList = JSON.parse(this.$common.getStore('isIdentityList')) || []
-    isIdentityList.map(item => {
-      if (item.account === this.$store.state.account && item.isIdentity) {
-        this.isIdentity = item.isIdentity
+    this.$http.get(`${this.basePath}/v1/chain/accounts/eos/${this.$store.state.account}`).then(res => {
+      let data = res.data
+      if (data.data.mobile) {
+        this.$store.commit('upDataIdentityAccount', this.$store.state.account)
+      }
+      if (this.$store.state.IdentityAccount.indexOf(this.$store.state.account) > -1) {
+        this.isIdentity = true
+      } else {
+        this.isIdentity = false
       }
     })
   },

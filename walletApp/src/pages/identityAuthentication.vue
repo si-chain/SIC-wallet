@@ -84,12 +84,7 @@ export default {
           _this.title = _this.$t('identity.success')
           _this.icon = 'success'
           _this.isIdentityMsg = true
-          let isIdentityList = JSON.parse(_this.$common.getStore('isIdentityList')) || []
-          isIdentityList.push({
-            account: _this.$store.state.account,
-            isIdentity: true
-          })
-          _this.$common.setStore('isIdentityList', isIdentityList)
+          this.$store.commit('upDataIdentityAccount', _this.$store.state.account)
         } else {
           _this.buttons = [{
             type: 'warn',

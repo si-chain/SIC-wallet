@@ -4,6 +4,7 @@ Vue.use(Vuex)
 const state = {
   isLoading: false,
   wallets: [],
+  IdentityAccount: [],
   account: '',
   img_upload_cache: [],
   img_paths: [],
@@ -17,6 +18,11 @@ export default new Vuex.Store({
   mutations: {
     UPDATE_LOADING (state, status) {
       state.isLoading = status
+    },
+    upDataIdentityAccount (state, data) {
+      if (state.IdentityAccount.indexOf(data) < 0) {
+        state.IdentityAccount.push(data)
+      }
     },
     UPDATE_WALLETS (state, wallets) {
       state.wallets = wallets

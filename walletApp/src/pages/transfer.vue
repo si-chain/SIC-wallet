@@ -80,12 +80,11 @@ export default{
         account === item.from ? _this.transferData.push('-' + item.quantity) : _this.transferData.push('+' + item.quantity)
       })
     })
-    let isIdentityList = JSON.parse(this.$common.getStore('isIdentityList')) || []
-    isIdentityList.map(item => {
-      if (item.account === account && item.isIdentity) {
-        this.isIdentity = item.isIdentity
-      }
-    })
+    if (this.$store.state.IdentityAccount.indexOf(this.$store.state.account) > -1) {
+      this.isIdentity = true
+    } else {
+      this.isIdentity = false
+    }
   },
   methods: {
     cancel () {

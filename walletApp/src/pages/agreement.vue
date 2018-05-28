@@ -1,7 +1,7 @@
 <template>
   <div class="agreement">
     <x-header :left-options="option">{{$t('index.agreement')}}</x-header>
-    <div style="padding: 50px 5px 8px 5px">
+    <div style="padding: 50px 5px 8px 5px;overflow:scroll-y">
       <p class="title center">《SIC服务协议》</p>
       <p>尊敬的用户：<br>
       <p class="tip">SIC用户使用服务协议（以下简称本协议）由SIC Foundation Ltd.（以下简称本基金会）和您签订。<br></p>

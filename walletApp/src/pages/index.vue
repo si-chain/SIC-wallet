@@ -141,6 +141,9 @@ export default {
       let account = this.$store.state.account
       this.$http.get(`${this.basePath}/v1/chain/accounts/eos/${account}`).then(res => {
         let data = res.data
+        if (data.data.mobile) {
+          this.$store.commit('upDataIdentityAccount', account)
+        }
         if (data.code === 200) {
           this.balance = data.data.eos_balance.split(' ')[0]
         } else {
