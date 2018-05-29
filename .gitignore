@@ -6,6 +6,7 @@ platforms/android
 platforms/ios
 npm-debug.log
 yarn-error.log
+package-lock.json
 release-key.keystore
 build.json
 hooks/
