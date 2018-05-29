@@ -20,8 +20,7 @@ FastClick.attach(document.body)
 Vue.config.productionTip = false
 // Vue.prototype.$http.defaults.baseURL = '${this.basePath}/v1'
 Vue.prototype.$common = util
-Vue.prototype.basePath = 'http://api.sichain.com.cn:3000'
-// Vue.prototype.basePath = 'http://10.3.1.135:3000'
+Vue.prototype.basePath = 'http://XXXX.com.cn:XXXX'
 
 Vue.directive('focus', {
   // 当绑定元素插入到 DOM 中。
