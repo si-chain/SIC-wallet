@@ -1,12 +1,18 @@
 .DS_Store
 node_modules/
 www/
-platforms/.gradle/
-platforms/assets/
+platforms/
+platforms/android
+platforms/ios
 npm-debug.log
 yarn-error.log
 release-key.keystore
 build.json
+hooks/
+plugins/
+res/
+config.xml
+
 
 # Editor directories and files
 .idea
