@@ -18,6 +18,9 @@
         },
         "phonegap-plugin-barcodescanner": {
             "PACKAGE_NAME": "com.rensanning.cordova"
+        },
+        "Umeng": {
+            "PACKAGE_NAME": "com.rensanning.cordova"
         }
     },
     "dependent_plugins": {}

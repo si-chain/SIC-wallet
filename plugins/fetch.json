@@ -38,5 +38,13 @@
         },
         "is_top_level": true,
         "variables": {}
+    },
+    "Umeng": {
+        "source": {
+            "type": "registry",
+            "id": "https://github.com/kamifun/cordova-plugin-umeng"
+        },
+        "is_top_level": true,
+        "variables": {}
     }
 }

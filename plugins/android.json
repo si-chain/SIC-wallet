@@ -7,6 +7,9 @@
         "files": {}
     },
     "installed_plugins": {
+        "Umeng": {
+            "PACKAGE_NAME": "com.rensanning.cordova"
+        },
         "cordova-plugin-android-permissions": {
             "PACKAGE_NAME": "com.rensanning.cordova"
         },

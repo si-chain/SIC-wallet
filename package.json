@@ -10,12 +10,14 @@
     "author": "Apache Cordova Team",
     "license": "Apache-2.0",
     "dependencies": {
+        "Umeng": "https://github.com/kamifun/cordova-plugin-umeng",
         "cordova-android": "^6.4.0",
         "cordova-ios": "^4.5.4",
         "cordova-plugin-android-permissions": "^1.0.0",
         "cordova-plugin-splashscreen": "^5.0.2",
         "cordova-plugin-whitelist": "^1.3.3",
-        "phonegap-plugin-barcodescanner": "^7.0.4"
+        "phonegap-plugin-barcodescanner": "^7.0.4",
+        "umeng-analytics-sdk": "git+https://github.com/kamifun/cordova-plugin-umeng.git"
     },
     "cordova": {
         "plugins": {
@@ -25,7 +27,8 @@
                 "ANDROID_SUPPORT_V4_VERSION": "27.+",
                 "CAMERA_USAGE_DESCRIPTION": " "
             },
-            "cordova-plugin-splashscreen": {}
+            "cordova-plugin-splashscreen": {},
+            "Umeng": {}
         },
         "platforms": [
             "android",

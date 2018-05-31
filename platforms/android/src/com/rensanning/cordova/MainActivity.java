@@ -20,10 +20,33 @@
 package com.rensanning.cordova;
 
 import android.os.Bundle;
+import com.umeng.analytics.MobclickAgent;
+import com.umeng.analytics.MobclickAgent.EScenarioType;
+import com.umeng.commonsdk.UMConfigure;
 import org.apache.cordova.*;
 
 public class MainActivity extends CordovaActivity
 {
+    private void initUmengSDK() {
+//        UMConfigure.init(this,"5b0d5f0ff43e4837470001c9","Umeng", UMConfigure.DEVICE_TYPE_PHONE,"");
+        MobclickAgent.setScenarioType(this, EScenarioType.E_UM_NORMAL);
+        MobclickAgent.setDebugMode(true);
+        MobclickAgent.openActivityDurationTrack(false);
+        MobclickAgent.setSessionContinueMillis(1000);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
@@ -37,5 +60,6 @@ public class MainActivity extends CordovaActivity
 
         // Set by <content src="index.html" /> in config.xml
         loadUrl(launchUrl);
+        initUmengSDK();
     }
 }

@@ -249,10 +249,11 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: '*.jar')
+    implementation fileTree(include: '*.jar', dir: 'libs')
     // SUB-PROJECT DEPENDENCIES START
     implementation(project(path: "CordovaLib"))
     // SUB-PROJECT DEPENDENCIES END
+    implementation files('libs/umeng-common-1.4.0.jar')
 }
 
 def promptForReleaseKeyPassword() {
