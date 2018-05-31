@@ -1,3 +1,4 @@
+/* jshint ignore:start */
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
@@ -22,7 +23,6 @@ Vue.config.productionTip = false
 Vue.prototype.$common = util
 // Vue.prototype.basePath = 'http://XXXX.com.cn:XXXX'
 Vue.prototype.basePath = 'http://api.sichain.com.cn:3000'
-
 
 Vue.directive('focus', {
   // 当绑定元素插入到 DOM 中。

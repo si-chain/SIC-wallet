@@ -1,11 +1,11 @@
 <template>
   <div class="guidance">
     <swiper ref="swiper" :list="guidanceList" :aspect-ratio="1" v-model="guidanceIndex" @on-index-change="guidanceOnIndexChange"></swiper>
-    <div style="text-align:center" class="check-box" v-if="guidanceIndex === 2">
+    <div style="text-align:center" class="check-box" v-if="guidanceIndex === 1">
         <check-icon :value.sync="checked" type="plain"> <a style="color:#ffffff;font-weight: 300;" href="#/agreement">我已阅读并同意SIC协议</a></check-icon>
       </div>
-    <box gap="9% 9%" class="btn-box" v-if="guidanceIndex === 2">
-      <x-button :disabled="!checked" plain type="primary" link="/" style="border-radius:99px;">{{$t('index.start')}}</x-button>
+    <box gap="9% 30%" class="btn-box" v-if="guidanceIndex === 1">
+      <x-button :disabled="!checked" plain link="/" style="border-radius:99px;font-size:13px">{{$t('index.start')}}</x-button>
     </box>
   </div>
 </template>
@@ -18,17 +18,12 @@ export default {
       checked: true,
       guidanceList: [{
         url: 'javascript:',
-        img: 'https://ww1.sinaimg.cn/large/663d3650gy1fq66vvsr72j20p00gogo2.jpg',
-        title: '送你一朵fua'
+        img: 'static/image/sic1.png',
+        title: ''
       }, {
         url: 'javascript:',
-        img: 'https://ww1.sinaimg.cn/large/663d3650gy1fq66vw1k2wj20p00goq7n.jpg',
-        title: '送你一辆车'
-      }, {
-        url: 'javascript:',
-        img: 'https://static.vux.li/demo/5.jpg', // 404
-        title: '送你一次旅行',
-        fallbackImg: 'https://ww1.sinaimg.cn/large/663d3650gy1fq66vw50iwj20ff0aaaci.jpg'
+        img: 'static/image/sic.png',
+        title: ''
       }],
       guidanceIndex: 0
     }
@@ -75,15 +70,19 @@ export default {
 }
 .btn-box{
   position: absolute;
-  bottom: 10%;
-  width: 80%;
+  bottom: 7%;
+  width: 40%;
   text-align: center
 }
 .check-box{
   position: absolute;
-  bottom: 24%;
+  bottom: 21%;
   width: 100%;
   color: #ffffff;
   text-align: center
+}
+.weui-btn_plain-default {
+    color: #fff;
+    border: 1px solid #FFF;
 }
 </style>

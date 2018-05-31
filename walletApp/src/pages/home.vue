@@ -35,6 +35,7 @@
   </div>
 </template>
 
+
 <script>
 import { XHeader, TransferDom, Loading, Cell, Badge } from 'vux'
 import accountDetail from '../components/accountDetail'

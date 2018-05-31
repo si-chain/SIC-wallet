@@ -1,7 +1,7 @@
 /*eslint-disable */
 const locale = {
     index: {
-      start:'开始体验',
+      start:'点击开始SIC',
       home:'我',
       SIC:'资金管理',
       notice: '提示',
