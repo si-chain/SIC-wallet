@@ -1,6 +1,6 @@
 let appConfig = {
   // 转账开关
   isTransfer: true,
-  versions: '1.0.6'
+  versions: '1.0.7'
 }
 export default appConfig

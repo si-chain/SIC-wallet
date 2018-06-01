@@ -29,17 +29,27 @@ import CryptoJS from 'crypto-js'
 import AES from 'crypto-js/aes'
 import ecc from 'eosjs-ecc'
 import AppConfig from './libs/config'
-import { Tabbar, TabbarItem } from 'vux'
+import { Tabbar, TabbarItem, Loading, Confirm, TransferDomDirective as TransferDom } from 'vux'
 export default {
   name: 'app',
+  directives: {
+    TransferDom
+  },
   components: {
     Tabbar,
-    TabbarItem
+    TabbarItem,
+    Confirm,
+    Loading
   },
   data () {
     return {
       isMsg: false,
-      isVersions: AppConfig.versions
+      onLoadingShow: false,
+      onLoadingText: '',
+      showUpdateShow: false,
+      isVersions: AppConfig.versions,
+      serverAppVersion: '',
+      AppUpDataUrl: ''
     }
   },
   methods: {

@@ -12,7 +12,7 @@
     <div class="transfer-bom">
       <flexbox>
         <flexbox-item>
-          <x-button type="primary" :text="$t('transfer.title')" :link="`/transfer-detail?account=${$route.query.account}`"></x-button>
+          <x-button :text="$t('transfer.title')" :link="`/transfer-detail?account=${$route.query.account}`"></x-button>
         </flexbox-item>
         <flexbox-item>
           <x-button v-if="isIdentity" type="primary" :text="$t('transfer.extract')" :link="`/withdraw?account=${$route.query.account}`"></x-button>
@@ -77,7 +77,7 @@ export default{
           label: _this.$t('transfer.memo'),
           value: item.memo
         }])
-        account === item.from ? _this.transferData.push('-' + item.quantity) : _this.transferData.push('+' + item.quantity)
+        account === item.from ? _this.transferData.push('<span style="color:red">-' + item.quantity + '</span>') : _this.transferData.push('<span style="color:green">+' + item.quantity + '</span>')
       })
     })
     if (this.$store.state.IdentityAccount.indexOf(this.$store.state.account) > -1) {

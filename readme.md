@@ -19,12 +19,12 @@ npm -v
 ```
 - Or download the project directly
 
-```
-$ git clone https://github.com/si-chain/SIC-wallet.git
-$ cd SIC-wallet/walletApp
-$ npm install
-$ npm run dll
-$ npm run dev
+```shell
+git clone https://github.com/si-chain/SIC-wallet.git
+cd SIC-wallet/walletApp
+npm install
+npm run dll
+npm run dev
 ```
 ## Note
 

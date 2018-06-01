@@ -8,23 +8,23 @@
     <div class="insurance-policy">
       <x-header :left-options="{showBack: false}">{{$t('policy.tip_insurance')}}</x-header>
       <div class="list-box" ref="wrapper" id="vux_view_box_body">
-        <group>
-          <cell is-link link="/insurance-policy">
+        <!-- <group> -->
+          <cell is-link link="/insurance-policy" style="border-bottom:1px solid #ddd">
             <img slot="icon" class="policy-icon" src="../assets/icon_031.png" width="25" height="25" alt="">
             <span slot="title"><span style="vertical-align:middle;">{{$t('policy.tip_insurance_policy')}}</span></span>
           </cell>
-          <cell is-link link="/insurance-claim">
+          <!-- <cell is-link link="/insurance-claim">
             <img slot="icon" class="policy-icon" src="../assets/icon_06.png" width="25" height="25" alt="">
             <span slot="title"><span style="vertical-align:middle;">{{$t('index.claim_trusteeship')}}</span></span>
-          </cell>
-        </group>
+          </cell> -->
+        <!-- </group> -->
         <div style="height:44px;">
           <sticky ref="sticky" scroll-box="vux_view_box_body" :offset="38" :check-sticky-support="false">
             <tab style="margin-top:10px;" v-model="index" prevent-default @on-before-index-change="switchTabItem">
               <tab-item v-if="index === 0" selected>{{$t('policy.tip_insurance_policy')}}</tab-item>
               <tab-item v-else>{{$t('policy.tip_insurance_policy')}}</tab-item>
-              <tab-item v-if="index === 1" selected>{{$t('index.claim_trusteeship')}}</tab-item>
-              <tab-item v-else>{{$t('index.claim_trusteeship')}}</tab-item>
+              <!-- <tab-item v-if="index === 1" selected>{{$t('index.claim_trusteeship')}}</tab-item>
+              <tab-item v-else>{{$t('index.claim_trusteeship')}}</tab-item> -->
             </tab>
           </sticky>
         </div>
@@ -177,11 +177,12 @@ export default {
 }
 .list-box{
   overflow-y: scroll;
+  margin-top: 7px;
 }
 .vux-step{
   margin:0 10px;
   padding:5px 0 10px 0;
-  border-bottom: 1px solid #333333;
+  border-bottom: 1px solid #dddddd;
 }
 .policy-icon{
   vertical-align: middle;

@@ -47,6 +47,18 @@
         <msg slot="default" :title="title" :buttons="buttons" :icon="icon"></msg>
       </alert>
     </div>
+    <div v-transfer-dom>
+      <confirm
+      v-model="showUpdateShow"
+      :close-on-confirm="false"
+      title="版本更新"
+      @on-confirm="showUpdateConfirm">
+        <p style="text-align:center;">有新版本发布，请及时更新！</p>
+      </confirm>
+    </div>
+    <div v-transfer-dom>
+      <loading :show="onLoadingShow" :text="onLoadingText"></loading>
+    </div>
   </div>
 </template>
 
@@ -188,6 +200,83 @@ export default {
         }
       })
     },
+    checkUpdate () {
+      // 从服务端获取最新版本
+      // let nums =
+      this.$http.get(`http://sic-client.oss-cn-beijing.aliyuncs.com/version.json?num=${Math.random() * 1000}`).then(data => {
+        data = data.data
+        this.serverAppVersion = data.version[data.version.length - 1].ver
+        // let serverAppContent = data.version[data.version.length - 1].msg
+        this.AppUpDataUrl = data.version[data.version.length - 1].url
+        // var permissions = cordova.plugins.permissions
+        // permissions.hasPermission(permissions.READ_EXTERNAL_STORAGE, checkPermissionCallback, null)
+        // function checkPermissionCallback (status) {
+        //   if (!status.hasPermission) {
+        //     var errorCallback = function () {
+        //       console.warn('Storage permission is not turned on')
+        //     }
+        //     permissions.requestPermission(permissions.READ_EXTERNAL_STORAGE, function (status) {
+        //       if (!status.hasPermission) {
+        //         errorCallback()
+        //       } else {
+        //         // continue with downloading/ Accessing operation
+        //         console.log('权限已开')
+        //       }
+        //     }, errorCallback)
+        //   }
+        // }
+        console.log(this.isVersions, this.serverAppVersion)
+        if (this.isVersions !== this.serverAppVersion) {
+          this.showUpdateShow = true
+        }
+      })
+    },
+    /***
+     *
+     */
+    showUpdateConfirm () {
+      window.location.href = this.AppUpDataUrl
+      // this.showUpdateShow = false
+      // this.onLoadingShow = true
+      // this.onLoadingText = '正在下载'
+      // let _this = this
+      // let url = this.AppUpDataUrl
+      // let filename = url.split('/').pop()
+      // let trustHosts = true
+      // let targetPath = cordova.file.externalRootDirectory + filename
+      // let options = {}
+      // cordova.FileTransfer.download(url, targetPath, options, trustHosts).then(function(result) {
+      //     // 打开下载下来的APP
+      //     cordova.FileOpener2.open(targetPath, 'application/vnd.android.package-archive').then(function() {
+      //       // 成功
+      //       console.log('success')
+      //     }, function(err) {
+      //       // 错误
+      //       console.log('error')
+      //     })
+      //     _this.onLoadingShow = false
+      // }, function(err) {
+      //     console.log(err)
+      //     _this.onLoadingShow = false
+      // }, function(progress) {
+      //     //进度，这里使用文字显示下载百分比
+      //     var downloadProgress = (progress.loaded / progress.total) * 100
+      //     _this.onLoadingText = '已经下载：' + Math.floor(downloadProgress) + '%'
+      //     if (downloadProgress > 99) {
+      //       _this.onLoadingShow = false
+      //     }
+      // })
+      // let FileTransfer = cordova.plugins.FileTransfer
+      // var fileTransfer = new FileTransfer()
+      // fileTransfer.download(url, targetPath, () => {
+      //   alert('下载成功')
+      //   cordova.plugins.fileOpener2.open(targetPath, 'application/vnd.android.package-archive')
+      // }, err => {
+      //   alert(JSON.stringify(err))
+      //   _this.onLoadingShow = false
+      //   alert('下载失败')
+      // }, trustHosts)
+    },
     keepOn () {
       this.show = false
     }
@@ -208,6 +297,7 @@ export default {
     this.box && this.box.removeEventListener('scroll', this.handler, false)
   },
   created () {
+    this.checkUpdate()
     this.wallets = this.$common.get_wallets()
     if (this.$route.query.account) {
       this.$store.state.account = this.$route.query.account
@@ -243,6 +333,12 @@ export default {
       balance: '0',
       isBackup: true,
       isShow: true,
+      onLoadingShow: false,
+      onLoadingText: '',
+      showUpdateShow: false,
+      isVersions: AppConfig.versions,
+      serverAppVersion: '',
+      AppUpDataUrl: '',
       isTransfer: AppConfig.isTransfer
     }
   }

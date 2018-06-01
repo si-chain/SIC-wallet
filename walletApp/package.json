@@ -23,6 +23,7 @@
     "fastclick": "^1.0.6",
     "jdenticon": "^2.1.0",
     "js-sha256": "^0.9.0",
+    "jsonp": "^0.2.1",
     "nyan-progress-webpack-plugin": "^1.2.0",
     "sic-ecies": "^1.0.2",
     "vue": "^2.5.2",
