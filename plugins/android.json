@@ -21,6 +21,15 @@
         },
         "phonegap-plugin-barcodescanner": {
             "PACKAGE_NAME": "com.rensanning.cordova"
+        },
+        "cordova-plugin-file": {
+            "PACKAGE_NAME": "com.rensanning.cordova"
+        },
+        "cordova-plugin-file-transfer": {
+            "PACKAGE_NAME": "com.rensanning.cordova"
+        },
+        "cordova-plugin-file-opener2": {
+            "PACKAGE_NAME": "com.rensanning.cordova"
         }
     },
     "dependent_plugins": {}
