@@ -14,9 +14,9 @@
         </cell>
         <cell :title="$t('index.authorization_record')" is-link :link="`/authorization-record?account=${this.$store.state.account}`">
           <img slot="icon" class="backup-icon" src="../assets/icon_icon011.png" width="25" height="25" alt="">
-          <div class="badge-value" v-if="$store.state.msgList > 0">
+          <div class="badge-value" v-if="$store.state.hasMsg">
             <span class="vertical-middle">{{ $t('index.message') }} &nbsp;</span>
-            <badge :text="$store.state.msgList"></badge>
+            <badge :text="$store.state.msgList.length"></badge>
           </div>
         </cell>
         <cell :title="$t('index.agreement')" is-link :link="`/user-agreement`">
@@ -63,6 +63,16 @@ export default {
         this.updateDemoPosition(this.box.scrollTop)
       }
     }
+    this.$store.state.msgList = []
+    this.$http.get(`${this.basePath}/v1/msg/user/${this.$store.state.account}?limit=100`, { lowerBound: 0 }).then(res => {
+      let data = res.data.data.rows
+      data.map(item => {
+        if (item.status === 0) {
+          this.$store.commit('upDataMsg', true)
+          this.$store.commit('upDataMsgList', item)
+        }
+      })
+    })
   },
   beforeDestroy () {
     this.box && this.box.removeEventListener('scroll', this.handler, false)
@@ -83,11 +93,6 @@ export default {
   data () {
     return {
       showMenu: false,
-      menus: {
-        'language.noop': '<span class="menu-title">Language</span>',
-        'zh-CN': '中文',
-        'en-US': 'English'
-      },
       path: '/',
       isLoading: false,
       direction: 'forward',

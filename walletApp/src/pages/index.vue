@@ -104,41 +104,41 @@ export default {
       this.$i18n.locale = locale
     },
     qrcode () {
-      let _this = this
-      let permissions = cordova.plugins.permissions
-      permissions.hasPermission(permissions.CAMERA, checkPermissionCallback, null)
-      function checkPermissionCallback (status) {
-        if (!status.hasPermission) {
-          let errorCallback = function () {
-            alert('请在系统设置中打开本应用的相机权限')
-          }
-          permissions.requestPermission(
-            permissions.CAMERA,
-            function (status) {
-              if (!status.hasPermission) errorCallback()
-              cordova.plugins.barcodeScanner.scan(
-                function (result) {
-                  let resultStr = result.text
-                  if (result.includes('qr://sic/login/')) {
-                    _this.showConfirm = true
-                    _this.code = resultStr.replace('qr://sic/login/', '')
-                  }
-                }, null, 'QRCode', 'scan', []
-              )
-            },
-            errorCallback)
-        } else {
-          cordova.plugins.barcodeScanner.scan(
-            function (result) {
-              let resultStr = result.text
-              if (resultStr.includes('qr://sic/login/')) {
-                _this.showConfirm = true
-                _this.code = resultStr.replace('qr://sic/login/', '')
-              }
-            }, null, 'QRCode', 'scan', []
-          )
-        }
-      }
+      // let _this = this
+      // let permissions = cordova.plugins.permissions
+      // permissions.hasPermission(permissions.CAMERA, checkPermissionCallback, null)
+      // function checkPermissionCallback (status) {
+      //   if (!status.hasPermission) {
+      //     let errorCallback = function () {
+      //       alert('请在系统设置中打开本应用的相机权限')
+      //     }
+      //     permissions.requestPermission(
+      //       permissions.CAMERA,
+      //       function (status) {
+      //         if (!status.hasPermission) errorCallback()
+      //         cordova.plugins.barcodeScanner.scan(
+      //           function (result) {
+      //             let resultStr = result.text
+      //             if (result.includes('qr://sic/login/')) {
+      //               _this.showConfirm = true
+      //               _this.code = resultStr.replace('qr://sic/login/', '')
+      //             }
+      //           }, null, 'QRCode', 'scan', []
+      //         )
+      //       },
+      //       errorCallback)
+      //   } else {
+      //     cordova.plugins.barcodeScanner.scan(
+      //       function (result) {
+      //         let resultStr = result.text
+      //         if (resultStr.includes('qr://sic/login/')) {
+      //           _this.showConfirm = true
+      //           _this.code = resultStr.replace('qr://sic/login/', '')
+      //         }
+      //       }, null, 'QRCode', 'scan', []
+      //     )
+      //   }
+      // }
     },
     onCancel () {
       this.showConfirm = false
@@ -173,7 +173,7 @@ export default {
       let data = ''
       let _this = this
       accountArr.map(item => {
-        if (item.account === this.$store.state.account) {
+        if (item.account === this.$route.query.account) {
           data = { 'data': item }
           this.$http.post(`${this.basePath}/v1/login/qrCode/${this.code}`, data).then(res => {
             let responese = res.data
@@ -225,7 +225,6 @@ export default {
         //     }, errorCallback)
         //   }
         // }
-        console.log(this.isVersions, this.serverAppVersion)
         if (this.isVersions !== this.serverAppVersion) {
           this.showUpdateShow = true
         }
@@ -302,6 +301,18 @@ export default {
     if (this.$route.query.account) {
       this.$store.state.account = this.$route.query.account
     }
+    this.$store.state.msgList = []
+    this.$http.get(`${this.basePath}/v1/msg/user/${this.$store.state.account}?limit=100`, { lowerBound: 0 }).then(res => {
+      let data = res.data.data.rows
+      this.$store.commit('upDataMsg', data.some((item) => {
+        return item.status === 0
+      }))
+      data.map(item => {
+        if (item.status === 0) {
+          this.$store.commit('upDataMsgList', item)
+        }
+      })
+    })
   },
   data () {
     return {

@@ -147,20 +147,6 @@ export default {
         this.$store.state.account = this.$common.get_wallets()[0].account
       }
     }
-    if (!this.$store.state.hasMsg && this.$store.state.account) {
-      this.$store.state.msgList = []
-      this.$http.get(`${this.basePath}/v1/msg/user/${this.$store.state.account}?limit=100`, { lowerBound: 0 }).then(res => {
-        let data = res.data.data.rows
-        data.map(item => {
-          if (item.status === 0) {
-            this.$store.commit('upDataMsg', true)
-            this.$store.commit('upDataMsgList', item)
-          }
-        })
-      })
-    } else {
-      this.$store.commit('upDataMsg', false)
-    }
     if (!this.$common.getStore(AppConfig.versions)) {
       this.$common.setStore(AppConfig.versions, AppConfig.versions)
       this.$router.push('/guidance')

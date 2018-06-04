@@ -40,9 +40,10 @@
           <div>
             <card class="wrap-item" v-if="policyList.length > 0" v-for="(item,index) in policyList" :key="index">
               <cell slot="header" :title="$t('policy.upload_time')">{{item.upload_time.replace('T', ' ')}}</cell>
-              <cell slot="content" v-if="item.status === 5" :title="$t('policy.policy_num')">{{item.policyID}}</cell>
-              <cell slot="content" v-else :title="$t('policy.policy_file')">{{item.ID}}</cell>
-              <cell slot="content" v-if="item.status === 5" :title="$t('policy.policy_value')">{{item.value}}</cell>
+              <cell slot="content" v-if="item.status === 5" :title="$t('policy.policy_file')">{{item.ID}}</cell>
+              <cell slot="content" v-if="item.status === 4" :title="$t('policy.policy_num')"><span style="color:green">{{item.policyID}}</span></cell>
+              <cell slot="content" v-if="item.status === 2" :title="$t('policy.policy_file')">{{item.ID}}</cell>
+              <cell slot="content" v-if="item.status === 5" :title="$t('policy.policy_value')"><span style="color:red">{{item.value}}</span></cell>
               <step slot="footer" class="step" v-model="item.status" background-color='#fbf9fe'>
                 <step-item :title="$t('policy.policy_status_step1')"></step-item>
                 <step-item :title="$t('policy.policy_status_step2')"></step-item>
