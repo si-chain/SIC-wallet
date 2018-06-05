@@ -110,6 +110,11 @@ export default new Router({
       path: '/identity-authentication',
       name: 'identityAuthentication',
       component: () => import('@/pages/identityAuthentication.vue')
+    },
+    {
+      path: '*',
+      name: 'other',
+      component: () => import('@/pages/index.vue')
     }
   ]
 })

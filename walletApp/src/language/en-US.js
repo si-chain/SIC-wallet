@@ -1,6 +1,8 @@
 /*eslint-disable */
 const locale = {
     index: {
+      newAccount: 'New Account',
+      newAccountTip: 'Create Account',
       start:'Start',
       home:'home',
       SIC:'Fund Manage',
@@ -125,6 +127,10 @@ const locale = {
         about: 'About'
     },
     wallet_create: {
+      placeholder: {
+        step1: 'User Name',
+        step2: 'Password'
+      },
         index: {
             title: 'Wallet',
             tip_empty: 'SIC Wallet was not created',

@@ -1,6 +1,8 @@
 /*eslint-disable */
 const locale = {
     index: {
+      newAccount: '新账号',
+      newAccountTip:'创建一个钱包和一个账户',
       start:'点击开始SIC',
       home:'我',
       SIC:'资金管理',
@@ -128,6 +130,10 @@ const locale = {
         about: '关于我们'
     },
     wallet_create: {
+      placeholder:{
+        step1:'请输入用户名',
+        step2:'请输入密码'
+      },
         index: {
             title: '钱包',
             tip_empty: '暂未绑定SIC钱包',
@@ -148,12 +154,12 @@ const locale = {
                 query_account_failed: '查询账户失败，请重试',
                 account_already_exist: '账户已存在',
                 empty_account: '账户名不可为空',
-                account_should_be_longer: '账户名至少3位',
+                account_should_be_longer: '账户名至少1位',
                 account_should_be_shorter: '账户名小于12位',
                 account_should_start_with_a_letter: '账户名需以字母开头',
-                account_format_error: '账户名只能是字母、数字的组合',
+                account_format_error: '账户名只能是字母、1-5的数字的组合',
                 account_end_error: '账户名需要以字母或数字结尾',
-                account_segment_should_be_longer: '账户名长度是1到13位',
+                account_segment_should_be_longer: '账户名长度是1到12位',
                 premium_name: '你使用的是高级账户名,请选择其他名字，包含至少一个横杠、数字或者不含元音字母'
             },
             next: '下一步'
