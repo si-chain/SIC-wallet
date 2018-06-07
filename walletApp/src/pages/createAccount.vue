@@ -1,16 +1,19 @@
 <template>
   <div class="creat-account" style="overflow:hidden">
-    <div v-if="$store.state.account" class="header">
+    <!-- <div v-if="$store.state.account" class="header">
       <div @click="goback" class="left-arrow"></div>
-    </div>
-    <!-- <x-header v-if="$store.state.account" :left-options="{backText: '返回'}">{{$t('left_panel.create_wallet')}}</x-header> -->
-    <x-header v-else :left-options="{showBack: false}">{{$t('left_panel.create_wallet')}}</x-header>
-    <div class="creat-box">
+    </div> -->
+    <x-header v-if="$store.state.account" :left-options="{backText: '返回'}"></x-header>
+    <!-- <x-header v-else :left-options="{showBack: false}"></x-header> -->
+    <p v-else style="height:30px;"></p>
+    <div class="creat-box" :class="$store.state.account ? 'hastop' : ''">
       <div class="logo">
         <div class="logo-left">
           <img src="../assets/createlogo.png" alt="">
         </div>
-        <div class="account-img"></div>
+        <div class="account-img">
+          <account-image style="margin:8px 0 0 1px;" :account="account" :size="16"></account-image>
+        </div>
       </div>
       <p class="new-account-title">{{$t('index.newAccount')}}</p>
       <p class="new-account-tip">{{$t('index.newAccountTip')}}</p>
@@ -20,13 +23,11 @@
       </div>
       <div class="input-item">
         <p class="create-account-title">{{$t('wallet_create.placeholder.step2')}}</p>
-        <x-input novalidate :icon-type="iconTypePwd" type="password" :placeholder="$t('wallet_create.placeholder.step2')" v-model="password" @on-blur="confirmOnBlur"></x-input>
+        <x-input novalidate :icon-type="iconTypePwd" type="password" @on-enter="submit" :placeholder="$t('wallet_create.placeholder.step2')" v-model="password" @on-blur="confirmOnBlur"></x-input>
         <!-- <x-input :title="$t('wallet_create.two.label.password')" type="password" novalidate :icon-type="iconTypePwd" v-model="password"></x-input> -->
       </div>
       <div class="btn-wrap">
-        <button @click="submit">
-          <img src="../assets/bot.png" width="260px" alt="">
-        </button>
+        <x-button class="create-btn" :disabled="password === ''" type="primary" @click.native="submit">{{$t('wallet_create.create_account')}}</x-button>
         <a class="has-account" @click="hasAccount">{{$t('index.existing_account')}}?</a>
       </div>
     </div>
@@ -136,13 +137,6 @@ export default{
     hasAccount () {
       this.$router.push('/account-import')
     },
-    goback () {
-      if (this.$store.state.account) {
-        this.$router.push(`/wallet-manage?${this.$store.state.account}`)
-      } else {
-        this.$router.push(`/wallet-manage`)
-      }
-    },
     createAccount (account, password) {
       let _this = this
       Co(function * () {
@@ -242,6 +236,9 @@ export default{
     left: 7px;
   }
 }
+.hastop{
+  margin-top: 10px;
+}
 .creat-box{
   padding: 0 20px;
 }
@@ -257,9 +254,10 @@ export default{
 .account-img{
   float: right;
   height: 48px;
+  text-align: center;
   width: 48px;
   border-radius: 50%;
-  background-color: #0b4acd;
+  border:1px solid #0b4acd;
 }
 .new-account-title{
   line-height: 27px;
@@ -308,8 +306,6 @@ export default{
     transform: scaleY(0.5);
     left: 15px;
 }
-.weui-cell__bd{
-}
 .btn-wrap{
   width: 260px;
   height: 45px;
@@ -319,10 +315,21 @@ export default{
   text-align: center;
   padding: 30px 0;
 }
+.create-btn{
+  width: 250px;
+  height: 39px;
+  border: 2px solid #d1b774;
+  background-color: #0f46b0!important;
+  border-radius: 28px;
+  line-height: 39px;
+  font-size: 16px;
+  // color: #ffffff;
+}
 .has-account{
   color: #bbbbbb;
   display: inline-block;
-  margin-left: 10px;
+  margin: 8px 0 0 10px;
+  font-size: 13px;
   float: left;
 }
 </style>

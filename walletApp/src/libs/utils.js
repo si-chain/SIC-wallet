@@ -110,7 +110,6 @@ util.del_wallet = (wallet) => {
       }
     }
     let encryptionWallets = util.getStore('account')
-    console.log(encryptionWallets)
     for (let i = 0; i < encryptionWallets.length; i++) {
       if (wallet.account === encryptionWallets[i].account) {
         encryptionWallets.splice(i, 1)

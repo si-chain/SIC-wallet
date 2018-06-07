@@ -127,6 +127,7 @@ const locale = {
         about: 'About'
     },
     wallet_create: {
+      create_account: 'Create Account',
       placeholder: {
         step1: 'User Name',
         step2: 'Password'

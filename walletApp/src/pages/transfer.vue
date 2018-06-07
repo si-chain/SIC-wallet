@@ -2,7 +2,7 @@
   <div>
     <x-header :left-options="{backText: ''}">{{$t('transfer.header')}}</x-header>
     <loading :show="transferData.length === 0  && !isLoading" text=""></loading>
-    <div style="padding:50px 3px 0 3px" v-if="transferData.length > 0 || isLoading">
+    <div style="padding:3.714286rem 3px 0 3px" v-if="transferData.length > 0 || isLoading">
       <div v-for="(item,index) in transferData" :key="index">
         <form-preview :header-label="$t('index.transaction_sum')" :header-value="transferData[index]" :body-items="list[index]"></form-preview>
         <br>
@@ -70,14 +70,25 @@ export default{
       this.isLoading = true
       let data = res.data.data.records
       data.map(item => {
-        _this.list.push([{
-          label: _this.$t('transfer.to'),
-          value: item.to
-        }, {
-          label: _this.$t('transfer.memo'),
-          value: item.memo
-        }])
-        account === item.from ? _this.transferData.push('<span style="color:red">-' + item.quantity + '</span>') : _this.transferData.push('<span style="color:green">+' + item.quantity + '</span>')
+        if (account === item.from) {
+          _this.list.push([{
+            label: _this.$t('transfer.to'),
+            value: item.to
+          }, {
+            label: _this.$t('transfer.memo'),
+            value: item.memo
+          }])
+          _this.transferData.push('<span style="color:#f59902">-' + item.quantity + '</span>')
+        } else {
+          _this.list.push([{
+            label: _this.$t('transfer.to'),
+            value: item.from
+          }, {
+            label: _this.$t('transfer.memo'),
+            value: item.memo
+          }])
+          _this.transferData.push('<span style="color:rgb(72, 114, 220)">+' + item.quantity + '</span>')
+        }
       })
     })
     if (this.$store.state.IdentityAccount.indexOf(this.$store.state.account) > -1) {
@@ -106,7 +117,7 @@ export default{
   width: 100%;
 }
 .no-more {
-  padding:10px 70px
+  padding:0.714286rem 5.0rem
 }
 </style>
 

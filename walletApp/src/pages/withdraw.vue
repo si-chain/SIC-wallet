@@ -6,7 +6,7 @@
       <x-input :title="$t('withdraw.amount')" type="number" label-width="4.5em" required :placeholder="$t('withdraw.amount_placeholder')" :is-type="validateAmount" v-model="amount"></x-input>
       <x-input :title="$t('withdraw.memo')" label-width="4.5em" :placeholder="$t('withdraw.memo')" v-model="memo"></x-input>
     </group>
-    <box gap="30px 15px">
+    <box gap="2.142857rem 1.071429rem">
       <x-button :disabled="!(ethAddress.match('^0x[a-fA-F0-9]{40}$') && amount > 0.001)" type="primary" @click.native="next" :show-loading="loading">{{btnTitle}}</x-button>
     </box>
     <toast v-model="ethToast" type="warn">{{error}}</toast>

@@ -3,10 +3,10 @@
     <img class="background" src="../assets/top_bg.jpg" alt="">
     <div class="account-detail">
       <div class="image-wrap">
-        <account-image :account="wallet.account" :size="40"></account-image>
+        <account-image style="margin-top:7px;" :account="wallet.account" :size="16"></account-image>
       </div>
       <div class="account-info">
-        <p class="account-name">{{$t('index.account_name')}}</p>
+        <p class="account-name" style="font-size:15px">{{$t('index.account_name')}}</p>
         <p class="name">
           {{wallet.account}}
           <!-- <img src="../assets/ewm.png"/> -->
@@ -48,16 +48,22 @@ export default{
 </script>
 <style lang="less" scoped>
 .image-wrap{
-  margin-left: 25px;
-  padding-top: 88px;
+  width: 45px;
+  height: 45px;
+  text-align: center;
+  border-radius: 50%;
+  background-color: #ffffff;
+  margin:89px 12px 45px 25px;
   float: left;
 }
 .account-info{
   float: left;
-  padding-top: 88px;
-  margin:15px 15px;
-  font-size: 20px;
+  padding-top: 91px;
+  font-size: 21px;
   color: #ffffff;
+  p{
+    line-height: 1.2
+  }
 }
 
 .center{
@@ -67,17 +73,17 @@ export default{
 .account-detail{
   // background: url(../../static/top_bg.jpg) no-repeat;
   // background-size: 100% 100%;
-  height: 200px;
+  height: 190px;
   z-index: 999;
   position: absolute;
 }
 .detail{
   position: relative;
-  height: 200px;
+  height: 190px;
 }
 .background{
   position: absolute;
   width: 100%;
-  height: 200px;
+  height: 190px;
 }
 </style>

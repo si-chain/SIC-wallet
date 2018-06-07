@@ -6,23 +6,15 @@
     <div v-transfer-dom>
       <actionsheet :menus="menus" v-model="showMenu" @on-click-menu="changeLocale"></actionsheet>
     </div>
-    <x-header >
+    <!-- <x-header >
       <img @click="onClickMore" class="sys" slot="overwrite-left" src="../assets/language.png"/>
       <img @click="qrcode" class="sys" slot="right" src="../assets/sys.png"/>
-    </x-header>
+    </x-header> -->
+    <div class="index-header">
+      <img @click="onClickMore" class="sys" src="../assets/language.png"/>
+      <img @click="qrcode" class="sys" style="float:right;margin-right:1.142857rem" src="../assets/sys.png"/>
+    </div>
     <account-detail></account-detail>
-    <!-- <flexbox class="balance">
-      <cell title="SIC">
-        <img slot="icon" class="backup-icon" src="../assets/icon_14.png" width="25" height="25" alt=""> -->
-        <!-- <img class="eye" v-if="isShow" @click="showFlag" src="../assets/eyez.png"/>
-        <img class="eye" v-else @click="showFlag" src="../assets/eyeb.png"/> -->
-      <!-- </cell>
-      <flexbox-item></flexbox-item>
-      <flexbox-item>
-        <span v-if="isShow" class="center">{{balance}}</span>
-        <span v-else class="center">******</span>
-      </flexbox-item>
-    </flexbox> -->
     <div class="is-backup">
       <cell v-if="isTransfer" :title="$t('index.SIC')" :value="balance + '  SIC'" is-link :link="`/transfer?account=${this.$store.state.account}`">
         <img slot="icon" class="backup-icon" src="../assets/icon_14.png" width="25" height="25" alt="">
@@ -105,6 +97,19 @@ export default {
     },
     qrcode () {
       // let _this = this
+      // let options = {
+      //   preferFrontCamera: true, // iOS and Android
+      //   showFlipCameraButton: true, // iOS and Android
+      //   showTorchButton: true, // iOS and Android
+      //   torchOn: true, // Android, launch with the torch switched on (if available)
+      //   saveHistory: true, // Android, save scan history (default false)
+      //   prompt: 'Place a barcode inside the scan area', // Android
+      //   resultDisplayDuration: 1500, // Android, display scanned text for X ms. 0 suppresses it entirely, default 1500
+      //   formats: 'QR_CODE,PDF_417', // default: all but PDF_417 and RSS_EXPANDED
+      //   orientation: 'landscape', // Android only (portrait|landscape), default unset so it rotates with the device
+      //   disableAnimations: true, // iOS
+      //   disableSuccessBeep: false // iOS and Android
+      // }
       // let permissions = cordova.plugins.permissions
       // permissions.hasPermission(permissions.CAMERA, checkPermissionCallback, null)
       // function checkPermissionCallback (status) {
@@ -123,8 +128,10 @@ export default {
       //               _this.showConfirm = true
       //               _this.code = resultStr.replace('qr://sic/login/', '')
       //             }
-      //           }, null, 'QRCode', 'scan', []
-      //         )
+      //           }, function (error) {
+      //             console.log(error)
+      //             alert('二维码不正确')
+      //           }, options)
       //       },
       //       errorCallback)
       //   } else {
@@ -135,8 +142,10 @@ export default {
       //           _this.showConfirm = true
       //           _this.code = resultStr.replace('qr://sic/login/', '')
       //         }
-      //       }, null, 'QRCode', 'scan', []
-      //     )
+      //       }, function (error) {
+      //         console.log(error)
+      //         alert('二维码不正确')
+      //       }, options)
       //   }
       // }
     },
@@ -202,29 +211,10 @@ export default {
     },
     checkUpdate () {
       // 从服务端获取最新版本
-      // let nums =
       this.$http.get(`http://sic-client.oss-cn-beijing.aliyuncs.com/version.json?num=${Math.random() * 1000}`).then(data => {
         data = data.data
         this.serverAppVersion = data.version[data.version.length - 1].ver
-        // let serverAppContent = data.version[data.version.length - 1].msg
         this.AppUpDataUrl = data.version[data.version.length - 1].url
-        // var permissions = cordova.plugins.permissions
-        // permissions.hasPermission(permissions.READ_EXTERNAL_STORAGE, checkPermissionCallback, null)
-        // function checkPermissionCallback (status) {
-        //   if (!status.hasPermission) {
-        //     var errorCallback = function () {
-        //       console.warn('Storage permission is not turned on')
-        //     }
-        //     permissions.requestPermission(permissions.READ_EXTERNAL_STORAGE, function (status) {
-        //       if (!status.hasPermission) {
-        //         errorCallback()
-        //       } else {
-        //         // continue with downloading/ Accessing operation
-        //         console.log('权限已开')
-        //       }
-        //     }, errorCallback)
-        //   }
-        // }
         if (this.isVersions !== this.serverAppVersion) {
           this.showUpdateShow = true
         }
@@ -235,46 +225,6 @@ export default {
      */
     showUpdateConfirm () {
       window.location.href = this.AppUpDataUrl
-      // this.showUpdateShow = false
-      // this.onLoadingShow = true
-      // this.onLoadingText = '正在下载'
-      // let _this = this
-      // let url = this.AppUpDataUrl
-      // let filename = url.split('/').pop()
-      // let trustHosts = true
-      // let targetPath = cordova.file.externalRootDirectory + filename
-      // let options = {}
-      // cordova.FileTransfer.download(url, targetPath, options, trustHosts).then(function(result) {
-      //     // 打开下载下来的APP
-      //     cordova.FileOpener2.open(targetPath, 'application/vnd.android.package-archive').then(function() {
-      //       // 成功
-      //       console.log('success')
-      //     }, function(err) {
-      //       // 错误
-      //       console.log('error')
-      //     })
-      //     _this.onLoadingShow = false
-      // }, function(err) {
-      //     console.log(err)
-      //     _this.onLoadingShow = false
-      // }, function(progress) {
-      //     //进度，这里使用文字显示下载百分比
-      //     var downloadProgress = (progress.loaded / progress.total) * 100
-      //     _this.onLoadingText = '已经下载：' + Math.floor(downloadProgress) + '%'
-      //     if (downloadProgress > 99) {
-      //       _this.onLoadingShow = false
-      //     }
-      // })
-      // let FileTransfer = cordova.plugins.FileTransfer
-      // var fileTransfer = new FileTransfer()
-      // fileTransfer.download(url, targetPath, () => {
-      //   alert('下载成功')
-      //   cordova.plugins.fileOpener2.open(targetPath, 'application/vnd.android.package-archive')
-      // }, err => {
-      //   alert(JSON.stringify(err))
-      //   _this.onLoadingShow = false
-      //   alert('下载失败')
-      // }, trustHosts)
     },
     keepOn () {
       this.show = false
@@ -361,26 +311,33 @@ export default {
 }
 .account-image-wrap{
   text-align: center;
-  padding: 30px 0;
+  padding: 2.142857rem 0;
+}
+.index-header{
+  position: absolute;
+  z-index: 9999;
+  width: 100%;
 }
 .sys{
-  width: 25px;
-  height: 25px;
+  width: 1.785714rem;
+  height: 1.785714rem;
+  margin-top: 1.0rem;
+  margin-left: 1.142857rem;
 }
 .backup-icon{
   vertical-align: middle;
-  margin-right: 10px;
+  margin-right: 0.714286rem;
 }
 .name{
-  line-height: 30px;
+  line-height: 2.142857rem;
   img{
-    height: 17px;
-    width: 17px;
-    margin-left: 20px;
+    height: 1.214286rem;
+    width: 1.214286rem;
+    margin-left: 1.428571rem;
   }
 }
 .is-backup{
-  font-size: 18px;
+  font-size: 1.142857rem;
   color: #333333;
   background-color:#fff;
   .weui-cell{
@@ -388,12 +345,12 @@ export default {
   }
 }
 .eye{
-  width: 17px;
-  height: 15px;
-  margin-left: 10px;
+  width: 1.214286rem;
+  height: 1.071429rem;
+  margin-left: 0.714286rem;
 }
 .balance{
-  line-height: 21px;
+  line-height: 1.5rem;
   border-bottom: 1px solid #D9D9D9;
   background-color:#fff;
   padding: 2px 0;

@@ -1,25 +1,28 @@
 <template>
     <div class="page-group">
       <x-header :left-options="{backText: ''}">{{$t('wallet_manage.title')}}</x-header>
-      <div style="padding:50px 0 60px 0">
+      <div style="padding:4.285714rem 0 2.857143rem 0">
         <div class="page clearfix" ref="wallet-manage" id="page-wallet-manage" v-for="(wallet,index) in wallets" :key="index" @click="goDetail(wallet.account)">
           <div class="account-img-wrap">
-            <account-image :account="wallet.account" :size="28"></account-image>
+            <div class="account-img">
+              <account-image style="margin-top:0.857143rem;" :account="wallet.account" :size="18"></account-image>
+            </div>
+            <!-- <account-image :account="wallet.account" :size="28"></account-image> -->
           </div>
           <account-home :account="wallet.account"></account-home>
         </div>
       </div>
 
-         <div class="content-block button-block bom">
-          <flexbox>
-            <flexbox-item>
-              <x-button type="primary" :link="`/create-account?account=${$route.query.account}`">{{$t('wallet_create.index.button_create')}}</x-button>
-            </flexbox-item>
-            <flexbox-item>
-              <x-button type="default" :link="`/account-import?account=${$route.query.account}`">{{$t('wallet_create.index.button_import')}}</x-button>
-            </flexbox-item>
-          </flexbox>
-        </div>
+      <div class="content-block button-block bom">
+        <flexbox>
+          <flexbox-item>
+            <x-button type="primary" class="creat-btn" :link="`/create-account?account=${$route.query.account}`">{{$t('wallet_create.index.button_create')}}</x-button>
+          </flexbox-item>
+          <flexbox-item>
+            <x-button type="default" class="import-btn" :link="`/account-import?account=${$route.query.account}`">{{$t('wallet_create.index.button_import')}}</x-button>
+          </flexbox-item>
+        </flexbox>
+      </div>
     </div>
 </template>
 <script>
@@ -98,49 +101,42 @@ export default {
         background-color: #3d3d3b;
     }
 }
+.weui-btn{
+  border-radius: 1.428571rem;
+  border:1px solid #f7b502;
+  font-weight: 300;
+  width: 91%;
+}
+.creat-btn{
+  background: -webkit-linear-gradient(#043487, #023fce); /* Safari 5.1 - 6.0 */
+  background: -o-linear-gradient(#043487, #023fce); /* Opera 11.1 - 12.0 */
+  background: -moz-linear-gradient(#043487, #023fce); /* Firefox 3.6 - 15 */
+  background: linear-gradient(#043487, #023fce); /* 标准的语法 */
+}
+.import-btn{
+  color:#1857f2
+}
 .account-img-wrap{
   text-align: center;
-  margin-top: 10px;
+  margin-top: 0.714286rem;
   float: left;
   width: 25%;
 }
 .clearfix{
   overflow: hidden;
   background: #ffffff;
-  margin-top: 10px;
-  padding: 10px 0;
+  margin-top: 0.714286rem;
+  padding: 3px 0;
 }
 .bom {
-  position: fixed;
-  bottom: 1%;
-  left: 0%;
-  right: 0%;
-  padding:0 10px;
+  padding:0 0.714286rem;
 }
-.wallets {
-    margin-top: 0;
-    margin-bottom: 3.8rem;
-    .wallet-info {
-        .item-media {
-            padding-bottom: .65rem;
-        }
-        .item-inner {
-            padding-bottom: 1rem;
-            padding-top: 1rem;
-        }
-    }
-    ul {
-        margin-bottom: .2rem;
-        /*background: #f0f5f6;*/
-    }
-    .price-info {
-        .item-after {
-            align-items: baseline;
-            .price {
-                font-size: 1rem;
-                font-weight: bold;
-            }
-        }
-    }
+.account-img{
+  margin-left: 1.428571rem;
+  height: 4.5rem;
+  text-align: center;
+  width: 4.5rem;
+  border-radius: 50%;
+  border:1px solid #0b4acd;
 }
 </style>

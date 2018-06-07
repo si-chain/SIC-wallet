@@ -1,5 +1,5 @@
 <template>
-  <view-box ref="viewBox" :class="$route.path === '/guidance' ? 'tab__panel_guidance' : ''" :body-padding-bottom="$route.path === '/guidance' || $route.path === '/agreement' || $route.path === '/user-agreement' ? '0' : '50px'" style="height:100%;width:100%;overflow-y:auto;">
+  <view-box ref="viewBox" :class="$route.path === '/guidance' ? 'tab__panel_guidance' : ''" :body-padding-bottom="$route.path === '/guidance' || $route.path === '/agreement' || $route.path === '/user-agreement' || $route.path === '/wallet-manage'? '0' : '50px'" style="height:100%;width:100%;overflow-y:auto;">
     <router-view class="router-view"></router-view>
     <tabbar v-if="($route.path === '/' || $route.path === '/home' || $route.path === '/policy' || $route.path === '*')&& $route.path !== '/guidance'" slot="bottom" style="width:100%;position:absolute;left:0;bottom:0;z-index:100;">
       <tabbar-item :selected="$route.path === '/'" link="/" @on-index-change="onIndexChange">
@@ -144,7 +144,12 @@ export default {
       this.$router.push('/create-account')
     } else {
       if (this.$store.state.account === '') {
-        this.$store.state.account = this.$common.get_wallets()[0].account
+        console.log(this.$route.params.account)
+        if (this.$route.params.account) {
+          this.$store.state.account = this.$route.params.account
+        } else {
+          this.$store.state.account = this.$common.get_wallets()[0].account
+        }
       }
     }
     if (!this.$common.getStore(AppConfig.versions)) {
@@ -158,6 +163,29 @@ export default {
   @import '~vux/src/styles/reset.less';
   @import '~vux/src/styles/1px.less';
   @import '~vux/src/styles/tap.less';
+  .vux-x-input .weui-cell__primary .weui-input::-webkit-input-placeholder {
+    color: #cccccc;
+    font-size: 0.928571rem;
+  }
+  .is-error-step .vux-step-item-head-finish .vux-step-item-head-inner{
+    border: 1px solid #f59902!important;
+    color: #f59902!important;
+  }
+  .is-error-step .vux-step-item-icon .weui-icon-success-no-circle{
+    color: #f59902!important;
+  }
+  .is-error-step .weui-icon-success-no-circle:before {
+    content: "\EA03";
+  }
+  .is-error-step .vux-step-item-main{
+    color: #f59902!important;
+  }
+  // .vux-header {
+  //   padding: 1.428571rem 0 3px 0!important;
+  // }
+  // .vux-header .vux-header-left .left-arrow{
+  //   top:0.714286rem!important;
+  // }
   body {
     background-color: #fbf9fe;
   }
@@ -173,7 +201,7 @@ export default {
   }
   .demo-icon-22 {
     font-family: 'vux-demo';
-    font-size: 22px;
+    font-size: 1.571429rem;
     color: #888;
   }
   .weui-tabbar.vux-demo-tabbar {
@@ -193,9 +221,9 @@ export default {
   .vux-demo-tabbar-component {
     background-color: #F70968;
     color: #fff;
-    border-radius: 7px;
+    border-radius: 0.5rem;
     padding: 0 4px;
-    line-height: 14px;
+    line-height: 1.0rem;
   }
   .weui-tabbar__icon + .weui-tabbar__label {
     margin-top: 0!important;
@@ -217,18 +245,18 @@ export default {
   }
   .demo-icon {
     font-family: 'vux-demo';
-    font-size: 20px;
+    font-size: 1.428571rem;
     color: #04BE02;
   }
   .demo-icon-big {
-    font-size: 28px;
+    font-size: 2.0rem;
   }
   .demo-icon:before {
     content: attr(icon);
   }
   .router-view {
     width: 100%;
-    top: 46px;
+    top: 3.285714rem;
   }
   .vux-pop-out-enter-active,
   .vux-pop-out-leave-active,
@@ -237,7 +265,7 @@ export default {
     will-change: transform;
     transition: all 500ms;
     height: 100%;
-    top: 46px;
+    top: 3.285714rem;
     position: absolute;
     backface-visibility: hidden;
     perspective: 1000;

@@ -7,7 +7,12 @@
         <cell :title="$t('authorization.time')">{{itemData.dt}}</cell>
         <cell :title="$t('authorization.type')">{{itemData.type | msgTyep}}</cell>
         <cell :title="$t('authorization.num')">{{itemData.reward | msgTyep}}</cell>
-        <cell :title="$t('authorization.status')">{{itemData.status | msgStatus}}</cell>
+        <cell :title="$t('authorization.status')">
+          <span style="color:rgb(72, 114, 220)" v-if="itemData.status === 0">{{itemData.status | msgStatus}}</span>
+          <span style="color:#05d164" v-if="itemData.status === 10">{{itemData.status | msgStatus}}</span>
+          <span style="color:#f2401ee6" v-if="itemData.status === 20">{{itemData.status | msgStatus}}</span>
+          <span style="color:#f2401ee6" v-if="itemData.status === 3">{{itemData.status | msgStatus}}</span>
+        </cell>
         <div v-if="this.itemData.status === 0">
           <div v-if="Show">
             <p style="padding:5px 10px" v-for="child in applayList" :key="child.applyId">请求编号：

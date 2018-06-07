@@ -103,6 +103,8 @@ const locale = {
     policy: {
       tip_insurance: '数据托管',
       tip_insurance_policy: '保单托管',
+      history_policy: '保单托管记录',
+      history_claim: '理赔托管记录',
       tip_insurance_claim: '理赔托管',
       policy_list: '保单记录',
       success:'成功！',
@@ -130,6 +132,7 @@ const locale = {
         about: '关于我们'
     },
     wallet_create: {
+      create_account:'创建账户',
       placeholder:{
         step1:'请输入用户名',
         step2:'请输入密码'

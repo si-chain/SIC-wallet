@@ -1,10 +1,12 @@
 <template>
-    <canvas ref="canvas" :style="{width:size,height:size}" :width="size * 2" :height="size * 2" :data-jdenticon-hash="hash"></canvas>
+  <div>
+    <canvas v-show="account" ref="canvas" :style="{width:size,height:size}" :width="size * 2" :height="size * 2" :data-jdenticon-hash="hash"></canvas>
+    <img v-show="!account" src="../assets/bbbhead.png" width="40px" style="margin-top:-4px" alt="">
+  </div>
 </template>
 <script>
 import jdenticon from 'jdenticon'
 import sha256 from 'js-sha256'
-
 export default {
   props: {
     size: {
@@ -32,21 +34,25 @@ export default {
   methods: {
     drawCanvas () {
       if (this.account) {
-        jdenticon.update(this.$refs.canvas, this.hash, 0)
-      } else {
-        let ctx = this.$refs.canvas.getContext('2d')
-        ctx.fillStyle = 'rgba(100, 100, 100, 0.5)'
-        let size = ctx.canvas.width
-        ctx.clearRect(0, 0, size, size)
-        ctx.fillRect(0, 0, size, size)
-        ctx.clearRect(0 + 1, 0 + 1, size - 2, size - 2)
-        ctx.font = `${size}px sans-serif`
-        ctx.fillText('?', size / 4, size - size / 6)
+        jdenticon.update(this.$refs.canvas, this.hash, 0.05)
       }
     }
   },
   mounted () {
     this.drawCanvas()
+    jdenticon.config = {
+      // hues: [1, 2, 3, 4, 5],
+      lightness: {
+        color: [0.4, 0.8],
+        grayscale: [0.3, 0.9]
+      },
+      saturation: {
+        color: [0.4, 0.8],
+        grayscale: [0.3, 0.9]
+      },
+      // backColor: '#fff',
+      replaceMode: 'once'
+    }
   }
 }
 </script>

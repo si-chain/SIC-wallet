@@ -198,6 +198,7 @@ export default {
           })
         })
       } catch (error) {
+        console.log(error)
         _this.showModal = true
         _this.upLoadImg = false
         _this.buttons[0].type = 'warn'
@@ -209,7 +210,12 @@ export default {
       let _this = this
       try {
         this.upLoadImg = true
-        let accountStr = this.$common.getStore('account')[0]
+        let accountStr
+        this.$common.getStore('account').map(item => {
+          if (item.account === _this.$store.state.account) {
+            accountStr = item
+          }
+        })
         let accountData = JSON.parse(this.$common.decryptActive(accountStr.encryption, _this.pwd))
         let activeKey = this.$common.decryptActive(accountData.active, _this.pwd)
         config.keyProvider = activeKey
@@ -241,6 +247,7 @@ export default {
           })
         })
       } catch (error) {
+        console.log(error)
         _this.showModal = true
         _this.upLoadImg = false
         _this.buttons[0].type = 'warn'

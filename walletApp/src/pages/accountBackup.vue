@@ -14,7 +14,7 @@
           <cell :title="$t('wallet_backup.index.label.account')" :value="$route.query.account"></cell>
           <cell :title="$t('wallet_backup.index.label.asset')" :value="balance"></cell>
           <cell :title="$t('wallet_backup.index.label.private_key')" :link="`/wallet-backup-key?account=${$route.query.account}`" is-link></cell>
-          <cell :title="$t('index.authorization_record')" is-link :link="`/authorization-record?account=${this.$store.state.account}`">
+          <cell :title="$t('index.authorization_record')" is-link :link="`/authorization-record?account=${$route.query.account}`">
             <div class="badge-value" v-if="$store.state.msgList > 0">
               <span class="vertical-middle">{{ $t('index.message') }}</span>
               <badge :text="$store.state.msgList.length"></badge>

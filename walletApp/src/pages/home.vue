@@ -3,30 +3,30 @@
     <div v-transfer-dom>
       <loading v-model="isLoading"></loading>
     </div>
-    <p class="header">{{$t('index.home')}}</p>
+    <!-- <p class="home-header">{{$t('index.home')}}</p> -->
     <account-detail></account-detail>
     <div class="is-backup">
         <cell :title="$t('index.manage_wallets')" is-link :link="`/wallet-manage?account=${this.$store.state.account}`">
-          <img slot="icon" class="backup-icon" src="../assets/icon_01-01.png" width="25" height="25" alt="">
+          <img slot="icon" class="backup-icon" src="../assets/icon_01-01.png" width="24" height="22" alt="">
         </cell>
         <cell :title="$t('index.transaction_record')" is-link :link="`/trading-record?account=${this.$store.state.account}`">
-          <img slot="icon" class="backup-icon" src="../assets/icon_09.png" width="25" height="25" alt="">
+          <img slot="icon" class="backup-icon" src="../assets/icon_09.png" width="21" height="23" alt="">
         </cell>
         <cell :title="$t('index.authorization_record')" is-link :link="`/authorization-record?account=${this.$store.state.account}`">
-          <img slot="icon" class="backup-icon" src="../assets/icon_icon011.png" width="25" height="25" alt="">
+          <img slot="icon" class="backup-icon" src="../assets/icon_icon011.png" width="21" height="17" alt="">
           <div class="badge-value" v-if="$store.state.hasMsg">
             <span class="vertical-middle">{{ $t('index.message') }} &nbsp;</span>
             <badge :text="$store.state.msgList.length"></badge>
           </div>
         </cell>
         <cell :title="$t('index.agreement')" is-link :link="`/user-agreement`">
-          <img slot="icon" class="backup-icon" src="../assets/agreement.png" width="25" height="25" alt="">
+          <img slot="icon" class="backup-icon" src="../assets/agreement.png" width="21" height="17" alt="">
         </cell>
         <cell v-if="!isIdentity" :title="$t('index.identity')" is-link :link="`/identity-authentication?account=${this.$store.state.account}`">
-          <img slot="icon" class="backup-icon" src="../assets/auth.png" width="25" height="25" alt="">
+          <img slot="icon" class="backup-icon" src="../assets/auth.png" width="21" height="17" alt="">
         </cell>
         <cell v-else :title="$t('index.identity')">
-          <img slot="icon" class="backup-icon" src="../assets/auth.png" width="25" height="25" alt="">
+          <img slot="icon" class="backup-icon" src="../assets/auth.png" width="21" height="17" alt="">
           <div>
             <img src="../assets/isidentity.png" width="60" height="25" alt="">
           </div>
@@ -57,6 +57,9 @@ export default {
     }
   },
   mounted () {
+    if (!this.$route.params.account) {
+      this.$router.push(`/home?account=${this.$store.state.account}`)
+    }
     this.handler = () => {
       if (this.path === '/') {
         this.box = document.querySelector('#demo_list_box')
@@ -116,8 +119,10 @@ export default {
   width: 25px;
   height: 25px;
 }
-.header{
-  background-color: #06319a!important;
+.home-header{
+  position: absolute;
+  z-index: 9999;
+  width: 100%;
   color: #ffffff;
   text-align: center;
   line-height: 46px;
@@ -137,7 +142,7 @@ export default {
 }
 .is-backup{
   // border-bottom: 1px solid #D9D9D9;
-  font-size: 18px;
+  font-size: 16px;
   color: #333333;
   background-color:#fff;
   .weui-cell{
