@@ -19,7 +19,7 @@
           </cell> -->
         <!-- </group> -->
         <div style="height:3.142857rem;">
-          <sticky ref="sticky" scroll-box="vux_view_box_body" :offset="-2" style="z-index: 99999" :check-sticky-support="false">
+          <sticky ref="sticky" scroll-box="vux_view_box_body" :offset="-10" style="z-index: 99999" :check-sticky-support="false">
             <tab style="margin-top:0.714286rem;" v-model="index" prevent-default @on-before-index-change="switchTabItem">
               <tab-item v-if="index === 0" selected>{{$t('policy.history_policy')}}</tab-item>
               <tab-item v-else>{{$t('policy.history_policy')}}</tab-item>
@@ -41,7 +41,7 @@
             <card class="wrap-item" v-if="policyList.length > 0" v-for="(item,index) in policyList" :key="index">
               <cell slot="header" :title="$t('policy.upload_time')">{{item.upload_time.replace('T', ' ')}}</cell>
               <cell slot="content" v-if="item.status === 5" :title="$t('policy.policy_file')">{{item.ID}}</cell>
-              <cell slot="content" v-if="item.status === 4" :title="$t('policy.policy_num')"><span style="color:#4656ff">{{item.policyID}}</span></cell>
+              <cell slot="content" v-if="item.status === 4" :title="$t('policy.policy_num')"><span style="color:#3287fd">{{item.policyID}}</span></cell>
               <cell slot="content" v-if="item.status === 5" :title="$t('policy.policy_value')"><span style="color:#f59902">{{item.value}}</span></cell>
               <cell slot="content" v-if="item.status === 2 || item.status === 1" :title="$t('policy.policy_file')">{{item.ID}}</cell>
               <step slot="footer" class="step" v-model="item.status" background-color='#fbf9fe'>

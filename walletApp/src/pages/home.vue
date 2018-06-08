@@ -6,38 +6,40 @@
     <!-- <p class="home-header">{{$t('index.home')}}</p> -->
     <account-detail></account-detail>
     <div class="is-backup">
+      <group>
         <cell :title="$t('index.manage_wallets')" is-link :link="`/wallet-manage?account=${this.$store.state.account}`">
-          <img slot="icon" class="backup-icon" src="../assets/icon_01-01.png" width="24" height="22" alt="">
+          <img slot="icon" class="backup-icon" src="../assets/icon_01-01.jpg" width="22" height="22" alt="">
         </cell>
-        <cell :title="$t('index.transaction_record')" is-link :link="`/trading-record?account=${this.$store.state.account}`">
-          <img slot="icon" class="backup-icon" src="../assets/icon_09.png" width="21" height="23" alt="">
+        <cell class="has-before cell-border-bottom" :title="$t('index.transaction_record')" is-link :link="`/trading-record?account=${this.$store.state.account}`">
+          <img slot="icon" class="backup-icon" src="../assets/icon_09.jpg" width="23" height="22" alt="">
         </cell>
-        <cell :title="$t('index.authorization_record')" is-link :link="`/authorization-record?account=${this.$store.state.account}`">
-          <img slot="icon" class="backup-icon" src="../assets/icon_icon011.png" width="21" height="17" alt="">
+        <cell class="cell-border-bottom cell-border-top" style="margin-top:1.428571rem;border-top: 1px solid #e5e5e5;" :title="$t('index.authorization_record')" is-link :link="`/authorization-record?account=${this.$store.state.account}`">
+          <img slot="icon" class="backup-icon" src="../assets/icon_icon011.jpg" width="25" height="24" alt="">
           <div class="badge-value" v-if="$store.state.hasMsg">
             <span class="vertical-middle">{{ $t('index.message') }} &nbsp;</span>
             <badge :text="$store.state.msgList.length"></badge>
           </div>
         </cell>
-        <cell :title="$t('index.agreement')" is-link :link="`/user-agreement`">
-          <img slot="icon" class="backup-icon" src="../assets/agreement.png" width="21" height="17" alt="">
+        <cell class="cell-border-top" style="margin-top:1.428571rem;border-top: 1px solid #e5e5e5;" :title="$t('index.agreement')" is-link :link="`/user-agreement`">
+          <img slot="icon" class="backup-icon" src="../assets/agreement.jpg" width="24" height="22" alt="">
         </cell>
-        <cell v-if="!isIdentity" :title="$t('index.identity')" is-link :link="`/identity-authentication?account=${this.$store.state.account}`">
-          <img slot="icon" class="backup-icon" src="../assets/auth.png" width="21" height="17" alt="">
+        <cell v-if="!isIdentity" class="has-before cell-border-bottom" :title="$t('index.identity')" is-link :link="`/identity-authentication?account=${this.$store.state.account}`">
+          <img slot="icon" class="backup-icon" src="../assets/auth.png" width="24" height="19" alt="">
         </cell>
-        <cell v-else :title="$t('index.identity')">
-          <img slot="icon" class="backup-icon" src="../assets/auth.png" width="21" height="17" alt="">
+        <cell v-else :title="$t('index.identity')" class="has-before cell-border-bottom">
+          <img slot="icon" class="backup-icon" src="../assets/auth.png" width="24" height="19" alt="">
           <div>
             <img src="../assets/isidentity.png" width="60" height="25" alt="">
           </div>
         </cell>
+      </group>
     </div>
   </div>
 </template>
 
 
 <script>
-import { XHeader, TransferDom, Loading, Cell, Badge } from 'vux'
+import { XHeader, TransferDom, Loading, Cell, Group, Badge } from 'vux'
 import accountDetail from '../components/accountDetail'
 export default {
   name: 'index',
@@ -49,6 +51,7 @@ export default {
     Loading,
     XHeader,
     Cell,
+    Group,
     Badge
   },
   methods: {
@@ -141,12 +144,22 @@ export default {
   }
 }
 .is-backup{
-  // border-bottom: 1px solid #D9D9D9;
+  // border-bottom: 1px solid #e5e5e5;
+  background-color: #cccccc1a;
   font-size: 16px;
   color: #333333;
-  background-color:#fff;
   .weui-cell{
-    border-bottom: 1px solid #D9D9D9;
+    // border-bottom: 1px solid #e5e5e5;
+    background: #ffffff;
+  }
+  .has-before:before{
+    border-top: 1px solid #98b3db!important;
+  }
+  .cell-border-top{
+    border-top:1px solid #d3e1f5!important;
+  }
+  .cell-border-bottom{
+    border-bottom:1px solid #d3e1f5!important;
   }
 }
 // @header-background-color:#fff

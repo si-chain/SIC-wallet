@@ -1,6 +1,6 @@
 <template>
   <div class="detail" @click="goIndex">
-    <img class="background" src="../assets/top_bg.jpg" alt="">
+    <img class="background" src="../assets/top_bg.png" alt="">
     <div class="account-detail">
       <div class="image-wrap">
         <account-image style="margin-top:7px;" :account="wallet.account" :size="16"></account-image>

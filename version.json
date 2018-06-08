@@ -15,6 +15,22 @@
             "url": "http://sic-client.oss-cn-beijing.aliyuncs.com/apk/SIC-Wallet@1.0.7.apk",
             "force": false,
             "msg": "添加应用更新功能"
+        },
+        {
+            "platform": "A",
+            "channel": "G",
+            "ver": "1.0.8",
+            "url": "http://sic-client.oss-cn-beijing.aliyuncs.com/apk/SIC-Wallet@1.0.8.apk",
+            "force": false,
+            "msg": "UI更新"
+        },
+        {
+            "platform": "A",
+            "channel": "G",
+            "ver": "1.0.9",
+            "url": "http://sic-client.oss-cn-beijing.aliyuncs.com/apk/SIC-Wallet@1.0.9.apk",
+            "force": false,
+            "msg": "页面布局更新"
         }
     ]
 }

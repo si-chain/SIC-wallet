@@ -12,18 +12,18 @@
     </x-header> -->
     <div class="index-header">
       <img @click="onClickMore" class="sys" src="../assets/language.png"/>
-      <img @click="qrcode" class="sys" style="float:right;margin-right:1.142857rem" src="../assets/sys.png"/>
+      <img v-if="isNative" @click="qrcode" class="sys" style="float:right;margin-right:1.142857rem" src="../assets/sys.png"/>
     </div>
     <account-detail></account-detail>
     <div class="is-backup">
-      <cell v-if="isTransfer" :title="$t('index.SIC')" :value="balance + '  SIC'" is-link :link="`/transfer?account=${this.$store.state.account}`">
-        <img slot="icon" class="backup-icon" src="../assets/icon_14.png" width="25" height="25" alt="">
+      <cell v-if="isTransfer" class="none-bottom" :title="$t('index.SIC')" :value="balance + '  SIC'" is-link :link="`/transfer?account=${this.$store.state.account}`">
+        <img slot="icon" class="backup-icon" src="../assets/icon_14.png" width="20" height="22" alt="">
       </cell>
       <cell v-else :title="$t('index.SIC')" :value="balance + '  SIC'" >
-        <img slot="icon" class="backup-icon" src="../assets/icon_14.png" width="25" height="25" alt="">
+        <img slot="icon" class="backup-icon" src="../assets/icon_14.png" width="20" height="22" alt="">
       </cell>
       <cell :title="$t('index.backup_wallet')" is-link :link="`/wallet-backup?account=${this.$store.state.account}`">
-        <img slot="icon" class="backup-icon" src="../assets/icon_11.png" width="25" height="25" alt="">
+        <img slot="icon" style="margin-left:-2px" class="backup-icon" src="../assets/icon_11.png" width="24" height="22" alt="">
       </cell>
     </div>
     <div v-transfer-dom>
@@ -246,7 +246,9 @@ export default {
     this.box && this.box.removeEventListener('scroll', this.handler, false)
   },
   created () {
-    this.checkUpdate()
+    if (AppConfig.isNative) {
+      this.checkUpdate()
+    }
     this.wallets = this.$common.get_wallets()
     if (this.$route.query.account) {
       this.$store.state.account = this.$route.query.account
@@ -300,6 +302,7 @@ export default {
       isVersions: AppConfig.versions,
       serverAppVersion: '',
       AppUpDataUrl: '',
+      isNative: AppConfig.isNative,
       isTransfer: AppConfig.isTransfer
     }
   }
@@ -341,8 +344,14 @@ export default {
   color: #333333;
   background-color:#fff;
   .weui-cell{
-    border-bottom: 1px solid #D9D9D9;
+    border-bottom: 1px solid #e5e5e5;
   }
+  // .none-bottom{
+  //   border-bottom:none;
+  // }
+  // .weui-cell:before{
+  //   border-top: 1px solid #e5e5e5;
+  // }
 }
 .eye{
   width: 1.214286rem;
@@ -351,7 +360,7 @@ export default {
 }
 .balance{
   line-height: 1.5rem;
-  border-bottom: 1px solid #D9D9D9;
+  border-bottom: 1px solid #e5e5e5;
   background-color:#fff;
   padding: 2px 0;
 }

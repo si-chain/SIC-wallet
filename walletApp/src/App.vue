@@ -144,7 +144,6 @@ export default {
       this.$router.push('/create-account')
     } else {
       if (this.$store.state.account === '') {
-        console.log(this.$route.params.account)
         if (this.$route.params.account) {
           this.$store.state.account = this.$route.params.account
         } else {
@@ -152,7 +151,7 @@ export default {
         }
       }
     }
-    if (!this.$common.getStore(AppConfig.versions)) {
+    if (AppConfig.isNative && !this.$common.getStore(AppConfig.versions)) {
       this.$common.setStore(AppConfig.versions, AppConfig.versions)
       this.$router.push('/guidance')
     }
@@ -180,6 +179,17 @@ export default {
   .is-error-step .vux-step-item-main{
     color: #f59902!important;
   }
+  .vux-header .vux-header-title{
+    font-weight: 200!important;
+  }
+  .vux-fixed .vux-tab{
+    height: 3.285714rem!important;
+    background-color:#3287fd!important;
+    .vux-tab-item.vux-tab-selected{
+      color:#ffffff!important;
+      font-weight: 200!important;
+    }
+  }
   // .vux-header {
   //   padding: 1.428571rem 0 3px 0!important;
   // }
@@ -204,6 +214,19 @@ export default {
     font-size: 1.571429rem;
     color: #888;
   }
+  #vux_view_box_body{
+    background-color: #f5f5f5;
+  }
+  .weui-cells{
+    margin-top: 0!important;
+    background-color: #f5f5f5!important;
+  }
+  .weui-cell{
+    background-color: #ffffff;
+  }
+  .weui-cell:before{
+    border-top: none!important;
+  }
   .weui-tabbar.vux-demo-tabbar {
     /** backdrop-filter: blur(10px);
     background-color: none;
@@ -211,6 +234,9 @@ export default {
   }
   .vux-demo-tabbar .weui-bar__item_on .demo-icon-22 {
     color: #F70968;
+  }
+  .weui-cell_access .weui-cell__ft:after{
+    border-color: #8a8a8c!important;
   }
   .vux-demo-tabbar .weui-tabbar_item.weui-bar__item_on .vux-demo-tabbar-icon-home {
     color: rgb(53, 73, 94);

@@ -79,7 +79,7 @@ export default {
   transition: all 0.4s ease 0s;
 }
 .vux-step-item-tail-finish {
-  background: #0001fe none repeat scroll 0 0;
+  background: #3287fd none repeat scroll 0 0;
 }
 .vux-step-item-tail-process, .vux-step-item-tail-wait {
   background: #CCC none repeat scroll 0 0;
@@ -115,13 +115,13 @@ export default {
   }
 }
 .vux-step-item-head-finish .vux-step-item-head-inner{
-  border: 1px solid #0001fe;
-  color: #0001fe;
+  border: 1px solid #3287fd;
+  color: #3287fd;
 }
 .vux-step-item-head-process .vux-step-item-head-inner{
-  border: 1px solid #0001fe;
+  border: 1px solid #3287fd;
   color: #FFF;
-  background: #0001fe none repeat scroll 0 0;
+  background: #3287fd none repeat scroll 0 0;
 }
 .vux-step-item-head-wait .vux-step-item-head-inner {
   border: 1px solid #888;
@@ -139,6 +139,6 @@ export default {
   color: #666;
 }
 .vux-step-item-icon .weui-icon-success-no-circle{
-  color: #0001fe;
+  color: #3287fd;
 }
 </style>

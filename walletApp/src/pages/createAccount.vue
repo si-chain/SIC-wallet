@@ -5,7 +5,9 @@
     </div> -->
     <x-header v-if="$store.state.account" :left-options="{backText: '返回'}"></x-header>
     <!-- <x-header v-else :left-options="{showBack: false}"></x-header> -->
-    <p v-else style="height:30px;"></p>
+    <x-header v-else style="margin-bottom:12px;" :left-options="{showBack: false}"></x-header>
+    <!-- <p v-else style="height:30px;height: 18px;
+    margin-bottom: 12px;background-color: #3287fd;"></p> -->
     <div class="creat-box" :class="$store.state.account ? 'hastop' : ''">
       <div class="logo">
         <div class="logo-left">
@@ -205,11 +207,13 @@ export default{
 </script>
 <style lang="less" scoped>
 .vux-header{
-  background-color: #ffffff!important;
   height: 40px;
+  .vux-header-back{
+    color: #ffffff!important;
+  }
 }
 .header{
-  background-color: #ffffff!important;
+  background-color: #3287fd!important;
   position: relative;
   color: #000000;
   text-align: left;
@@ -291,6 +295,7 @@ export default{
 .weui-cell{
   padding: 5px 0;
   border-bottom: 1px solid #D9D9D9;
+  background: #f6f5f9;
 }
 .weui-cell:before {
     content: " ";
