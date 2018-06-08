@@ -30,6 +30,9 @@
         },
         "cordova-plugin-file-opener2": {
             "PACKAGE_NAME": "com.rensanning.cordova"
+        },
+        "cordova-plugin-statusbar": {
+            "PACKAGE_NAME": "com.rensanning.cordova"
         }
     },
     "dependent_plugins": {}
