@@ -228,6 +228,14 @@ module.exports = [
     "clobbers": [
       "cordova.plugins.fileOpener2"
     ]
+  },
+  {
+    "id": "cordova-plugin-statusbar.statusbar",
+    "file": "plugins/cordova-plugin-statusbar/www/statusbar.js",
+    "pluginId": "cordova-plugin-statusbar",
+    "clobbers": [
+      "window.StatusBar"
+    ]
   }
 ];
 module.exports.metadata = 
@@ -240,7 +248,8 @@ module.exports.metadata =
   "phonegap-plugin-barcodescanner": "4.0.1",
   "cordova-plugin-file": "6.0.1",
   "cordova-plugin-file-transfer": "1.7.1",
-  "cordova-plugin-file-opener2": "2.0.19"
+  "cordova-plugin-file-opener2": "2.0.19",
+  "cordova-plugin-statusbar": "2.4.2"
 };
 // BOTTOM OF METADATA
 });
