@@ -59,7 +59,7 @@ export default {
 .tip-alert{
   background: #fbf2f1;
   color: #c2433b;
-  font-size: .6rem;
+  font-size: 12px;
   padding: .3rem;
   white-space: normal;
   letter-spacing: normal;

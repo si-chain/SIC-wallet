@@ -27,10 +27,10 @@
       <div slot="footer" style="padding:10px" v-if="itemData.status === 0">
         <flexbox>
           <flexbox-item>
-            <x-button type="warn" :disabled="applayListValue.length === 0" @click.native="handle('Reject')">{{$t('authorization.Reject')}}</x-button>
+            <x-button type="primary" :disabled="applayListValue.length === 0" @click.native="handle('Agree')">{{$t('authorization.Agree')}}</x-button>
           </flexbox-item>
           <flexbox-item>
-            <x-button type="primary" :disabled="applayListValue.length === 0" @click.native="handle('Agree')">{{$t('authorization.Agree')}}</x-button>
+            <x-button :disabled="applayListValue.length === 0" @click.native="handle('Reject')">{{$t('authorization.Reject')}}</x-button>
           </flexbox-item>
         </flexbox>
       </div>

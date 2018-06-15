@@ -52,7 +52,10 @@
               </step>
             </card>
           </div>
-          <divider class="no-more" v-if="!more">{{ $t('policy.policy_more') }}</divider>
+          <div v-if="!more">
+            <divider class="no-more">{{ $t('policy.policy_more') }}</divider>
+            <p class="no-more-tip">{{$t('policy.upload_nomore_tip')}}</p>
+          </div>
         </div>
         <loading :show="policyList.length === 0  && !isLoading" text=""></loading>
       </div>
@@ -213,5 +216,13 @@ export default {
 }
 .weui-panel:before{
   border-top: none;
+}
+.no-more-tip{
+  width:80%;
+  text-align:center;
+  margin:0 auto;
+  font-size: 12px;
+  line-height: 16px;
+  color: #999;
 }
 </style>

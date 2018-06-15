@@ -1,11 +1,11 @@
 <template>
     <div class="page-group" style="overflow:hidden">
-      <x-header :left-options="{backText: ''}">备份私钥</x-header>
+      <x-header :left-options="{backText: ''}">{{$t('index.backup_wallet')}}</x-header>
       <div class="page" id="page-wallet-backup-detail">
         <div class="content">
-          <div class="tip-info">
+          <!-- <div class="tip-info">
               {{$t('wallet_backup.detail.tip')}}
-          </div>
+          </div> -->
           <div class="content-block">
             <div class="tip-warning" :class="{'text-center':!wifKey}" id='copywin'>
               {{wifKey || '****************************'}}
@@ -14,6 +14,9 @@
             <x-button v-if="!wifKey" type="primary" @click.native="unlock">{{$t('wallet_backup.detail.unlock')}}</x-button>
           </div>
           <ul class="tips color-danger">
+            <li>
+              {{$t('wallet_backup.detail.tip')}}
+            </li>
             <li>
               {{$t('wallet_backup.detail.tip1')}}
             </li>
@@ -204,7 +207,7 @@ button.weui-btn {
     border: 1px solid #ffebcc;
     border-radius: 6px;
     color: #495060;
-    font-size: .6rem;
+    font-size: 12px;
     padding: .3rem;
     margin-bottom: 20px;
     white-space: normal;
@@ -214,12 +217,13 @@ button.weui-btn {
   word-break: break-word;
 }
 .tip-info {
-    background: #d6edf8;
-    color: #5393bc;
-    font-size: .6rem;
-    padding: .3rem;
-    white-space: normal;
-    word-break: break-all;
+  width:96%;
+  text-align:left;
+  margin:0 auto;
+  font-size: 12px;
+  margin-top:10px;
+  line-height: 16px;
+  color: #999;
 }
 .tip-warning {
   padding: 0.5rem;
@@ -228,7 +232,7 @@ button.weui-btn {
 .tip-error {
     background: #fbf2f1;
     color: #c2433b;
-    font-size: .6rem;
+    font-size: 12px;
     padding: .3rem;
     text-align: center;
     border-radius: 5px;
@@ -237,12 +241,9 @@ button.weui-btn {
     word-break: break-all;
 }
 .tips {
-    font-size: .6rem;
+    font-size: 12px;
     padding-left: 1.5rem;
-}
-.color-danger {
-    color: #ed3f14 !important;
-    font-weight: bold;
+    color: #999;
 }
 
 .link-green {

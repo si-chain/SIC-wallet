@@ -1,11 +1,8 @@
 <template>
   <div class="page-group" style="overflow:hidden">
-    <x-header :left-options="{backText: ''}">备份私钥</x-header>
+    <x-header :left-options="{backText: ''}">{{$t('index.backup_wallet')}}</x-header>
     <div class="page">
       <div class="content">
-        <div class="tip-info">
-            {{$t('wallet_backup.index.tip')}}
-        </div>
         <div class="content-block text-center">
           <account-image :size="30" :account="$route.query.account"></account-image>
           <p>{{$route.query.account}}</p>
@@ -22,6 +19,9 @@
           </cell>
         </group>
         <p class="tip-error text-center" v-if="error.common">{{error.common}}</p>
+        <div class="tip-info">
+            <span style="color:#999">*</span> {{$t('wallet_backup.index.tip')}}
+        </div>
         <div class="content-block button-block">
           <flexbox>
             <flexbox-item>
@@ -34,7 +34,7 @@
         </div>
       </div>
     </div>
-    <password-confirm v-if="isUnlock" @unlocking="unlocking" :tips="$t('wallet_del.tip_del')"></password-confirm>
+    <password-confirm v-if="isUnlock" @unlocking="unlocking" @setUnlock="setUnlock" :tips="$t('wallet_del.tip_del')"></password-confirm>
   </div>
 </template>
 <script>
@@ -128,6 +128,9 @@ export default {
         this.isUnlock = false
         this.error.common = this.$t('unlock.error.invalid_password')
       }
+    },
+    setUnlock (val) {
+      this.isUnlock = val
     }
   },
   computed: {
@@ -157,7 +160,7 @@ export default {
     margin-top: 10px;
     background: #fbf2f1;
     color: #c2433b;
-    font-size: .6rem;
+    font-size: 12px;
     padding: .3rem;
     white-space: normal;
     word-break: break-all;
@@ -175,12 +178,12 @@ export default {
     align-items: center;
 }
 .tip-info {
-  background: #d6edf8;
-  color: #5393bc;
-  font-size: .6rem;
-  padding: .3rem;
-  white-space: normal;
-  word-break: break-all;
-  word-break: break-word;
+  width:96%;
+  text-align:left;
+  margin:0 auto;
+  font-size: 12px;
+  margin-top:10px;
+  line-height: 16px;
+  color: #999;
 }
 </style>

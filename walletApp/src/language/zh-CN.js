@@ -106,6 +106,9 @@ const locale = {
     },
     policy: {
       tip_insurance: '数据托管',
+      upload_nomore_tip: '保单挖矿说明：点击上方的"保单托管"后可以上传自己的保单文件或图片，通过审核后，即可获得奖励的SIC',
+      policy_upload_tip_title:'温馨提示',
+      policy_upload_tip: '建议上传电子版保单文件，但也可以用是拍摄纸质保单，若纸质保单，需上传有保单号，保险产品名，保险人，被保险人的完全清晰的内容。',
       tip_insurance_policy: '保单托管',
       history_policy: '保单托管记录',
       history_claim: '理赔托管记录',

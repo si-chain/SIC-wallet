@@ -123,8 +123,8 @@ export default {
 .tip-error,.info-alert {
     background: #fbf2f1;
     color: #c2433b;
-    font-size: .6rem;
-    padding: .6rem;
+    font-size: 12px;
+    padding: 5px;
     white-space: normal;
     word-break: break-all;
 }

@@ -23,14 +23,15 @@
                     </div>
                 </li>
               </ul>
+              <p class="upload-tip">{{$t('policy.policy_upload_tip_title')}}：{{$t('policy.policy_upload_tip')}}</p>
           </div>
           <box gap="10px 15px">
             <flexbox>
               <flexbox-item>
-                <x-button type="warn" @click.native="confirm" link="/policy">{{$t('index.cancel')}}</x-button>
+                <x-button type="primary" @click.native="uploadFile">{{$t('index.confirm')}}</x-button>
               </flexbox-item>
               <flexbox-item>
-                <x-button type="primary" @click.native="uploadFile">{{$t('index.confirm')}}</x-button>
+                <x-button @click.native="confirm" link="/policy">{{$t('index.cancel')}}</x-button>
               </flexbox-item>
             </flexbox>
           </box>
@@ -286,5 +287,13 @@ export default {
   font-size: 18px;
   line-height: 30px;
   padding: 10px 15px 0 15px;
+}
+.upload-tip{
+  width:90%;
+  text-align:left;
+  margin:0 auto;
+  font-size: 12px;
+  line-height: 16px;
+  color: #999;
 }
 </style>

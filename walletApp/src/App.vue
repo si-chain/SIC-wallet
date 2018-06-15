@@ -204,6 +204,10 @@ export default {
     height: 100%;
     overflow: auto;
   }
+  .weui-icon-success {
+    font-size: 23px;
+    color: #3287fd!important;
+  }
   html, body {
     height: 100%;
     width: 100%;

@@ -10,13 +10,13 @@
       <divider class="no-more">{{ $t('policy.policy_more') }}</divider>
     </div>
     <div class="transfer-bom">
-      <flexbox>
+      <flexbox style="margin-bottom:3px">
         <flexbox-item>
-          <x-button :text="$t('transfer.title')" :link="`/transfer-detail?account=${$route.query.account}`"></x-button>
+          <x-button type="primary" :text="$t('transfer.title')" :link="`/transfer-detail?account=${$route.query.account}`"></x-button>
         </flexbox-item>
         <flexbox-item>
-          <x-button v-if="isIdentity" type="primary" :text="$t('transfer.extract')" :link="`/withdraw?account=${$route.query.account}`"></x-button>
-          <x-button v-else :text="$t('transfer.extract')" type="primary" @click.native="ShowIdentityMsg = !ShowIdentityMsg"></x-button>
+          <x-button v-if="isIdentity" :text="$t('transfer.extract')" :link="`/withdraw?account=${$route.query.account}`"></x-button>
+          <x-button v-else :text="$t('transfer.extract')" @click.native="ShowIdentityMsg = !ShowIdentityMsg"></x-button>
         </flexbox-item>
       </flexbox>
     </div>

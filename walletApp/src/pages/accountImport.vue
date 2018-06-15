@@ -207,11 +207,11 @@ export default {
 }
 
 .block-button {
-  margin-top: 0.6rem;
+  margin-top: 5px;
 }
 
 .block-tip {
-  margin: 0.6rem 0 0 0;
+  margin: 5px 0 0 0;
   .tip-error {
     text-align: center;
     color: #ea3a3a;

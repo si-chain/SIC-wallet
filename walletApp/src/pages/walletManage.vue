@@ -16,10 +16,10 @@
       <div class="content-block button-block bom">
         <flexbox>
           <flexbox-item>
-            <x-button type="primary" class="creat-btn" :link="`/create-account?account=${$route.query.account}`">{{$t('wallet_create.index.button_create')}}</x-button>
+            <x-button type="primary" :link="`/create-account?account=${$route.query.account}`">{{$t('wallet_create.index.button_create')}}</x-button>
           </flexbox-item>
           <flexbox-item>
-            <x-button type="default" class="import-btn" :link="`/account-import?account=${$route.query.account}`">{{$t('wallet_create.index.button_import')}}</x-button>
+            <x-button :link="`/account-import?account=${$route.query.account}`">{{$t('wallet_create.index.button_import')}}</x-button>
           </flexbox-item>
         </flexbox>
       </div>
@@ -102,10 +102,7 @@ export default {
     }
 }
 .weui-btn{
-  border-radius: 1.428571rem;
-  border:1px solid #f7b502;
   font-weight: 300;
-  width: 91%;
 }
 .creat-btn{
   background: -webkit-linear-gradient(#3287f1, #3287fd); /* Safari 5.1 - 6.0 */

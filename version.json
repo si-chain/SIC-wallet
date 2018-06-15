@@ -39,6 +39,14 @@
             "url": "http://sic-client.oss-cn-beijing.aliyuncs.com/apk/SIC-Wallet@1.1.0.apk",
             "force": true,
             "msg": "EOS 更新"
+        },
+        {
+            "platform": "A",
+            "channel": "G",
+            "ver": "1.1.1",
+            "url": "http://sic-client.oss-cn-beijing.aliyuncs.com/apk/SIC-Wallet@1.1.1.apk",
+            "force": true,
+            "msg": "提升用户体验"
         }
     ]
 }
