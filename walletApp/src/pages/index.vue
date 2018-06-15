@@ -34,6 +34,11 @@
         <p style="text-align:center;">{{ $t('index.confirm_authorization') }}</p>
       </confirm>
     </div>
+     <div v-transfer-dom>
+       <toast v-model="httpError" width="60%" type="text" :time="1000" is-show-mask :text="$t('index.http_error')" position="middle">
+         <!-- {{ $t('index.http_error')}} -->
+       </toast>
+    </div>
     <div v-transfer-dom>
       <alert v-model="show" button-text=" ">
         <msg slot="default" :title="title" :buttons="buttons" :icon="icon"></msg>
@@ -55,7 +60,7 @@
 </template>
 
 <script>
-import { Radio, Group, Cell, Flexbox, FlexboxItem, Badge, Drawer, Confirm, Alert, Msg, Actionsheet, ButtonTab, ButtonTabItem, ViewBox, XHeader, Tabbar, TabbarItem, Loading, TransferDom } from 'vux'
+import { Radio, Group, Toast, Cell, Flexbox, FlexboxItem, Badge, Drawer, Confirm, Alert, Msg, Actionsheet, ButtonTab, ButtonTabItem, ViewBox, XHeader, Tabbar, TabbarItem, Loading, TransferDom } from 'vux'
 import util from '../libs/utils'
 import AppConfig from '../libs/config'
 import accountDetail from '../components/accountDetail'
@@ -69,6 +74,7 @@ export default {
     Radio,
     Group,
     Confirm,
+    Toast,
     Cell,
     Alert,
     Msg,
@@ -159,20 +165,31 @@ export default {
       this.$router.push({path: '/wallet-backup', query})
     },
     loadBalance () {
-      let account = this.$store.state.account
-      this.$http.get(`${this.basePath}/v1/chain/accounts/eos/${account}`).then(res => {
-        let data = res.data
-        if (data.data.mobile) {
-          this.$store.commit('upDataIdentityAccount', account)
-        }
-        if (data.code === 200) {
-          this.balance = data.data.eos_balance.split(' ')[0]
-        } else {
-          this.balance = '0'
-        }
-      }).catch(() => {
+      let account = this.$route.query.account || this.$store.state.account
+      if (account) {
+        this.$http.get(`${this.basePath}/v1/chain/accounts/eos/${account}`).then(res => {
+          let data = res.data
+          if (data.code === 200) {
+            this.balance = data.data.balance.split(' ')[0]
+            this.$common.setStore('accountInfo', data.data)
+          } else {
+            this.balance = '0'
+          }
+          if (data.data.mobile) {
+            this.$store.commit('upDataIdentityAccount', account)
+          }
+        }).catch((err) => {
+          console.log(err)
+          this.httpError = true
+          if (!this.$common.getStore('accountInfo')) {
+            this.$router.push('/create-account')
+          } else {
+            this.balance = JSON.parse(this.$common.getStore('accountInfo')).balance.split(' ')[0]
+          }
+        })
+      } else {
         this.$router.push('/create-account')
-      })
+      }
     },
     showFlag () {
       this.isShow = !this.isShow
@@ -182,7 +199,7 @@ export default {
       let data = ''
       let _this = this
       accountArr.map(item => {
-        if (item.account === this.$route.query.account) {
+        if (item.account === this.$route.query.account || item.account === this.$store.state.account) {
           data = { 'data': item }
           this.$http.post(`${this.basePath}/v1/login/qrCode/${this.code}`, data).then(res => {
             let responese = res.data
@@ -279,6 +296,7 @@ export default {
       code: '',
       path: '/',
       isLoading: false,
+      httpError: false,
       direction: 'forward',
       drawerVisibility: false,
       showMode: 'push',

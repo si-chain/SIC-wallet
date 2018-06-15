@@ -21,11 +21,18 @@
       <p class="new-account-tip">{{$t('index.newAccountTip')}}</p>
       <div class="input-item">
         <p class="create-account-title">{{$t('index.account_name')}}</p>
-        <x-input novalidate :icon-type="iconType" :placeholder="$t('wallet_create.placeholder.step1')" v-model="account" @on-blur="accountOnBlur"></x-input>
+        <x-input novalidate :icon-type="iconType" :placeholder="$t('wallet_create.placeholder.step1')" v-model="account" :min="12" :max="12" @on-blur="accountOnBlur">
+          <x-button slot="right" type="primary" @click.native="randomEosName" mini>{{$t('index.random')}}</x-button>
+        </x-input>
       </div>
       <div class="input-item">
         <p class="create-account-title">{{$t('wallet_create.placeholder.step2')}}</p>
         <x-input novalidate :icon-type="iconTypePwd" type="password" @on-enter="submit" :placeholder="$t('wallet_create.placeholder.step2')" v-model="password" @on-blur="confirmOnBlur"></x-input>
+        <!-- <x-input :title="$t('wallet_create.two.label.password')" type="password" novalidate :icon-type="iconTypePwd" v-model="password"></x-input> -->
+      </div>
+      <div class="input-item">
+        <p class="create-account-title">{{$t('index.Invite')}}</p>
+        <x-input :placeholder="$t('index.placeholderInvite')" v-model="invite" @on-blur="InviteOnBlur"></x-input>
         <!-- <x-input :title="$t('wallet_create.two.label.password')" type="password" novalidate :icon-type="iconTypePwd" v-model="password"></x-input> -->
       </div>
       <div class="btn-wrap">
@@ -68,6 +75,7 @@ export default{
     return {
       account: '',
       isAccount: false,
+      invite: '',
       error: '',
       createShow: false,
       width: '7.6em',
@@ -85,45 +93,56 @@ export default{
     accountOnBlur () {
       this.validateAccount()
     },
+    randomEosName () {
+      this.account = this.$common.randomEosName()
+      this.validateAccountHttp()
+    },
+    InviteOnBlur () {
+      console.log(this.invite)
+    },
     validateAccount () {
       let account = this.account
       // var length = account.length
-      console.log(!/^[a-zA-Z1-5]{1,12}/.test(this.account))
+      // console.log(!/^[a-zA-Z1-5]{1,12}/.test(this.account))
       if (!account) {
         this.error = this.$t('wallet_create.one.error.empty_account')
         this.createShow = true
         this.iconType = ''
-        this.width = '7.6em'
+        this.width = '8.5em'
         return false
-      } else if (!/^[a-zA-Z1-5]{1,12}/.test(this.account)) {
+      } else if (!/^[a-zA-Z1-5]{12}/.test(this.account)) {
         this.error = this.$t('wallet_create.one.error.account_format_error')
         this.createShow = true
         this.width = '18em'
         this.iconType = 'error'
         return false
       } else {
-        this.$http.get(`${this.basePath}/v1/chain/accounts/eos/${account}`).then(res => {
-          let data = res.data
-          if (data.code === 400) {
-            this.createShow = false
-            this.isAccount = true
-            this.iconType = 'success'
-            return true
-          } else {
-            this.error = this.$t('wallet_create.one.error.account_already_exist')
-            this.createShow = true
-            this.iconType = 'error'
-            this.width = '18em'
-            return false
-          }
-        }).catch(ex => {
-          this.error = this.$t('wallet_create.one.error.account_format_error')
-          this.createShow = true
-          this.width = '18em'
-          this.iconType = 'error'
-          return false
-        })
+        this.validateAccountHttp()
       }
+    },
+    validateAccountHttp () {
+      let account = this.account
+      this.$http.get(`${this.basePath}/v1/chain/accounts/eos/${account}`).then(res => {
+        let data = res.data
+        if (data.code === 400) {
+          this.createShow = false
+          this.isAccount = true
+          this.iconType = 'success'
+          return true
+        } else {
+          this.error = this.$t('wallet_create.one.error.account_already_exist')
+          this.createShow = true
+          this.iconType = 'error'
+          this.width = '18em'
+          return false
+        }
+      }).catch(ex => {
+        this.error = this.$t('wallet_create.one.error.account_format_error')
+        this.createShow = true
+        this.width = '18em'
+        this.iconType = 'error'
+        return false
+      })
     },
     confirmOnBlur () {
       if (this.password === '') {
@@ -151,6 +170,7 @@ export default{
         let getData = {
           params: {
             'chainName': 'eos',
+            'inviteCode': _this.invite,
             'accountName': account,
             'keys': {
               'active': activePubkey,
@@ -291,11 +311,12 @@ export default{
 }
 .weui-input{
   font-size: 18px;
+
 }
 .weui-cell{
   padding: 5px 0;
   border-bottom: 1px solid #D9D9D9;
-  background: #f6f5f9;
+  background: #f5f5f5!important;
 }
 .weui-cell:before {
     content: " ";
@@ -324,7 +345,7 @@ export default{
   width: 250px;
   height: 39px;
   border: 2px solid #d1b774;
-  background-color: #0f46b0!important;
+  background-color: #3287fd!important;
   border-radius: 28px;
   line-height: 39px;
   font-size: 16px;

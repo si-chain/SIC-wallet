@@ -7,6 +7,21 @@ import Co from 'co'
 import _ from 'lodash'
 let util = {}
 util._ = _
+const eosArray = ['1', '2', '3', '4', '5', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
+
+Array.prototype.shuffle = function () {
+  let m = this.length, i;
+  while (m) {
+    i = (Math.random() * m--) >>> 0;
+    [this[m], this[i]] = [this[i], this[m]]
+  }
+  return this;
+}
+util.randomEosName = function(prefix = 'sic', length = 12) {
+  let array = eosArray.shuffle();
+  return prefix + array.slice(0, length - prefix.length).join('');
+}
+
 /**
  * @param arr//需要去重的数组
  * @return  //返回去重之后的新数组

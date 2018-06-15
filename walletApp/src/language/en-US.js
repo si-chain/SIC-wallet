@@ -1,10 +1,14 @@
 /*eslint-disable */
 const locale = {
     index: {
+      http_error: 'System Exception, Please Try Again Later',
       newAccount: 'New Account',
       newAccountTip: 'Create Account',
       start:'Start',
       home:'home',
+      random: 'Random',
+      Invite: 'Invite Code',
+      placeholderInvite: 'Invite Code',
       SIC:'Fund Manage',
       goIdentity: 'Authentication',
       agreement: 'User Agreement',
@@ -155,7 +159,7 @@ const locale = {
                 account_should_be_longer: 'Account name be longer',
                 account_should_be_shorter: 'Account name be shorter',
                 account_should_start_with_a_letter: 'Each account segment should start with a letter',
-                account_format_error: 'Each account segment should have only letters, digits',
+                account_format_error: 'Each account can only be [a-z][1-5] and a combination of 12 bits.',
                 account_end_error: 'Each account segment should end with a letter or digit',
                 account_segment_should_be_longer: 'Each account segment should be longer',
                 premium_name: 'This is a premium name which is not supported by this faucet Please enter a regular name containing least one dash, a number or no vowels'

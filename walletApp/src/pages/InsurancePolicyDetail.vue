@@ -150,8 +150,9 @@ export default {
         try {
           let accountData = JSON.parse(this.$common.decryptActive(accountStr.encryption, _this.pwd))
           let activeKey = this.$common.decryptActive(accountData.active, _this.pwd)
+          console.log(activeKey)
           config.keyProvider = activeKey
-          let eos = Eos.Localnet(config)
+          let eos = Eos(config)
           let t = {}
           t.files = data.data.files
           const policyContract = eos.contract(this.account)
@@ -175,6 +176,7 @@ export default {
             alert(err)
           }
         } catch (error) {
+          console.log(error)
           this.showModule()
           this.upLoadImg = false
           setTimeout(() => {

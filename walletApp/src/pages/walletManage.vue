@@ -108,10 +108,10 @@ export default {
   width: 91%;
 }
 .creat-btn{
-  background: -webkit-linear-gradient(#043487, #023fce); /* Safari 5.1 - 6.0 */
-  background: -o-linear-gradient(#043487, #023fce); /* Opera 11.1 - 12.0 */
-  background: -moz-linear-gradient(#043487, #023fce); /* Firefox 3.6 - 15 */
-  background: linear-gradient(#043487, #023fce); /* 标准的语法 */
+  background: -webkit-linear-gradient(#3287f1, #3287fd); /* Safari 5.1 - 6.0 */
+  background: -o-linear-gradient(#3287f1, #3287fd); /* Opera 11.1 - 12.0 */
+  background: -moz-linear-gradient(#3287f1, #3287fd); /* Firefox 3.6 - 15 */
+  background: linear-gradient(#3287f1, #3287fd); /* 标准的语法 */
 }
 .import-btn{
   color:#1857f2

@@ -5,7 +5,7 @@
             "channel": "G",
             "ver": "1.0.6",
             "url": "http://sic-client.oss-cn-beijing.aliyuncs.com/apk/SIC-Wallet@1.0.6.apk",
-            "force": false,
+            "force": true,
             "msg": "添加数据统计功能"
         },
         {
@@ -13,7 +13,7 @@
             "channel": "G",
             "ver": "1.0.7",
             "url": "http://sic-client.oss-cn-beijing.aliyuncs.com/apk/SIC-Wallet@1.0.7.apk",
-            "force": false,
+            "force": true,
             "msg": "添加应用更新功能"
         },
         {
@@ -21,7 +21,7 @@
             "channel": "G",
             "ver": "1.0.8",
             "url": "http://sic-client.oss-cn-beijing.aliyuncs.com/apk/SIC-Wallet@1.0.8.apk",
-            "force": false,
+            "force": true,
             "msg": "UI更新"
         },
         {
@@ -29,8 +29,16 @@
             "channel": "G",
             "ver": "1.0.9",
             "url": "http://sic-client.oss-cn-beijing.aliyuncs.com/apk/SIC-Wallet@1.0.9.apk",
-            "force": false,
+            "force": true,
             "msg": "页面布局更新"
+        },
+        {
+            "platform": "A",
+            "channel": "G",
+            "ver": "1.1.0",
+            "url": "http://sic-client.oss-cn-beijing.aliyuncs.com/apk/SIC-Wallet@1.1.0.apk",
+            "force": true,
+            "msg": "EOS 更新"
         }
     ]
 }

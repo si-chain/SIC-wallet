@@ -10,9 +10,11 @@ import { AjaxPlugin, ToastPlugin, ConfirmPlugin, ViewBox } from 'vux'
 import i18n from './language/index'
 import util from './libs/utils'
 import Filters from './libs/filters'
+import moment from 'vue-moment'
 
 Vue.component('view-box', ViewBox)
 Filters(Vue)
+Vue.use(moment)
 Vue.use(ToastPlugin)
 Vue.use(AjaxPlugin)
 Vue.use(ConfirmPlugin)

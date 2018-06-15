@@ -39,7 +39,7 @@
         <div class="wrapper" v-if="policyList.length > 0 || isLoading">
           <div>
             <card class="wrap-item" v-if="policyList.length > 0" v-for="(item,index) in policyList" :key="index">
-              <cell slot="header" :title="$t('policy.upload_time')">{{item.upload_time.replace('T', ' ')}}</cell>
+              <cell slot="header" :title="$t('policy.upload_time')">{{item.upload_time | moment('YYYY MM DD hh:mm:ss')}}</cell>
               <cell slot="content" v-if="item.status === 5" :title="$t('policy.policy_file')">{{item.ID}}</cell>
               <cell slot="content" v-if="item.status === 4" :title="$t('policy.policy_num')"><span style="color:#3287fd">{{item.policyID}}</span></cell>
               <cell slot="content" v-if="item.status === 5" :title="$t('policy.policy_value')"><span style="color:#f59902">{{item.value}}</span></cell>

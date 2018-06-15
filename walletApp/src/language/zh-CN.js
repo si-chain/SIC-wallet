@@ -1,10 +1,14 @@
 /*eslint-disable */
 const locale = {
     index: {
+      http_error: '系统异常,请稍后再试',
       newAccount: '新账号',
       newAccountTip:'创建一个钱包和一个账户',
       start:'点击开始SIC',
       home:'我',
+      random:'随机',
+      Invite:'邀请码',
+      placeholderInvite: '邀请码',
       SIC:'资金管理',
       notice: '提示',
       goIdentity:'立即认证',
@@ -160,9 +164,9 @@ const locale = {
                 account_should_be_longer: '账户名至少1位',
                 account_should_be_shorter: '账户名小于12位',
                 account_should_start_with_a_letter: '账户名需以字母开头',
-                account_format_error: '账户名只能是字母、1-5的数字的组合',
+                account_format_error: '账户名只能是[a-z][1-5]且长度为12位的组合',
                 account_end_error: '账户名需要以字母或数字结尾',
-                account_segment_should_be_longer: '账户名长度是1到12位',
+                account_segment_should_be_longer: '账户名长度是12位',
                 premium_name: '你使用的是高级账户名,请选择其他名字，包含至少一个横杠、数字或者不含元音字母'
             },
             next: '下一步'
