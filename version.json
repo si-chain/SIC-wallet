@@ -6,7 +6,7 @@
             "ver": "1.0.6",
             "url": "http://sic-client.oss-cn-beijing.aliyuncs.com/apk/SIC-Wallet@1.0.6.apk",
             "force": true,
-            "msg": "添加数据统计功能"
+            "msg": ["添加数据统计功能","增加短信认证功能"]
         },
         {
             "platform": "A",
@@ -14,7 +14,7 @@
             "ver": "1.0.7",
             "url": "http://sic-client.oss-cn-beijing.aliyuncs.com/apk/SIC-Wallet@1.0.7.apk",
             "force": true,
-            "msg": "添加应用更新功能"
+            "msg": ["添加应用更新功能","支持多账号"]
         },
         {
             "platform": "A",
@@ -22,7 +22,7 @@
             "ver": "1.0.8",
             "url": "http://sic-client.oss-cn-beijing.aliyuncs.com/apk/SIC-Wallet@1.0.8.apk",
             "force": true,
-            "msg": "UI更新"
+            "msg": ["UI更新"]
         },
         {
             "platform": "A",
@@ -30,7 +30,7 @@
             "ver": "1.0.9",
             "url": "http://sic-client.oss-cn-beijing.aliyuncs.com/apk/SIC-Wallet@1.0.9.apk",
             "force": true,
-            "msg": "页面布局更新"
+            "msg": ["升级用户体验","添加转账功能"]
         },
         {
             "platform": "A",
@@ -38,7 +38,7 @@
             "ver": "1.1.0",
             "url": "http://sic-client.oss-cn-beijing.aliyuncs.com/apk/SIC-Wallet@1.1.0.apk",
             "force": true,
-            "msg": "EOS 更新"
+            "msg": ["EOS 更新","修复创建账号问题"]
         },
         {
             "platform": "A",
@@ -46,7 +46,15 @@
             "ver": "1.1.1",
             "url": "http://sic-client.oss-cn-beijing.aliyuncs.com/apk/SIC-Wallet@1.1.1.apk",
             "force": true,
-            "msg": "提升用户体验"
+            "msg": ["增加创建账号邀请码功能"]
+        },
+        {
+            "platform": "A",
+            "channel": "G",
+            "ver": "1.1.2",
+            "url": "http://sic-client.oss-cn-beijing.aliyuncs.com/apk/SIC-Wallet@1.1.2.apk",
+            "force": true,
+            "msg": ["保单托管列表loading状态修复","按钮风格修改","资产首屏增加手动刷新功能","关于我们与版本日志功能"]
         }
     ]
 }

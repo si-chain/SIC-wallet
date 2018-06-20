@@ -112,6 +112,16 @@ export default new Router({
       component: () => import('@/pages/identityAuthentication.vue')
     },
     {
+      path: '/about',
+      name: 'about',
+      component: () => import('@/pages/about.vue')
+    },
+    {
+      path: '/version-log',
+      name: 'versionLog',
+      component: () => import('@/pages/versionLog.vue')
+    },
+    {
       path: '*',
       name: 'other',
       component: () => import('@/pages/index.vue')

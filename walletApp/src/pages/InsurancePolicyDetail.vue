@@ -151,7 +151,6 @@ export default {
         try {
           let accountData = JSON.parse(this.$common.decryptActive(accountStr.encryption, _this.pwd))
           let activeKey = this.$common.decryptActive(accountData.active, _this.pwd)
-          console.log(activeKey)
           config.keyProvider = activeKey
           let eos = Eos(config)
           let t = {}
@@ -171,13 +170,20 @@ export default {
                 this.icon = 'success'
                 this.title = this.$t('policy.success')
                 this.$store.commit('set_img_upload_cache', [])
+              }).catch((err) => {
+                this.upLoadImg = false
+                let data = JSON.parse(err)
+                AlertModule.show({
+                  title: data.message,
+                  icon: 'warn',
+                  content: data.error.details[0].message
+                })
               })
             })
           } catch (err) {
             alert(err)
           }
         } catch (error) {
-          console.log(error)
           this.showModule()
           this.upLoadImg = false
           setTimeout(() => {

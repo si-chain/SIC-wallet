@@ -4,6 +4,7 @@ Vue.use(Vuex)
 const state = {
   isLoading: false,
   wallets: [],
+  isUpdate: true,
   IdentityAccount: [],
   account: '',
   img_upload_cache: [],

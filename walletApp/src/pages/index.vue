@@ -1,5 +1,5 @@
 <template>
-  <div style="height:100%;overflow:hidden">
+  <div style="height:100%;overflow:hidden" v-swipedown="{fn:vuetouchDown}">
     <div v-transfer-dom>
       <loading v-model="isLoading"></loading>
     </div>
@@ -12,7 +12,7 @@
     </x-header> -->
     <div class="index-header">
       <img @click="onClickMore" class="sys" src="../assets/language.png"/>
-      <img v-if="isNative" @click="qrcode" class="sys" style="float:right;margin-right:1.142857rem" src="../assets/sys.png"/>
+      <img @click="qrcode" class="sys" style="float:right;margin-right:1.142857rem" src="../assets/sys.png"/>
     </div>
     <account-detail></account-detail>
     <div class="is-backup">
@@ -49,8 +49,11 @@
       v-model="showUpdateShow"
       :close-on-confirm="false"
       title="版本更新"
+      @on-cancel="showUpdateCancel"
       @on-confirm="showUpdateConfirm">
-        <p style="text-align:center;">有新版本发布，请及时更新！</p>
+        <ul style="margin:0 2rem">
+          <li v-for="item in versionMsg" :key="item" style="text-align:left">{{item}}</li>
+        </ul>
       </confirm>
     </div>
     <div v-transfer-dom>
@@ -94,6 +97,10 @@ export default {
     accountDetail
   },
   methods: {
+    vuetouchDown (s, e) {
+      this.isLoading = true
+      this.loadBalance()
+    },
     onClickMore () {
       this.showMenu = true
     },
@@ -102,58 +109,61 @@ export default {
       this.$i18n.locale = locale
     },
     qrcode () {
-      let _this = this
-      let options = {
-        preferFrontCamera: true, // iOS and Android
-        showFlipCameraButton: true, // iOS and Android
-        showTorchButton: true, // iOS and Android
-        torchOn: true, // Android, launch with the torch switched on (if available)
-        saveHistory: true, // Android, save scan history (default false)
-        prompt: 'Place a barcode inside the scan area', // Android
-        resultDisplayDuration: 1500, // Android, display scanned text for X ms. 0 suppresses it entirely, default 1500
-        formats: 'QR_CODE,PDF_417', // default: all but PDF_417 and RSS_EXPANDED
-        orientation: 'landscape', // Android only (portrait|landscape), default unset so it rotates with the device
-        disableAnimations: true, // iOS
-        disableSuccessBeep: false // iOS and Android
+      if (!AppConfig.isNative) {
+        console.log(111)
       }
-      let permissions = cordova.plugins.permissions
-      permissions.hasPermission(permissions.CAMERA, checkPermissionCallback, null)
-      function checkPermissionCallback (status) {
-        if (!status.hasPermission) {
-          let errorCallback = function () {
-            alert('请在系统设置中打开本应用的相机权限')
-          }
-          permissions.requestPermission(
-            permissions.CAMERA,
-            function (status) {
-              if (!status.hasPermission) errorCallback()
-              cordova.plugins.barcodeScanner.scan(
-                function (result) {
-                  let resultStr = result.text
-                  if (result.includes('qr://sic/login/')) {
-                    _this.showConfirm = true
-                    _this.code = resultStr.replace('qr://sic/login/', '')
-                  }
-                }, function (error) {
-                  console.log(error)
-                  alert('二维码不正确')
-                }, options)
-            },
-            errorCallback)
-        } else {
-          cordova.plugins.barcodeScanner.scan(
-            function (result) {
-              let resultStr = result.text
-              if (resultStr.includes('qr://sic/login/')) {
-                _this.showConfirm = true
-                _this.code = resultStr.replace('qr://sic/login/', '')
-              }
-            }, function (error) {
-              console.log(error)
-              alert('二维码不正确')
-            }, options)
-        }
-      }
+      // let _this = this
+      // let options = {
+      //   preferFrontCamera: true, // iOS and Android
+      //   showFlipCameraButton: true, // iOS and Android
+      //   showTorchButton: true, // iOS and Android
+      //   torchOn: true, // Android, launch with the torch switched on (if available)
+      //   saveHistory: true, // Android, save scan history (default false)
+      //   prompt: 'Place a barcode inside the scan area', // Android
+      //   resultDisplayDuration: 1500, // Android, display scanned text for X ms. 0 suppresses it entirely, default 1500
+      //   formats: 'QR_CODE,PDF_417', // default: all but PDF_417 and RSS_EXPANDED
+      //   orientation: 'landscape', // Android only (portrait|landscape), default unset so it rotates with the device
+      //   disableAnimations: true, // iOS
+      //   disableSuccessBeep: false // iOS and Android
+      // }
+      // let permissions = cordova.plugins.permissions
+      // permissions.hasPermission(permissions.CAMERA, checkPermissionCallback, null)
+      // function checkPermissionCallback (status) {
+      //   if (!status.hasPermission) {
+      //     let errorCallback = function () {
+      //       alert('请在系统设置中打开本应用的相机权限')
+      //     }
+      //     permissions.requestPermission(
+      //       permissions.CAMERA,
+      //       function (status) {
+      //         if (!status.hasPermission) errorCallback()
+      //         cordova.plugins.barcodeScanner.scan(
+      //           function (result) {
+      //             let resultStr = result.text
+      //             if (result.includes('qr://sic/login/')) {
+      //               _this.showConfirm = true
+      //               _this.code = resultStr.replace('qr://sic/login/', '')
+      //             }
+      //           }, function (error) {
+      //             console.log(error)
+      //             alert('二维码不正确')
+      //           }, options)
+      //       },
+      //       errorCallback)
+      //   } else {
+      //     cordova.plugins.barcodeScanner.scan(
+      //       function (result) {
+      //         let resultStr = result.text
+      //         if (resultStr.includes('qr://sic/login/')) {
+      //           _this.showConfirm = true
+      //           _this.code = resultStr.replace('qr://sic/login/', '')
+      //         }
+      //       }, function (error) {
+      //         console.log(error)
+      //         alert('二维码不正确')
+      //       }, options)
+      //   }
+      // }
     },
     onCancel () {
       this.showConfirm = false
@@ -169,6 +179,7 @@ export default {
       if (account) {
         this.$http.get(`${this.basePath}/v1/chain/accounts/eos/${account}`).then(res => {
           let data = res.data
+          this.isLoading = false
           if (data.code === 200) {
             this.balance = data.data.balance.split(' ')[0]
             this.$common.setStore('accountInfo', data.data)
@@ -180,6 +191,7 @@ export default {
           }
         }).catch((err) => {
           console.log(err)
+          this.isLoading = false
           this.httpError = true
           if (!this.$common.getStore('accountInfo')) {
             this.$router.push('/create-account')
@@ -188,6 +200,7 @@ export default {
           }
         })
       } else {
+        this.isLoading = false
         this.$router.push('/create-account')
       }
     },
@@ -231,8 +244,9 @@ export default {
       this.$http.get(`http://sic-client.oss-cn-beijing.aliyuncs.com/version.json?num=${Math.random() * 1000}`).then(data => {
         data = data.data
         this.serverAppVersion = data.version[data.version.length - 1].ver
+        this.versionMsg = data.version[data.version.length - 1].msg
         this.AppUpDataUrl = data.version[data.version.length - 1].url
-        if (this.isVersions !== this.serverAppVersion) {
+        if (this.isVersions !== this.serverAppVersion && this.$store.state.isUpdate) {
           this.showUpdateShow = true
         }
       })
@@ -241,7 +255,12 @@ export default {
      *
      */
     showUpdateConfirm () {
+      this.$store.state.isUpdate = false
       window.location.href = this.AppUpDataUrl
+    },
+    showUpdateCancel () {
+      this.$store.state.isUpdate = false
+      this.showUpdateShow = false
     },
     keepOn () {
       this.show = false
@@ -288,6 +307,7 @@ export default {
       showMenu: false,
       showConfirm: false,
       show: false,
+      versionMsg: [],
       menus: {
         'language.noop': '<span class="menu-title">Language</span>',
         'zh-CN': '中文',
@@ -295,7 +315,7 @@ export default {
       },
       code: '',
       path: '/',
-      isLoading: false,
+      isLoading: true,
       httpError: false,
       direction: 'forward',
       drawerVisibility: false,

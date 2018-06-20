@@ -3,7 +3,8 @@
       <x-header :left-options="{backText: ''}">{{$t('index.authorization_record')}}</x-header>
       <div style="padding-top:50px" ref="authorization" v-if="authorizationData.length > 0 || isLoading">
         <authorization-item v-if="authorizationData.length > 0" @setPwdShow="setPwdShow" v-for="(item,index) in authorizationData" :key="index" :itemData="item"></authorization-item>
-        <divider class="no-more">{{ $t('policy.policy_more') }}</divider>
+        <!-- <divider class="no-more">{{ $t('policy.policy_more') }}</divider> -->
+        <load-more :show-loading="false" :tip="$t('loadmsg.not_more')"></load-more>
       </div>
       <loading :show="authorizationData.length === 0 && !isLoading" text=""></loading>
       <div v-transfer-dom>
@@ -21,7 +22,7 @@
 import Eos from 'eosjs'
 import config from '../libs/env'
 import authorizationItem from '../components/authorizationItem'
-import { XHeader, XButton, Alert, Loading, Msg, FormPreview, Divider, Card, Cell, Group, Flexbox, FlexboxItem, Checklist, TransferDomDirective as TransferDom } from 'vux'
+import { XHeader, XButton, Alert, Loading, Msg, FormPreview, Divider, Card, Cell, Group, Flexbox, FlexboxItem, Checklist, LoadMore, TransferDomDirective as TransferDom } from 'vux'
 import passwordConfirm from '../components/PasswordConfirm'
 import SIC from 'sic-ecies'
 export default {
@@ -30,6 +31,7 @@ export default {
   },
   components: {
     XHeader,
+    LoadMore,
     FormPreview,
     Divider,
     Card,

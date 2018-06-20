@@ -10,7 +10,9 @@
   <body>
     <script type="text/javascript" src="cordova.js"></script>
     <script type="text/javascript" src="static/js/index.js"></script>
-
+    <!-- <script type="text/javascript" src="static/js/zepto.js"></script>
+    <script type="text/javascript" src="static/js/qrcode.lib.min.js"></script>
+    <script type="text/javascript" src="static/js/qrcode.js"></script> -->
     <script type="text/javascript" src="./static/cordova.js"></script>
     <div id="app-box"></div>
     <% for (var chunk in htmlWebpackPlugin.files.chunks) { %><script type="text/javascript" src="<%= htmlWebpackPlugin.files.chunks[chunk].entry %>"></script>

@@ -3,6 +3,7 @@ const locale = {
     index: {
       http_error: '系统异常,请稍后再试',
       newAccount: '新账号',
+			version_log: '版本日志',
       newAccountTip:'创建一个钱包和一个账户',
       start:'点击开始SIC',
       home:'我',
@@ -43,6 +44,10 @@ const locale = {
       transaction_sum: '交易金额',
       message:'新消息',
       authorization_record:'授权记录'
+    },
+    loadmsg:{
+      more:'正在加载',
+      not_more:'暂无更多'
     },
     identity:{
       phone:'手机号码',

@@ -1,20 +1,20 @@
 <template>
-  <view-box ref="viewBox" :class="$route.path === '/guidance' ? 'tab__panel_guidance' : ''" :body-padding-bottom="$route.path === '/guidance' || $route.path === '/agreement' || $route.path === '/user-agreement' || $route.path === '/wallet-manage'? '0' : '50px'" style="height:100%;width:100%;overflow-y:auto;">
+  <view-box ref="viewBox" :class="$route.path === '/guidance' ? 'tab__panel_guidance' : ''" :body-padding-bottom="$route.path === '/guidance' || $route.path === '/agreement' || $route.path === '/user-agreement' || $route.path === '/wallet-manage' ? '0' : '50px'" style="height:100%;width:100%;overflow-y:auto;">
     <router-view class="router-view"></router-view>
     <tabbar v-if="($route.path === '/' || $route.path === '/home' || $route.path === '/policy' || $route.path === '*')&& $route.path !== '/guidance'" slot="bottom" style="width:100%;position:absolute;left:0;bottom:0;z-index:100;">
       <tabbar-item :selected="$route.path === '/'" link="/" @on-index-change="onIndexChange">
-        <img slot="icon" src="./assets/icon_01-03.png">
-        <img slot="icon-active" src="./assets/icon_01-01.png">
+        <img style="margin-top:2px;height: 17px!important;width: 22px!important;" slot="icon" src="./assets/icon_01-03.png">
+        <img style="margin-top:2px;height: 17px!important;width: 22px!important;" slot="icon-active" src="./assets/icon_01-01.png">
         <span slot="label">{{$t('index.wallet')}}</span>
       </tabbar-item>
       <tabbar-item :selected="$route.path === '/policy'" link="/policy">
-        <img slot="icon" src="./assets/icon_01-06.png">
-        <img slot="icon-active" src="./assets/icon_01-04.png">
+        <img style="width: 26px!important;height: 23px!important;" slot="icon" src="./assets/icon_01-06.png">
+        <img style="width: 26px!important;height: 23px!important;" slot="icon-active" src="./assets/icon_01-04.png">
         <span slot="label">{{$t('policy.tip_insurance')}}</span>
       </tabbar-item>
       <tabbar-item :selected="$route.path === '/home'" :show-dot="$store.state.hasMsg" link="/home">
-        <img slot="icon" src="./assets/icon_01-05.png">
-        <img slot="icon-active" src="./assets/icon_01-02.png">
+        <img style="width: 22px!important;height: 22px!important;" slot="icon" src="./assets/icon_01-05.png">
+        <img style="width: 22px!important;height: 22px!important;" slot="icon-active" src="./assets/icon_01-02.png">
         <span slot="label">{{$t('index.home')}}</span>
       </tabbar-item>
     </tabbar>
@@ -318,6 +318,9 @@ export default {
   }
   .menu-title {
     color: #888;
+  }
+  .weui-tabbar__icon {
+    height: 23px!important;
   }
 </style>
 

@@ -36,7 +36,7 @@
         <!-- <x-input :title="$t('wallet_create.two.label.password')" type="password" novalidate :icon-type="iconTypePwd" v-model="password"></x-input> -->
       </div>
       <div class="btn-wrap">
-        <x-button class="create-btn" :disabled="password === ''" type="primary" @click.native="submit">{{$t('wallet_create.create_account')}}</x-button>
+        <x-button :disabled="password === ''" type="primary" @click.native="submit">{{$t('wallet_create.create_account')}}</x-button>
         <a class="has-account" @click="hasAccount">{{$t('index.existing_account')}}?</a>
       </div>
     </div>
@@ -335,7 +335,8 @@ export default{
 .btn-wrap{
   width: 260px;
   height: 45px;
-  margin:28px 0 0 -5px;
+  margin:0 auto;
+  margin-top: 28px;
 }
 .account-image-wrap{
   text-align: center;

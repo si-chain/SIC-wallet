@@ -1,6 +1,7 @@
 /*eslint-disable */
 const locale = {
     index: {
+			version_log: 'Version Log',
       http_error: 'System Exception, Please Try Again Later',
       newAccount: 'New Account',
       newAccountTip: 'Create Account',
@@ -43,6 +44,10 @@ const locale = {
       transaction_sum: 'Transaction amount',
       message:'New Message',
       authorization_record:'Authorization record'
+    },
+    loadmsg: {
+      more: 'Loading',
+      not_more: 'The End'
     },
     identity: {
       phone: 'Phone Number',

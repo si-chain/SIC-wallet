@@ -7,7 +7,7 @@
 <template>
     <div class="insurance-policy">
       <x-header :left-options="{showBack: false}">{{$t('policy.tip_insurance')}}</x-header>
-      <div class="list-box" ref="wrapper" id="vux_view_box_body">
+      <div class="list-box" ref="wrapper" id="vux_view_box_body" v-swipedown="{fn:vuetouchDown}" v-swipeup="{fn:vuetouchUp}">
         <!-- <group> -->
           <cell is-link link="/insurance-policy" style="border-bottom:1px solid #ddd">
             <img slot="icon" class="policy-icon" src="../assets/icon_031.png" width="25" height="25" alt="">
@@ -36,8 +36,9 @@
           <img src="../assets/list.png" width="20" height="20" alt="">
           {{ $t('index.claim_trusteeship') }}
         </p> -->
-        <div class="wrapper" v-if="policyList.length > 0 || isLoading">
+        <div ref="viewBox" class="wrapper" v-if="policyList.length > 0 || isLoading" >
           <div>
+            <load-more tip=" " v-if="isTouchDown"></load-more>
             <card class="wrap-item" v-if="policyList.length > 0" v-for="(item,index) in policyList" :key="index">
               <cell slot="header" :title="$t('policy.upload_time')">{{item.upload_time | moment('YYYY MM DD hh:mm:ss')}}</cell>
               <cell slot="content" v-if="item.status === 5" :title="$t('policy.policy_file')">{{item.ID}}</cell>
@@ -52,9 +53,16 @@
               </step>
             </card>
           </div>
-          <div v-if="!more">
+          <div v-if="notmore">
+            <load-more tip=" "></load-more>
+          </div>
+          <div v-else-if="!more">
+            <!-- <load-more :show-loading="false" :tip="$t('policy.policy_more')"></load-more> -->
             <divider class="no-more">{{ $t('policy.policy_more') }}</divider>
             <p class="no-more-tip">{{$t('policy.upload_nomore_tip')}}</p>
+          </div>
+          <div v-else>
+            <load-more :tip="$t('loadmsg.more')"></load-more>
           </div>
         </div>
         <loading :show="policyList.length === 0  && !isLoading" text=""></loading>
@@ -67,7 +75,7 @@
 // import Bscroll from 'better-scroll'
 import Step from '../components/step'
 import StepItem from '../components/step-Item'
-import { XHeader, Group, Loading, Box, Tab, TabItem, Cell, Divider, Scroller, Card, Sticky } from 'vux'
+import { XHeader, Group, Loading, Box, Tab, TabItem, Cell, Divider, Scroller, Card, Sticky, LoadMore } from 'vux'
 export default {
   components: {
     XHeader,
@@ -82,7 +90,8 @@ export default {
     Tab,
     TabItem,
     Sticky,
-    Loading
+    Loading,
+    LoadMore
   },
   data () {
     return {
@@ -90,12 +99,39 @@ export default {
       policyList: [],
       more: true,
       lowerBound: 1,
+      isTouchDown: false,
       isLoading: false,
+      notmore: false,
       disabled: typeof navigator !== 'undefined' && /iphone/i.test(navigator.userAgent) && /ucbrowser/i.test(navigator.userAgent),
       url: `${this.basePath}/v1/policy/list/${this.$store.state.account}`
     }
   },
   methods: {
+    vuetouchDown (s, e) {
+      this.lowerBound = 1
+      this.isTouchDown = true
+      setTimeout(() => {
+        let _this = this
+        this.$http.get(this.url, { lowerBound: this.lowerBound }).then(res => {
+          this.isTouchDown = false
+          let data = res.data.data
+          _this.policyList = data.rows
+          _this.policyList.map(item => {
+            item.status === 0 ? item.status = 1 : item.status === 10 ? item.status = 1 : item.status === 20 ? item.status = 4 : item.status === 30 ? item.status = 5 : item.status = 5
+          })
+          _this.more = data.more
+          if (data.rows.length > 0) {
+            _this.lowerBound = data.rows[data.rows.length - 1].ID
+          }
+        })
+      }, 750)
+    },
+    vuetouchUp (s, e) {
+      this.notmore = true
+      setTimeout(() => {
+        this.notmore = false
+      }, 750)
+    },
     getPolicyData () {
       let _this = this
       this.$http.get(this.url, { lowerBound: this.lowerBound }).then(res => {
@@ -108,27 +144,14 @@ export default {
         _this.more = data.more
         if (data.rows.length > 0) {
           _this.lowerBound = data.rows[data.rows.length - 1].ID
-          // _this.$nextTick(() => {
-          //   if (!_this.scroll) {
-          //     console.log(2222)
-          //     _this.scroll = new Bscroll(_this.$refs.wrapper, {})
-          //     _this.scroll.on('touchEnd', (pos) => {
-          //       // 下拉动作
-          //       console.log(1111)
-          //       if (_this.more && pos.y > _this.scroll.maxScrollY - 90) {
-          //         _this.getData()
-          //       }
-          //     }, _this)
-          //   } else {
-          //     _this.scroll.refresh()
-          //   }
-          // })
         }
       })
     },
-    policyHandleScroll () {
-      if (this.more) {
-        this.getPolicyData()
+    policyHandleScroll (event) {
+      if (event.target.scrollTop + event.target.clientHeight === event.target.scrollHeight) {
+        if (this.more) {
+          this.getPolicyData()
+        }
       }
     },
     switchTabItem (index) {

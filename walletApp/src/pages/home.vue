@@ -32,6 +32,9 @@
             <img src="../assets/isidentity.png" width="60" height="25" alt="">
           </div>
         </cell>
+        <cell class="cell-border-bottom cell-border-top" style="margin-top:1.428571rem;border-top: 1px solid #e5e5e5;" :title="$t('left_panel.about')" is-link :link="`/about?account=${this.$store.state.account}`">
+          <img slot="icon" class="backup-icon" src="../assets/aboutSIC.png" width="25" height="24" alt="">
+        </cell>
       </group>
     </div>
   </div>
