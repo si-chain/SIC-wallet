@@ -168,7 +168,7 @@ export default {
           })
         })
         let value = SIC().encrypt(JSON.stringify(_this.valueList), _this.reqKey)
-        let eos = Eos.Localnet(config)
+        let eos = Eos(config)
         // 合约名
         const contractName = 'sic.auth'
         // const user = 'sic.auditor';
@@ -221,7 +221,7 @@ export default {
         let accountData = JSON.parse(this.$common.decryptActive(accountStr.encryption, _this.pwd))
         let activeKey = this.$common.decryptActive(accountData.active, _this.pwd)
         config.keyProvider = activeKey
-        let eos = Eos.Localnet(config)
+        let eos = Eos(config)
         // 合约名
         const contractName = 'sic.auth'
         const policyContract = eos.contract(contractName)

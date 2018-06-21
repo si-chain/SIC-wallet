@@ -91,7 +91,7 @@ export default {
           let accountData = JSON.parse(this.$common.decryptActive(accountStr.encryption, this.pwd))
           let activeKey = this.$common.decryptActive(accountData.active, this.pwd)
           config.keyProvider = activeKey
-          let eos = Eos.Localnet(config)
+          let eos = Eos(config)
           // 合约，固定
           const contractName = 'sic.token'
           const contractPromise = eos.contract(contractName)

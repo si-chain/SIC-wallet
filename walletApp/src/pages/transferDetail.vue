@@ -125,7 +125,7 @@ export default {
           let accountData = JSON.parse(this.$common.decryptActive(accountStr.encryption, this.pwd))
           let activeKey = this.$common.decryptActive(accountData.active, this.pwd)
           config.keyProvider = activeKey
-          let eos = Eos.Localnet(config)
+          let eos = Eos(config)
           // 合约，固定
           const contractName = 'sic.token'
           const contractPromise = eos.contract(contractName)
@@ -134,7 +134,7 @@ export default {
               contract.transfer({
                 from: accountStr.account,
                 to: _this.ToAccount,
-                quantity: _this.amount + ' SIC',
+                quantity: Number(_this.amount).toFixed(4) + ' SIC',
                 memo: _this.memo + Date.now()
               }, {authorization: accountStr.account}).then(res => {
                 _this.isSuccess = 'success'
@@ -152,10 +152,10 @@ export default {
                 _this.show = true
                 _this.isSuccess = 'warn'
                 _this.error = data.error.details[0].message
-                _this.ToAccount = ''
+                // _this.ToAccount = ''
                 _this.iconType = ''
-                _this.amount = ''
-                _this.memo = ''
+                // _this.amount = ''
+                // _this.memo = ''
               })
             })
           } catch (error) {
