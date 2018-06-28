@@ -17,22 +17,6 @@ module.exports = [
     ]
   },
   {
-    "id": "cordova-plugin-splashscreen.SplashScreen",
-    "file": "plugins/cordova-plugin-splashscreen/www/splashscreen.js",
-    "pluginId": "cordova-plugin-splashscreen",
-    "clobbers": [
-      "navigator.splashscreen"
-    ]
-  },
-  {
-    "id": "phonegap-plugin-barcodescanner.BarcodeScanner",
-    "file": "plugins/phonegap-plugin-barcodescanner/www/barcodescanner.js",
-    "pluginId": "phonegap-plugin-barcodescanner",
-    "clobbers": [
-      "cordova.plugins.barcodeScanner"
-    ]
-  },
-  {
     "id": "cordova-plugin-file.DirectoryEntry",
     "file": "plugins/cordova-plugin-file/www/DirectoryEntry.js",
     "pluginId": "cordova-plugin-file",
@@ -222,11 +206,11 @@ module.exports = [
     ]
   },
   {
-    "id": "cordova-plugin-file-opener2.FileOpener2",
-    "file": "plugins/cordova-plugin-file-opener2/www/plugins.FileOpener2.js",
-    "pluginId": "cordova-plugin-file-opener2",
+    "id": "cordova-plugin-splashscreen.SplashScreen",
+    "file": "plugins/cordova-plugin-splashscreen/www/splashscreen.js",
+    "pluginId": "cordova-plugin-splashscreen",
     "clobbers": [
-      "cordova.plugins.fileOpener2"
+      "navigator.splashscreen"
     ]
   },
   {
@@ -236,6 +220,14 @@ module.exports = [
     "clobbers": [
       "window.StatusBar"
     ]
+  },
+  {
+    "id": "phonegap-plugin-barcodescanner.BarcodeScanner",
+    "file": "plugins/phonegap-plugin-barcodescanner/www/barcodescanner.js",
+    "pluginId": "phonegap-plugin-barcodescanner",
+    "clobbers": [
+      "cordova.plugins.barcodeScanner"
+    ]
   }
 ];
 module.exports.metadata = 
@@ -243,13 +235,12 @@ module.exports.metadata =
 {
   "Umeng": "3.0.0",
   "cordova-plugin-android-permissions": "1.0.0",
-  "cordova-plugin-splashscreen": "5.0.2",
-  "cordova-plugin-whitelist": "1.3.3",
-  "phonegap-plugin-barcodescanner": "4.0.1",
   "cordova-plugin-file": "6.0.1",
   "cordova-plugin-file-transfer": "1.7.1",
-  "cordova-plugin-file-opener2": "2.0.19",
-  "cordova-plugin-statusbar": "2.4.2"
+  "cordova-plugin-splashscreen": "5.0.2",
+  "cordova-plugin-statusbar": "2.4.2",
+  "cordova-plugin-whitelist": "1.3.3",
+  "phonegap-plugin-barcodescanner": "4.0.1"
 };
 // BOTTOM OF METADATA
 });

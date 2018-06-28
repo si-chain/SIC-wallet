@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.rensanning.cordova" version="1.0.9" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="io.cordova.hellocordova" version="1.1.2" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <plugins>
         <feature name="Umeng">
             <param name="android-package" value="com.umeng.plugin.UMPlugin" />
@@ -7,17 +7,6 @@
     </plugins>
     <feature name="Permissions">
         <param name="android-package" value="com.android.plugins.Permissions" />
-    </feature>
-    <feature name="SplashScreen">
-        <param name="android-package" value="org.apache.cordova.splashscreen.SplashScreen" />
-        <param name="onload" value="true" />
-    </feature>
-    <feature name="Whitelist">
-        <param name="android-package" value="org.apache.cordova.whitelist.WhitelistPlugin" />
-        <param name="onload" value="true" />
-    </feature>
-    <feature name="BarcodeScanner">
-        <param name="android-package" value="com.phonegap.plugins.barcodescanner.BarcodeScanner" />
     </feature>
     <feature name="File">
         <param name="android-package" value="org.apache.cordova.file.FileUtils" />
@@ -27,14 +16,22 @@
     <feature name="FileTransfer">
         <param name="android-package" value="org.apache.cordova.filetransfer.FileTransfer" />
     </feature>
-    <feature name="FileOpener2">
-        <param name="android-package" value="io.github.pwlin.cordova.plugins.fileopener2.FileOpener2" />
+    <feature name="SplashScreen">
+        <param name="android-package" value="org.apache.cordova.splashscreen.SplashScreen" />
+        <param name="onload" value="true" />
     </feature>
     <feature name="StatusBar">
         <param name="android-package" value="org.apache.cordova.statusbar.StatusBar" />
         <param name="onload" value="true" />
     </feature>
-    <name>SIC Wallet</name>
+    <feature name="Whitelist">
+        <param name="android-package" value="org.apache.cordova.whitelist.WhitelistPlugin" />
+        <param name="onload" value="true" />
+    </feature>
+    <feature name="BarcodeScanner">
+        <param name="android-package" value="com.phonegap.plugins.barcodescanner.BarcodeScanner" />
+    </feature>
+    <name>智宝钱包</name>
     <description>
         A sample Apache Cordova application that responds to the deviceready event.
     </description>
