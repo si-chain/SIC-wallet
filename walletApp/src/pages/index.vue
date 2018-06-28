@@ -109,60 +109,71 @@ export default {
       this.$i18n.locale = locale
     },
     qrcode () {
-      if (!AppConfig.isNative) {
-        console.log(111)
-      }
       let _this = this
       let options = {
         preferFrontCamera: true, // iOS and Android
         showFlipCameraButton: true, // iOS and Android
         showTorchButton: true, // iOS and Android
         torchOn: true, // Android, launch with the torch switched on (if available)
-        saveHistory: true, // Android, save scan history (default false)
+        saveHistory: false, // Android, save scan history (default false)
         prompt: 'Place a barcode inside the scan area', // Android
         resultDisplayDuration: 1500, // Android, display scanned text for X ms. 0 suppresses it entirely, default 1500
         formats: 'QR_CODE,PDF_417', // default: all but PDF_417 and RSS_EXPANDED
-        orientation: 'landscape', // Android only (portrait|landscape), default unset so it rotates with the device
+        orientation: 'portrait', // Android only (portrait|landscape), default unset so it rotates with the device
         disableAnimations: true, // iOS
         disableSuccessBeep: false // iOS and Android
       }
-      let permissions = cordova.plugins.permissions
-      permissions.hasPermission(permissions.CAMERA, checkPermissionCallback, null)
-      function checkPermissionCallback (status) {
-        if (!status.hasPermission) {
-          let errorCallback = function () {
-            alert('请在系统设置中打开本应用的相机权限')
+      try {
+        let permissions = cordova.plugins.permissions
+        permissions.hasPermission(permissions.CAMERA, checkPermissionCallback, null)
+        function checkPermissionCallback (status) {
+          if (!status.hasPermission) {
+            let errorCallback = function () {
+              alert('请在系统设置中打开本应用的相机权限')
+            }
+            permissions.requestPermission(
+              permissions.CAMERA,
+              function (status) {
+                if (!status.hasPermission) errorCallback()
+                cordova.plugins.barcodeScanner.scan(
+                  function (result) {
+                    let resultStr = result.text
+                    if (result.includes('qr://sic/login/')) {
+                      _this.showConfirm = true
+                      _this.code = resultStr.replace('qr://sic/login/', '')
+                    }
+                  }, function (error) {
+                    console.log(error)
+                    alert('二维码不正确')
+                  }, options)
+              },
+              errorCallback)
+          } else {
+            cordova.plugins.barcodeScanner.scan(
+              function (result) {
+                let resultStr = result.text
+                if (resultStr.includes('qr://sic/login/')) {
+                  _this.showConfirm = true
+                  _this.code = resultStr.replace('qr://sic/login/', '')
+                }
+              }, function (error) {
+                console.log(error)
+                alert('二维码不正确')
+              }, options)
           }
-          permissions.requestPermission(
-            permissions.CAMERA,
-            function (status) {
-              if (!status.hasPermission) errorCallback()
-              cordova.plugins.barcodeScanner.scan(
-                function (result) {
-                  let resultStr = result.text
-                  if (result.includes('qr://sic/login/')) {
-                    _this.showConfirm = true
-                    _this.code = resultStr.replace('qr://sic/login/', '')
-                  }
-                }, function (error) {
-                  console.log(error)
-                  alert('二维码不正确')
-                }, options)
-            },
-            errorCallback)
-        } else {
-          cordova.plugins.barcodeScanner.scan(
-            function (result) {
-              let resultStr = result.text
-              if (resultStr.includes('qr://sic/login/')) {
-                _this.showConfirm = true
-                _this.code = resultStr.replace('qr://sic/login/', '')
-              }
-            }, function (error) {
-              console.log(error)
-              alert('二维码不正确')
-            }, options)
         }
+      } catch (err) {
+        cordova.plugins.barcodeScanner.scan(
+          function (result) {
+            let resultStr = result.text
+            if (result.includes('qr://sic/login/')) {
+              _this.showConfirm = true
+              _this.code = resultStr.replace('qr://sic/login/', '')
+            }
+          }, function (error) {
+            console.log(error)
+            alert('二维码不正确')
+          }, options)
       }
     },
     onCancel () {
