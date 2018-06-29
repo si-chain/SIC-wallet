@@ -15,7 +15,7 @@
     <allow-intent href="sms:*" />
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
-    <preference name="StatusBarBackgroundColor" value="#3287fd" />
+    <preference name="StatusBarBackgroundColor" value="false" />
     <platform name="android">
         <allow-intent href="market:*" />
         <icon density="mdpi" src="res/icon/android/drawable-mdpi-icon.png" />

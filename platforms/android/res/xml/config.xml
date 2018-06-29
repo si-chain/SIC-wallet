@@ -64,7 +64,7 @@
     <splash density="port-xxhdpi" src="res/screen/android/splash-port-xxhdpi.png" />
     <splash density="port-xxxhdpi" src="res/screen/android/splash-port-xxxhdpi.png" />
     <preference name="loglevel" value="DEBUG" />
-    <preference name="StatusBarBackgroundColor" value="#3287fd" />
+    <preference name="StatusBarBackgroundColor" value="false" />
     <preference name="orientation" value="portrait" />
     <preference name="AndroidExtraFilesystems" value="sdcard" />
     <preference name="AndroidPersistentFileLocation" value="Compatibility" />
