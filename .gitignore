@@ -1,6 +1,5 @@
 .DS_Store
 node_modules/
-www/*
 platforms/
 platforms/android
 platforms/ios
@@ -11,8 +10,6 @@ release-key.keystore
 build.json
 hooks/
 plugins/
-res/
-config.xml
 
 
 # Editor directories and files

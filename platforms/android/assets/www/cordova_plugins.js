@@ -228,6 +228,14 @@ module.exports = [
     "clobbers": [
       "cordova.plugins.barcodeScanner"
     ]
+  },
+  {
+    "id": "cordova-hot-code-push-plugin.chcp",
+    "file": "plugins/cordova-hot-code-push-plugin/www/chcp.js",
+    "pluginId": "cordova-hot-code-push-plugin",
+    "clobbers": [
+      "chcp"
+    ]
   }
 ];
 module.exports.metadata = 
@@ -240,7 +248,8 @@ module.exports.metadata =
   "cordova-plugin-splashscreen": "5.0.2",
   "cordova-plugin-statusbar": "2.4.2",
   "cordova-plugin-whitelist": "1.3.3",
-  "phonegap-plugin-barcodescanner": "4.0.1"
+  "phonegap-plugin-barcodescanner": "4.0.1",
+  "cordova-hot-code-push-plugin": "1.5.3"
 };
 // BOTTOM OF METADATA
 });
