@@ -295,33 +295,18 @@ util.create_account = (account, password) => {
   }).catch(function (err) {
     console.log(err);
   });
-  // ecc.randomKey().then(activekey => {
-  //   console.log(activekey)
-  //   active_pubkey = ecc.privateToPublic(activekey)
-
-  // })
-  // ecc.randomKey().then(ownerkey =>{
-  //   console.log(ownerkey)
-  //   owner_pubkey = ecc.privateToPublic(ownerkey)
-
-  // })
-  // let data = {
-  //   params: {
-  //     'chainName': 'eos',
-  //     'accountName': account,
-  //     'keys': {
-  //       'active': active_pubkey,
-  //       'owner': owner_pubkey
-  //     }
-  //   },
-  //   wallet: {
-  //     account: account,
-  //     active,
-  //     active_pubkey,
-  //     owner,
-  //     owner_pubkey,
-  //     backup_date: null
-  //   }
-  // }
+}
+util.go = function (url, $router) {
+  if (/^javas/.test(url) || !url) return
+  const useRouter = typeof url === 'object' || ($router && typeof url === 'string' && !/http/.test(url))
+  if (useRouter) {
+    if (typeof url === 'object' && url.replace === true) {
+      $router.replace(url)
+    } else {
+      url === 'BACK' ? $router.go(-1) : $router.push(url)
+    }
+  } else {
+    window.location.href = url
+  }
 }
 export default util
