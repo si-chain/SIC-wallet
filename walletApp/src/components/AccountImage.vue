@@ -1,7 +1,7 @@
 <template>
-  <div>
-    <canvas v-show="account" ref="canvas" :style="{width:size,height:size}" :width="size * 2" :height="size * 2" :data-jdenticon-hash="hash"></canvas>
-    <img v-show="!account" src="../assets/bbbhead.png" width="40px" style="margin-top:-4px" alt="">
+  <div :style="{width:wrapSize,height:wrapSize}" class="align-center canvas-wrap">
+    <canvas v-show="account" ref="canvas" :style="{width:size + 'px',height:size +'px'}" :width="size " :height="size " :data-jdenticon-hash="hash"></canvas>
+    <img v-show="!account" src="../assets/images/img_head_account.png" :width="size" style="margin-top:-4px" alt="">
   </div>
 </template>
 <script>
@@ -9,9 +9,13 @@ import jdenticon from 'jdenticon'
 import sha256 from 'js-sha256'
 export default {
   props: {
+    wrapSize: {
+      type: String,
+      default: '5.714286rem'
+    },
     size: {
       type: Number,
-      default: 30
+      default: 50
     },
     account: {
       type: String,
@@ -41,7 +45,6 @@ export default {
   mounted () {
     this.drawCanvas()
     jdenticon.config = {
-      // hues: [1, 2, 3, 4, 5],
       lightness: {
         color: [0.4, 0.8],
         grayscale: [0.3, 0.9]
@@ -50,9 +53,16 @@ export default {
         color: [0.4, 0.8],
         grayscale: [0.3, 0.9]
       },
-      // backColor: '#fff',
       replaceMode: 'once'
     }
   }
 }
 </script>
+<style lang="less" scoped>
+.canvas-wrap{
+  background: #ffffff;
+  border-radius: 50%;
+  align-items:center;
+}
+</style>
+

@@ -109,6 +109,16 @@ Vue.directive('swipeup', {
     new vueTouch(el, binding, 'swipeup')
   }
 })
+Vue.directive('swiperight', {
+  bind: function (el, binding) {
+    new vueTouch(el, binding, 'swiperight')
+  }
+})
+Vue.directive('swipeleft', {
+  bind: function (el, binding) {
+    new vueTouch(el, binding, 'swipeleft')
+  }
+})
 Vue.directive('focus', {
   // 当绑定元素插入到 DOM 中。
   inserted: function (el) {

@@ -10,7 +10,7 @@ const locale = {
       random:'随机',
       Invite:'邀请码',
       placeholderInvite: '邀请码',
-      SIC:'资金管理',
+      SIC:'资金管理 (SIC)',
       notice: '提示',
       goIdentity:'立即认证',
       agreement:'用户协议',

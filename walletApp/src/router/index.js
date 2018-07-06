@@ -9,7 +9,23 @@ export default new Router({
     {
       path: '/',
       name: 'index',
-      component: () => import('@/pages/index.vue')
+      component: () => import('../components/indexMenu.vue'),
+      children: [
+        {
+          path: '/',
+          component: () => import('../pages/index.vue')
+        },
+        {
+          path: '/policy',
+          name: 'Policy',
+          component: () => import('@/pages/InsurancePolicy.vue')
+        },
+        {
+          path: '/home',
+          name: 'home',
+          component: () => import('@/pages/home.vue')
+        }
+      ]
     },
     {
       path: '/create-account',
@@ -35,16 +51,6 @@ export default new Router({
       path: '/wallet-manage',
       name: 'walletManage',
       component: () => import('@/pages/walletManage.vue')
-    },
-    {
-      path: '/home',
-      name: 'home',
-      component: () => import('@/pages/home.vue')
-    },
-    {
-      path: '/policy',
-      name: 'Policy',
-      component: () => import('@/pages/InsurancePolicy.vue')
     },
     {
       path: '/insurance-policy',

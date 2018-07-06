@@ -1,15 +1,14 @@
 <template>
   <div class="detail" @click="goIndex">
-    <img class="background" src="../assets/top_bg.png" alt="">
-    <div class="account-detail">
-      <div class="image-wrap">
-        <account-image style="margin-top:7px;" :account="wallet.account" :size="16"></account-image>
+    <img class="background" src="../assets/images/bg_wallet.png" alt="">
+    <div class="account-detail clearfix">
+      <div class="image-wrap align-center">
+        <account-image :account="wallet.account"></account-image>
       </div>
-      <div class="account-info">
-        <p class="account-name" style="font-size:15px">{{$t('index.account_name')}}</p>
-        <p class="name">
+      <div class="account-info ">
+        <p class="account-name align-center">{{$t('index.account_name')}}</p>
+        <p class="name align-center">
           {{wallet.account}}
-          <!-- <img src="../assets/ewm.png"/> -->
         </p>
       </div>
     </div>
@@ -47,43 +46,27 @@ export default{
 }
 </script>
 <style lang="less" scoped>
-.image-wrap{
-  width: 45px;
-  height: 45px;
-  text-align: center;
-  border-radius: 50%;
-  background-color: #ffffff;
-  margin:89px 12px 45px 25px;
-  float: left;
-}
-.account-info{
-  float: left;
-  padding-top: 91px;
-  font-size: 21px;
-  color: #ffffff;
-  p{
-    line-height: 1.2
-  }
-}
-
-.center{
-  text-align: center
-}
-
-.account-detail{
-  // background: url(../../static/top_bg.jpg) no-repeat;
-  // background-size: 100% 100%;
-  height: 190px;
-  z-index: 999;
-  position: absolute;
+.background{
+  height: 16.428571rem;
+  width: 100%;
 }
 .detail{
   position: relative;
-  height: 190px;
 }
-.background{
+.account-detail{
   position: absolute;
+  top: 0;
   width: 100%;
-  height: 190px;
+}
+.image-wrap{
+  padding: 3.214286rem 0 .714286rem 0;
+}
+.account-name{
+  font-size: @font-size4;
+  color: rgba(255,255,255,0.5);
+}
+.name{
+  font-size: @font-size2;
+  color: #ffffff;
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <view-box ref="viewBox" :class="$route.path === '/guidance' ? 'tab__panel_guidance' : ''" :body-padding-bottom="$route.path === '/guidance' || $route.path === '/agreement' || $route.path === '/user-agreement' || $route.path === '/wallet-manage' ? '0' : '50px'" style="height:100%;width:100%;overflow-y:auto;">
+  <!-- <view-box ref="viewBox" :class="$route.path === '/guidance' ? 'tab__panel_guidance' : ''" :body-padding-bottom="$route.path === '/guidance' || $route.path === '/agreement' || $route.path === '/user-agreement' || $route.path === '/wallet-manage' ? '0' : '50px'" style="height:100%;width:100%;overflow-y:auto;">
     <router-view class="router-view"></router-view>
     <tabbar v-if="($route.path === '/' || $route.path === '/home' || $route.path === '/policy' || $route.path === '*')&& $route.path !== '/guidance'" slot="bottom" style="width:100%;position:absolute;left:0;bottom:0;z-index:100;">
       <tabbar-item :selected="$route.path === '/'" link="/" @on-index-change="onIndexChange">
@@ -18,16 +18,15 @@
         <span slot="label">{{$t('index.home')}}</span>
       </tabbar-item>
     </tabbar>
-  </view-box>
-  <!-- <div :class="$route.path === '/guidance' ? 'weui-tab__panel_guidance' : ''">
-
-  </div> -->
+  </view-box> -->
+    <router-view class="router-view"></router-view>
 </template>
 
 <script>
 import CryptoJS from 'crypto-js'
 import AES from 'crypto-js/aes'
 import ecc from 'eosjs-ecc'
+import util from './libs/utils'
 import AppConfig from './libs/config'
 import { Tabbar, TabbarItem, Loading, Confirm, TransferDomDirective as TransferDom } from 'vux'
 export default {
@@ -44,6 +43,7 @@ export default {
   data () {
     return {
       isMsg: false,
+      util: util,
       onLoadingShow: false,
       onLoadingText: '',
       showUpdateShow: false,
@@ -162,165 +162,6 @@ export default {
   @import '~vux/src/styles/reset.less';
   @import '~vux/src/styles/1px.less';
   @import '~vux/src/styles/tap.less';
-  .vux-x-input .weui-cell__primary .weui-input::-webkit-input-placeholder {
-    color: #cccccc;
-    font-size: 0.928571rem;
-  }
-  .is-error-step .vux-step-item-head-finish .vux-step-item-head-inner{
-    border: 1px solid #f59902!important;
-    color: #f59902!important;
-  }
-  .is-error-step .vux-step-item-icon .weui-icon-success-no-circle{
-    color: #f59902!important;
-  }
-  .is-error-step .weui-icon-success-no-circle:before {
-    content: "\EA03";
-  }
-  .is-error-step .vux-step-item-main{
-    color: #f59902!important;
-  }
-  .vux-header .vux-header-title{
-    font-weight: 200!important;
-  }
-  .vux-fixed .vux-tab{
-    height: 3.285714rem!important;
-    background-color:#3287fd!important;
-    .vux-tab-item.vux-tab-selected{
-      color:#ffffff!important;
-      font-weight: 200!important;
-    }
-  }
-  // .vux-header {
-  //   padding: 1.428571rem 0 3px 0!important;
-  // }
-  // .vux-header .vux-header-left .left-arrow{
-  //   top:0.714286rem!important;
-  // }
-  body {
-    background-color: #fbf9fe;
-  }
-  .weui-tab__panel_guidance{
-    box-sizing: border-box;
-    height: 100%;
-    overflow: auto;
-  }
-  .weui-icon-success {
-    font-size: 23px;
-    color: #3287fd!important;
-  }
-  html, body {
-    height: 100%;
-    width: 100%;
-    overflow-x: hidden;
-  }
-  .demo-icon-22 {
-    font-family: 'vux-demo';
-    font-size: 1.571429rem;
-    color: #888;
-  }
-  #vux_view_box_body{
-    background-color: #f5f5f5;
-  }
-  .weui-cells{
-    margin-top: 0!important;
-    background-color: #f5f5f5!important;
-  }
-  .weui-cell{
-    background-color: #ffffff;
-  }
-  .weui-cell:before{
-    border-top: none!important;
-  }
-  .weui-tabbar.vux-demo-tabbar {
-    /** backdrop-filter: blur(10px);
-    background-color: none;
-    background: rgba(247, 247, 250, 0.5);**/
-  }
-  .vux-demo-tabbar .weui-bar__item_on .demo-icon-22 {
-    color: #F70968;
-  }
-  .weui-cell_access .weui-cell__ft:after{
-    border-color: #8a8a8c!important;
-  }
-  .vux-demo-tabbar .weui-tabbar_item.weui-bar__item_on .vux-demo-tabbar-icon-home {
-    color: rgb(53, 73, 94);
-  }
-  .demo-icon-22:before {
-    content: attr(icon);
-  }
-  .vux-demo-tabbar-component {
-    background-color: #F70968;
-    color: #fff;
-    border-radius: 0.5rem;
-    padding: 0 4px;
-    line-height: 1.0rem;
-  }
-  .weui-tabbar__icon + .weui-tabbar__label {
-    margin-top: 0!important;
-  }
-  .vux-demo-header-box {
-    z-index: 100;
-    position: absolute;
-    width: 100%;
-    left: 0;
-    top: 0;
-  }
-  @font-face {
-    font-family: 'vux-demo';  /* project id 70323 */
-    src: url('https://at.alicdn.com/t/font_h1fz4ogaj5cm1jor.eot');
-    src: url('https://at.alicdn.com/t/font_h1fz4ogaj5cm1jor.eot?#iefix') format('embedded-opentype'),
-    url('https://at.alicdn.com/t/font_h1fz4ogaj5cm1jor.woff') format('woff'),
-    url('https://at.alicdn.com/t/font_h1fz4ogaj5cm1jor.ttf') format('truetype'),
-    url('https://at.alicdn.com/t/font_h1fz4ogaj5cm1jor.svg#iconfont') format('svg');
-  }
-  .demo-icon {
-    font-family: 'vux-demo';
-    font-size: 1.428571rem;
-    color: #04BE02;
-  }
-  .demo-icon-big {
-    font-size: 2.0rem;
-  }
-  .demo-icon:before {
-    content: attr(icon);
-  }
-  .router-view {
-    width: 100%;
-    top: 3.285714rem;
-  }
-  .vux-pop-out-enter-active,
-  .vux-pop-out-leave-active,
-  .vux-pop-in-enter-active,
-  .vux-pop-in-leave-active {
-    will-change: transform;
-    transition: all 500ms;
-    height: 100%;
-    top: 3.285714rem;
-    position: absolute;
-    backface-visibility: hidden;
-    perspective: 1000;
-  }
-  .vux-pop-out-enter {
-    opacity: 0;
-    transform: translate3d(-100%, 0, 0);
-  }
-  .vux-pop-out-leave-active {
-    opacity: 0;
-    transform: translate3d(100%, 0, 0);
-  }
-  .vux-pop-in-enter {
-    opacity: 0;
-    transform: translate3d(100%, 0, 0);
-  }
-  .vux-pop-in-leave-active {
-    opacity: 0;
-    transform: translate3d(-100%, 0, 0);
-  }
-  .menu-title {
-    color: #888;
-  }
-  .weui-tabbar__icon {
-    height: 23px!important;
-  }
+  @import url('./style/common.less');
 </style>
 

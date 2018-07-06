@@ -10,7 +10,7 @@ const locale = {
       random: 'Random',
       Invite: 'Invite Code',
       placeholderInvite: 'Invite Code',
-      SIC:'Fund Manage',
+      SIC: 'Fund Manage (SIC)',
       goIdentity: 'Authentication',
       agreement: 'User Agreement',
       account:'Account',
