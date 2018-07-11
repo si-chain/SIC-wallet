@@ -6,8 +6,8 @@
 -->
 <template>
     <div class="insurance-policy">
-      <x-header v-if="account === 'sic.policy'" :left-options="{backText: ''}">{{$t('policy.tip_insurance_policy')}}</x-header>
-      <x-header v-else :left-options="{backText: ''}">{{$t('policy.tip_insurance_claim')}}</x-header>
+      <sic-header v-if="account === 'sic.policy'" :left-options="{backText: ''}">{{$t('policy.tip_insurance_policy')}}</sic-header>
+      <sic-header v-else :left-options="{backText: ''}">{{$t('policy.tip_insurance_claim')}}</sic-header>
       <div class="content">
           <div class="list-block">
               <ul>
@@ -44,16 +44,17 @@
       <div v-transfer-dom>
         <loading :show="upLoadImg" text=""></loading>
       </div>
-      <password-confirm v-if="isUnlock" ref="confirm" @setUnlock="setUnlock" @unlocking="unlocking"></password-confirm>
+      <password-confirm v-show="isUnlock" :iShowLock="isUnlock" ref="confirm" @setUnlock="setUnlock" @unlocking="unlocking"></password-confirm>
     </div>
 </template>
 
 <script>
 import Eos from 'eosjs'
 import config from '../libs/env'
-import { AlertModule, XHeader, Msg, Alert, Box, XButton, Loading, Flexbox, FlexboxItem, TransferDomDirective as TransferDom } from 'vux'
+import { AlertModule, Msg, Alert, Box, XButton, Loading, Flexbox, FlexboxItem, TransferDomDirective as TransferDom } from 'vux'
 import upload from '../components/upload-img'
 import passwordConfirm from '../components/PasswordConfirm'
+import sicHeader from '../components/sicHeader'
 import { mapState } from 'vuex'
 export default {
   directives: {
@@ -262,7 +263,7 @@ export default {
     Alert,
     Msg,
     XButton,
-    XHeader,
+    sicHeader,
     Flexbox,
     Box,
     Loading,

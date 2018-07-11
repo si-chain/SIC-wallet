@@ -1,7 +1,7 @@
 
 <template>
   <div>
-    <x-header :left-options="{backText: ''}">{{$t('index.identity')}}</x-header>
+    <sic-header :left-options="{backText: ''}">{{$t('index.identity')}}</sic-header>
     <group>
       <x-input :title="$t('identity.phone')" v-model="phoneNumber" name="mobile" :placeholder="$t('identity.placeholder')" keyboard="number" @on-change="phoneNumberChange" is-type="china-mobile"></x-input>
       <x-input :title="$t('identity.code')" :max="4" :min="4" class="weui-vcode" v-model="validateCode">
@@ -21,7 +21,8 @@
 </template>
 
 <script>
-import { Alert, Group, Box, XInput, XButton, XHeader, Msg, TransferDomDirective as TransferDom } from 'vux'
+import sicHeader from '../components/sicHeader'
+import { Alert, Group, Box, XInput, XButton, Msg, TransferDomDirective as TransferDom } from 'vux'
 export default {
   directives: {
     TransferDom
@@ -114,7 +115,7 @@ export default {
     this.clearTimer()
   },
   components: {
-    Group, XInput, XButton, Box, XHeader, Msg, Alert
+    Group, XInput, XButton, Box, sicHeader, Msg, Alert
   }
 }
 </script>

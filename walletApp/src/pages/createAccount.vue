@@ -3,9 +3,9 @@
     <!-- <div v-if="$store.state.account" class="header">
       <div @click="goback" class="left-arrow"></div>
     </div> -->
-    <x-header v-if="$store.state.account" :left-options="{backText: '返回'}"></x-header>
+    <sic-header v-if="$store.state.account" :left-options="{backText: ''}"></sic-header>
     <!-- <x-header v-else :left-options="{showBack: false}"></x-header> -->
-    <x-header v-else style="margin-bottom:12px;" :left-options="{showBack: false}"></x-header>
+    <sic-header v-else style="margin-bottom:12px;" :left-options="{showBack: false}"></sic-header>
     <!-- <p v-else style="height:30px;height: 18px;
     margin-bottom: 12px;background-color: #3287fd;"></p> -->
     <div class="creat-box" :class="$store.state.account ? 'hastop' : ''">
@@ -60,11 +60,12 @@ import AccountImage from '../components/AccountImage'
 import ecc from 'eosjs-ecc'
 import AES from 'crypto-js/aes'
 import Co from 'co'
-import { XHeader, Box, Group, XButton, XInput, Toast } from 'vux'
+import sicHeader from '../components/sicHeader'
+import { Box, Group, XButton, XInput, Toast } from 'vux'
 export default{
   components: {
     AccountImage,
-    XHeader,
+    sicHeader,
     Group,
     XButton,
     XInput,

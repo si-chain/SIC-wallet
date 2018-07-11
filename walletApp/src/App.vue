@@ -163,5 +163,8 @@ export default {
   @import '~vux/src/styles/1px.less';
   @import '~vux/src/styles/tap.less';
   @import url('./style/common.less');
+  .router-view{
+    height: 100%;
+  }
 </style>
 

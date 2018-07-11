@@ -1,6 +1,6 @@
 <template>
   <div>
-    <x-header :left-options="{backText: ''}">{{$t('withdraw.extract')}}</x-header>
+    <sic-header :left-options="{backText: ''}">{{$t('withdraw.extract')}}</sic-header>
     <group>
       <x-input :title="$t('withdraw.to')" label-width="5.5em" required :placeholder="$t('withdraw.to_placeholder')" v-model="ethAddress" :is-type="validateAccount"></x-input>
       <x-input :title="$t('withdraw.amount')" type="number" label-width="4.5em" required :placeholder="$t('withdraw.amount_placeholder')" :is-type="validateAmount" v-model="amount"></x-input>
@@ -11,17 +11,18 @@
     </box>
     <toast v-model="ethToast" type="warn">{{error}}</toast>
     <alert v-model="show" :title="$t('index.notice')" :content="error"></alert>
-    <password-confirm v-if="isUnlock" ref="confirm" @setUnlock="setUnlock" @unlocking="unlocking"></password-confirm>
+    <password-confirm v-show="isUnlock" :iShowLock="isUnlock" ref="confirm" @setUnlock="setUnlock" @unlocking="unlocking"></password-confirm>
   </div>
 </template>
 <script>
 import Eos from 'eosjs'
 import config from '../libs/env'
 import passwordConfirm from '../components/PasswordConfirm'
-import { XHeader, Group, XInput, Box, Toast, XButton, Alert } from 'vux'
+import { Group, XInput, Box, Toast, XButton, Alert } from 'vux'
+import sicHeader from '../components/sicHeader'
 export default {
   components: {
-    Group, XInput, XHeader, Box, Toast, XButton, passwordConfirm, Alert
+    Group, XInput, sicHeader, Box, Toast, XButton, passwordConfirm, Alert
   },
   data () {
     return {

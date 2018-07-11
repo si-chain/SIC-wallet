@@ -1,11 +1,32 @@
 <template>
-  <div style="height:100%;overflow:hidden">
+  <div style="height:100%;overflow:hidden"  v-swiperight="{fn:vuetouchRight}">
     <div v-transfer-dom>
       <loading v-model="isLoading"></loading>
     </div>
-    <!-- <p class="home-header">{{$t('index.home')}}</p> -->
+    <div style="padding-top: 8.357143rem;"></div>
     <account-detail></account-detail>
-    <div class="is-backup">
+    <div class="cell-wrap" :style="{height:cellWrapHeight}">
+      <sic-cell class="align-center" :title="$t('index.manage_wallets')" :link="`/wallet-manage?account=${this.$store.state.account}`">
+        <img slot="icon" class="icon" src="../assets/images/ico_wallet_home.png" alt="">
+      </sic-cell>
+      <sic-cell class="align-center" :title="$t('index.transaction_record')" :link="`/trading-record?account=${this.$store.state.account}`">
+        <img slot="icon" class="icon" src="../assets/images/ico_transaction_home.png" alt="">
+      </sic-cell>
+      <sic-cell class="align-center" :title="$t('index.authorization_record')" :link="`/authorization-record?account=${this.$store.state.account}`">
+        <img slot="icon" class="icon" src="../assets/images/ico_authorization_home.png" alt="">
+      </sic-cell>
+      <sic-cell class="align-center" :title="$t('index.agreement')" :link="`/user-agreement`">
+        <img slot="icon" class="icon" src="../assets/images/ico_authorization_backup.png" alt="">
+      </sic-cell>
+      <sic-cell class="align-center" :title="$t('index.identity')" :link="`/identity-authentication?account=${this.$store.state.account}`">
+        <img slot="icon" class="icon" src="../assets/images/ico_authentiation_home.png" alt="">
+      </sic-cell>
+      <sic-cell class="align-center" :title="$t('left_panel.about')" :link="`/about?account=${this.$store.state.account}`">
+        <img slot="icon" class="icon" src="../assets/images/ico_about_home.png" alt="">
+      </sic-cell>
+    </div>
+    
+    <!-- <div class="is-backup">
       <group>
         <cell :title="$t('index.manage_wallets')" is-link :link="`/wallet-manage?account=${this.$store.state.account}`">
           <img slot="icon" class="backup-icon" src="../assets/icon_01-01.jpg" width="22" height="22" alt="">
@@ -36,14 +57,15 @@
           <img slot="icon" class="backup-icon" src="../assets/aboutSIC.png" width="25" height="24" alt="">
         </cell>
       </group>
-    </div>
+    </div> -->
   </div>
 </template>
 
 
 <script>
-import { XHeader, TransferDom, Loading, Cell, Group, Badge } from 'vux'
+import { TransferDom, Loading, Badge } from 'vux'
 import accountDetail from '../components/accountDetail'
+import sicCell from '../components/sicCell'
 export default {
   name: 'index',
   directives: {
@@ -52,14 +74,15 @@ export default {
   components: {
     accountDetail,
     Loading,
-    XHeader,
-    Cell,
-    Group,
-    Badge
+    Badge,
+    sicCell
   },
   methods: {
     onClickMore () {
       this.showMenu = true
+    },
+    vuetouchRight (s, e) {
+      this.$common.go(`/policy?account=this.$route.query.account || this.$store.state.account`, this.$router)
     }
   },
   mounted () {
@@ -98,6 +121,7 @@ export default {
         this.isIdentity = false
       }
     })
+    this.cellWrapHeight = window.screen.availHeight / 14 - 24.785714 + 'rem'
   },
   data () {
     return {
@@ -111,7 +135,8 @@ export default {
       showPlacement: 'left',
       wallets: [],
       showPlacementValue: 'left',
-      isIdentity: false
+      isIdentity: false,
+      cellWrapHeight: '30rem'
     }
   }
 }
@@ -146,24 +171,9 @@ export default {
     margin-left: 20px;
   }
 }
-.is-backup{
-  // border-bottom: 1px solid #e5e5e5;
-  background-color: #cccccc1a;
-  font-size: 16px;
-  color: #333333;
-  .weui-cell{
-    // border-bottom: 1px solid #e5e5e5;
-    background: #ffffff;
-  }
-  .has-before:before{
-    border-top: 1px solid #98b3db!important;
-  }
-  .cell-border-top{
-    border-top:1px solid #d3e1f5!important;
-  }
-  .cell-border-bottom{
-    border-bottom:1px solid #d3e1f5!important;
-  }
+.cell-wrap{
+  overflow-y:scroll;
+  width: 100%;
 }
 // @header-background-color:#fff
 </style>

@@ -1,8 +1,9 @@
 <template>
-  <div style="height:100%;overflow:hidden" v-swipedown="{fn:vuetouchDown}">
+  <div class="index-wrap" v-swipedown="{fn:vuetouchDown}" v-swipeleft="{fn:vuetouchLeft}">
     <div v-transfer-dom>
       <loading v-model="isLoading"></loading>
     </div>
+    <div style="padding-top: 8.357143rem;"></div>
     <account-detail></account-detail>
     <sic-cell type="circle" class="fund-manage-wrap align-center" :title="$t('index.SIC')" :value="balance" :link="`/transfer?account=${this.$store.state.account}`"></sic-cell>
     <sic-cell class="align-center" :title="$t('index.SIC')" :value="balance" :link="`/wallet-backup?account=${this.$store.state.account}`">
@@ -82,11 +83,11 @@ export default {
       this.isLoading = true
       this.loadBalance()
     },
+    vuetouchLeft (s, e) {
+      this.$common.go(`/policy?account=this.$route.query.account || this.$store.state.account`, this.$router)
+    },
     linkBackup (account) {
-      let query = {
-        account: this.$store.state.account
-      }
-      this.$router.push({path: '/wallet-backup', query})
+      this.$common.go(`/wallet-backup?account=this.$route.query.account || this.$store.state.account`, this.$router)
     },
     loadBalance () {
       let account = this.$route.query.account || this.$store.state.account
@@ -211,7 +212,9 @@ export default {
 }
 </script>
 <style lang="less" scoped>
-
+.index-wrap{
+  height:100%;overflow:hidden;
+}
 .fund-manage-wrap{
   margin-top: -2.5rem;
   position: relative;

@@ -1,6 +1,6 @@
 <template>
     <div class="page-group">
-      <x-header :left-options="{backText: ''}">{{$t('wallet_manage.title')}}</x-header>
+      <sic-header :left-options="{backText: ''}">{{$t('wallet_manage.title')}}</sic-header>
 
          <div class="content-block button-block bom" v-if="!this.$route.query.account">
           <flexbox>
@@ -15,10 +15,11 @@
     </div>
 </template>
 <script>
-import { XHeader, Group, Cell, Flexbox, FlexboxItem, XButton } from 'vux'
+import sicHeader from '../components/sicHeader'
+import { Group, Cell, Flexbox, FlexboxItem, XButton } from 'vux'
 export default {
   components: {
-    XHeader,
+    sicHeader,
     Group,
     Cell,
     Flexbox,

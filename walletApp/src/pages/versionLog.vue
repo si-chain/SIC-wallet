@@ -6,7 +6,7 @@
 -->
 <template>
     <div>
-        <x-header :left-options="{backText:''}">{{$t('index.version_log')}}</x-header>
+        <sic-header :left-options="{backText:''}">{{$t('index.version_log')}}</sic-header>
         <div class="version-wrap" v-for="(item,index) in versionData" :key="index">
             <p>V {{item.ver}}</p>
             <ul>
@@ -16,10 +16,10 @@
     </div>
 </template>
 <script>
-import { XHeader } from 'vux'
+import sicHeader from '../components/sicHeader'
 export default {
   components: {
-    XHeader
+    sicHeader
   },
   data () {
     return {

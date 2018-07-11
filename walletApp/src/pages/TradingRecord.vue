@@ -1,6 +1,6 @@
 <template>
     <div class="page-group">
-      <x-header :left-options="{backText: ''}">{{$t('index.transaction_record')}}</x-header>
+      <sic-header :left-options="{backText: ''}">{{$t('index.transaction_record')}}</sic-header>
       <loading :show="transferData.length === 0  && !isLoading" text=""></loading>
       <div style="padding:3.785714rem 3px 0 3px" v-if="transferData.length > 0 || isLoading" v-swipedown="{fn:vuetouchDown}" v-swipeup="{fn:vuetouchUp}">
         <load-more :tip="$t('loadmsg.more')" v-if="isTouchDown"></load-more>
@@ -15,11 +15,12 @@
     </div>
 </template>
 <script>
-import { XHeader, FormPreview, Divider, Loading, LoadMore } from 'vux'
+import sicHeader from '../components/sicHeader'
+import { FormPreview, Divider, Loading, LoadMore } from 'vux'
 
 export default {
   components: {
-    XHeader,
+    sicHeader,
     FormPreview,
     Divider,
     Loading,

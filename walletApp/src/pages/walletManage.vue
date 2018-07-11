@@ -1,37 +1,39 @@
 <template>
-    <div class="page-group">
-      <x-header :left-options="{backText: ''}">{{$t('wallet_manage.title')}}</x-header>
-      <div style="padding:4.285714rem 0 2.857143rem 0">
-        <div class="page clearfix" ref="wallet-manage" id="page-wallet-manage" v-for="(wallet,index) in wallets" :key="index" @click="goDetail(wallet.account)">
+    <div class="wallet-manage-wrap">
+      <sic-header :left-options="{backText: ''}">{{$t('wallet_manage.title')}}</sic-header>
+      <div class="page-group">
+        <div class="page" ref="wallet-manage" id="page-wallet-manage" v-for="(wallet,index) in wallets" :key="index" @click="goDetail(wallet.account)">
           <div class="account-img-wrap">
             <div class="account-img">
-              <account-image style="margin-top:0.857143rem;" :account="wallet.account" :size="18"></account-image>
+              <account-image :account="wallet.account" :size="40" wrapSize="4.285714rem"></account-image>
             </div>
-            <!-- <account-image :account="wallet.account" :size="28"></account-image> -->
           </div>
           <account-home :account="wallet.account"></account-home>
         </div>
       </div>
 
-      <div class="content-block button-block bom">
-        <flexbox>
+      <div class="button-wrap button-block">
+        <x-button type="primary" :link="`/create-account?account=${$route.query.account}`">{{$t('wallet_create.index.button_create')}}</x-button>
+        <x-button type="default" :link="`/account-import?account=${$route.query.account}`">{{$t('wallet_create.index.button_import')}}</x-button>
+        <!-- <flexbox>
           <flexbox-item>
-            <x-button type="primary" :link="`/create-account?account=${$route.query.account}`">{{$t('wallet_create.index.button_create')}}</x-button>
+            
           </flexbox-item>
           <flexbox-item>
-            <x-button :link="`/account-import?account=${$route.query.account}`">{{$t('wallet_create.index.button_import')}}</x-button>
+            
           </flexbox-item>
-        </flexbox>
+        </flexbox> -->
       </div>
     </div>
 </template>
 <script>
-import { XHeader, Group, Cell, Flexbox, FlexboxItem, XButton } from 'vux'
+import { Group, Cell, Flexbox, FlexboxItem, XButton } from 'vux'
 import AccountImage from '../components/AccountImage'
 import AccountHome from '../components/AccountHome'
+import sicHeader from '../components/sicHeader'
 export default {
   components: {
-    XHeader,
+    sicHeader,
     Group,
     Cell,
     Flexbox,
@@ -84,56 +86,48 @@ export default {
 }
 </script>
 <style scoped lang="less">
+.wallet-manage-wrap{
+  position: relative;
+}
 .page-group{
-  background: #efeff4;
-  height: 100%;
+  // display: flex;
+  height: 84%;
+  overflow-y: scroll;
 }
-.vux-header{
-  position: absolute;
-  width: 100%;
-  z-index: 9999;
-  top:0;
+.page{
+  display: flex;
+  width: 90%;
+  height: 7.142857rem;
+  background: #f1f1f1;
+  margin: 0 auto;
+  margin-top: 1.428571rem;
+  border-radius: .357143rem;
 }
-.page,
-.content {}
-.pull-to-refresh-layer {
-    .line-scale>div {
-        background-color: #3d3d3b;
-    }
-}
-.weui-btn{
-  font-weight: 300;
-}
-.creat-btn{
-  background: -webkit-linear-gradient(#3287f1, #3287fd); /* Safari 5.1 - 6.0 */
-  background: -o-linear-gradient(#3287f1, #3287fd); /* Opera 11.1 - 12.0 */
-  background: -moz-linear-gradient(#3287f1, #3287fd); /* Firefox 3.6 - 15 */
-  background: linear-gradient(#3287f1, #3287fd); /* 标准的语法 */
-}
-.import-btn{
-  color:#1857f2
+.page:last-child{
+  margin-bottom: 1.428571rem;
 }
 .account-img-wrap{
-  text-align: center;
-  margin-top: 0.714286rem;
-  float: left;
-  width: 25%;
-}
-.clearfix{
-  overflow: hidden;
-  background: #ffffff;
-  margin-top: 0.714286rem;
-  padding: 3px 0;
-}
-.bom {
-  padding:0 0.714286rem;
+  display: flex;
+  align-items:center;
 }
 .account-img{
-  margin-left: 1.428571rem;
-  height: 4.5rem;
-  text-align: center;
-  width: 4.5rem;
-  border-radius: 50%;
-  border:1px solid #0b4acd;
+  flex: 1;
+  padding: 0 1.428571rem;
+}
+.button-wrap{
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  display: flex;
+  justify-content: flex-start;
+  .weui-btn_primary{
+    flex: 3.5
+  }
+  .weui-btn_default{
+    flex: 2
+  }
+}
+.weui-btn + .weui-btn{
+  margin-top:0;
 }
 </style>

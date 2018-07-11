@@ -4,6 +4,7 @@
     <div class="sic-cell circle" v-if="type === 'circle'" @click="onClick">
       <p class="fund-manage">{{title}}</p>
       <p class="balance">{{value}}</p>
+      <slot class="default-slot"></slot>
       <div class="sic-cell-rignt-icon"></div>
     </div>
     <div v-else class="sic-cell cell-default"  @click="onClick">
@@ -11,7 +12,9 @@
         <slot name="icon"></slot>
       </div>
       <p class="fund-manage">{{title}}</p>
-      <div class="sic-cell-rignt-icon"></div>
+      <slot class="default-slot"></slot>
+      <div v-if="isLink" class="sic-cell-rignt-icon"></div>
+      <p v-else class="not-link-value balance">{{value}}</p>
     </div>
   </div>
 </template>
@@ -28,11 +31,15 @@ export default {
     },
     value: {
       type: String,
-      default: '0.0000'
+      default: ''
     },
     link: {
       type: String,
       default: ''
+    },
+    isLink: {
+      type: Boolean,
+      default: true
     }
   },
   data () {
@@ -53,25 +60,36 @@ export default {
 .sic-cell{
   width: 100%;
   position: relative;
-  height: 4.285714rem;
+  height: 4rem;
 }
 .circle{
   width: 90%;
-  height: 4.285714rem;
+  height: 4rem;
   background: rgb(255,255,255);
   border-radius: 2.142857rem;
   box-shadow: 0px 3px 17px #999999;
   text-align: center; 
+  .fund-manage{
+    padding-top: .357143rem;
+  }
 }
 .fund-manage{
+  font-weight: 600;
   font-size: 1.071429rem;
   color: @index-color;
-  padding-top: .357143rem;
 }
 .balance{
   font-size: 1.714286rem;
   font-weight: 900;
   color: @index-color;
+}
+.default-slot{
+  position: absolute;
+  right: 2.857143rem;
+}
+.not-link-value{
+  position: absolute;
+  right: 1.428571rem;
 }
 .sic-cell-rignt-icon:after {
     content: " ";

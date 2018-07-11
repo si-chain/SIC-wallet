@@ -1,6 +1,6 @@
 <template>
     <div>
-      <x-header :left-options="option">{{$t('left_panel.about')}}</x-header>
+      <sic-header :left-options="option">{{$t('left_panel.about')}}</sic-header>
       <div class="logo-wrap">
         <img class="logo" src="../assets/createlogo.png" alt="">
         <p>智宝钱包</p>
@@ -25,14 +25,15 @@
     </div>
 </template>
 <script>
-import { XHeader, Group, Cell, Confirm, TransferDom } from 'vux'
+import sicHeader from '../components/sicHeader'
+import { Group, Cell, Confirm, TransferDom } from 'vux'
 import AppConfig from '../libs/config'
 export default {
   directives: {
     TransferDom
   },
   components: {
-    XHeader,
+    sicHeader,
     Group,
     Cell,
     Confirm

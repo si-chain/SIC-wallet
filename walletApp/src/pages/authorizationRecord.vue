@@ -1,6 +1,6 @@
 <template>
     <div class="page-group">
-      <x-header :left-options="{backText: ''}">{{$t('index.authorization_record')}}</x-header>
+      <sic-header :left-options="{backText: ''}">{{$t('index.authorization_record')}}</sic-header>
       <div style="padding-top:50px" ref="authorization" v-if="authorizationData.length > 0 || isLoading">
         <authorization-item v-if="authorizationData.length > 0" @setPwdShow="setPwdShow" v-for="(item,index) in authorizationData" :key="index" :itemData="item"></authorization-item>
         <!-- <divider class="no-more">{{ $t('policy.policy_more') }}</divider> -->
@@ -15,14 +15,15 @@
       <div v-transfer-dom>
         <loading :show="upLoadImg" text=""></loading>
       </div>
-      <password-confirm v-if="isUnlock" ref="confirm" @setUnlock="setUnlock" @unlocking="unlocking"></password-confirm>
+      <password-confirm v-show="isUnlock" :iShowLock="isUnlock" ref="confirm" @setUnlock="setUnlock" @unlocking="unlocking"></password-confirm>
     </div>
 </template>
 <script>
 import Eos from 'eosjs'
 import config from '../libs/env'
 import authorizationItem from '../components/authorizationItem'
-import { XHeader, XButton, Alert, Loading, Msg, FormPreview, Divider, Card, Cell, Group, Flexbox, FlexboxItem, Checklist, LoadMore, TransferDomDirective as TransferDom } from 'vux'
+import sicHeader from '../components/sicHeader'
+import { XButton, Alert, Loading, Msg, FormPreview, Divider, Card, Cell, Group, Flexbox, FlexboxItem, Checklist, LoadMore, TransferDomDirective as TransferDom } from 'vux'
 import passwordConfirm from '../components/PasswordConfirm'
 import SIC from 'sic-ecies'
 export default {
@@ -30,7 +31,7 @@ export default {
     TransferDom
   },
   components: {
-    XHeader,
+    sicHeader,
     LoadMore,
     FormPreview,
     Divider,

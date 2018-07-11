@@ -1,6 +1,6 @@
 <template>
   <div style="overflow:hidden">
-    <x-header :left-options="{backText: ''}">创建成功</x-header>
+    <sic-header :left-options="{backText: ''}">创建成功</sic-header>
     <div class="page-group">
       <div class="svg-wrap">
         <success-check-mark></success-check-mark>
@@ -21,7 +21,8 @@
   </div>
 </template>
 <script>
-import { XButton, XHeader, Flexbox, FlexboxItem } from 'vux'
+import sicHeader from '../components/sicHeader'
+import { XButton, Flexbox, FlexboxItem } from 'vux'
 import SuccessCheckMark from '../components/SuccessCheckMark.vue'
 export default {
   data () {
@@ -29,7 +30,7 @@ export default {
   },
   components: {
     XButton,
-    XHeader,
+    sicHeader,
     Flexbox,
     FlexboxItem,
     SuccessCheckMark

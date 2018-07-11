@@ -216,7 +216,12 @@ export default {
 </script>
 <style lang="less" scoped>
   .menu-box{
+    // position: fixed;
     padding-top: 1.428571rem;
+    position: absolute;
+    top:0;
+    width: 100%;
+    z-index: 9999;
     background: @header-background-color;
   }
   .menu-nav{

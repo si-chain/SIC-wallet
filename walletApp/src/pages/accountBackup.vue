@@ -1,44 +1,52 @@
 <template>
   <div class="page-group" style="overflow:hidden">
-    <x-header :left-options="{backText: ''}">{{$t('index.backup_wallet')}}</x-header>
+    <sic-header :left-options="{backText: ''}">{{$t('index.backup_wallet')}}</sic-header>
     <div class="page">
       <div class="content">
-        <div class="content-block text-center">
+        <!-- <div class="content-block text-center">
           <account-image :size="30" :account="$route.query.account"></account-image>
           <p>{{$route.query.account}}</p>
-        </div>
-        <group>
-          <cell :title="$t('wallet_backup.index.label.account')" :value="$route.query.account"></cell>
-          <cell :title="$t('wallet_backup.index.label.asset')" :value="balance"></cell>
-          <cell :title="$t('wallet_backup.index.label.private_key')" :link="`/wallet-backup-key?account=${$route.query.account}`" is-link></cell>
-          <cell :title="$t('index.authorization_record')" is-link :link="`/authorization-record?account=${$route.query.account}`">
-            <div class="badge-value" v-if="$store.state.msgList > 0">
-              <span class="vertical-middle">{{ $t('index.message') }}</span>
-              <badge :text="$store.state.msgList.length"></badge>
-            </div>
-          </cell>
-        </group>
-        <p class="tip-error text-center" v-if="error.common">{{error.common}}</p>
+        </div> -->
+        <wallet-detail :isBackground="false"></wallet-detail>
+        <sic-cell :title="$t('wallet_backup.index.label.asset')" :isLink="false" :value="balance">
+          <img slot="icon" class="icon" src="../assets/images/ico_asset_backup.png" alt="">
+        </sic-cell>
+        <sic-cell :title="$t('wallet_backup.index.label.private_key')" :link="`/wallet-backup-key?account=${$route.query.account}`">
+          <img slot="icon" class="icon" src="../assets/images/ico_privatekey_backup.png" alt="">
+        </sic-cell>
+        <sic-cell :title="$t('index.authorization_record')" :link="`/authorization-record?account=${$route.query.account}`">
+          <img slot="icon" class="icon" src="../assets/images/ico_authorization_backup.png" alt="">
+          <div class="badge-value" v-if="!$store.state.msgList > 0">
+            <span class="vertical-middle">{{ $t('index.message') }}</span>
+            <badge :text="$store.state.msgList.length"></badge>
+          </div>
+        </sic-cell>
+        <!-- <p class="tip-error text-center" v-if="!error.common">{{error.common}}</p> -->
         <div class="tip-info">
             <span style="color:#999">*</span> {{$t('wallet_backup.index.tip')}}
         </div>
-        <div class="content-block button-block">
-          <flexbox>
+        <div class="button-block">
+          <x-button type="primary" :link="`/wallet-backup-key?account=${$route.query.account}`">{{$t('wallet_backup.index.button_backup')}}</x-button>
+          <x-button type="default" @click.native="delWallet">{{$t('wallet_backup.index.button_remove')}}</x-button>
+          <!-- <flexbox>
             <flexbox-item>
               <x-button type="primary" :link="`/wallet-backup-key?account=${$route.query.account}`">{{$t('wallet_backup.index.button_backup')}}</x-button>
             </flexbox-item>
             <flexbox-item>
               <x-button type="default" @click.native="delWallet">{{$t('wallet_backup.index.button_remove')}}</x-button>
             </flexbox-item>
-          </flexbox>
+          </flexbox> -->
         </div>
       </div>
     </div>
-    <password-confirm v-if="isUnlock" @unlocking="unlocking" @setUnlock="setUnlock" :tips="$t('wallet_del.tip_del')"></password-confirm>
+    <password-confirm v-show="isUnlock" :iShowLock="isUnlock" @unlocking="unlocking" @setUnlock="setUnlock" :tips="$t('wallet_del.tip_del')"></password-confirm>
   </div>
 </template>
 <script>
-import { XButton, XHeader, Group, Cell, Flexbox, FlexboxItem, Badge } from 'vux'
+import sicHeader from '../components/sicHeader'
+import walletDetail from '../components/accountDetail'
+import sicCell from '../components/sicCell'
+import { XButton, Group, Cell, Flexbox, FlexboxItem, Badge } from 'vux'
 import AccountImage from '../components/AccountImage.vue'
 import PasswordConfirm from '../components/PasswordConfirm.vue'
 export default {
@@ -46,12 +54,14 @@ export default {
     XButton,
     Group,
     Cell,
-    XHeader,
+    sicHeader,
     Flexbox,
     FlexboxItem,
     AccountImage,
     PasswordConfirm,
-    Badge
+    Badge,
+    walletDetail,
+    sicCell
   },
   mounted () {
     this.loadBalance()
@@ -80,54 +90,33 @@ export default {
     },
     delWallet () {
       this.error.common = ''
-      // if (this.balance === 0.0000) {
       this.isUnlock = true
-      // } else {
-      //   this.error.common = this.$t('wallet_del.error.invalid_delete')
-      // }
     },
-    unlocking (pwd) {
-      let self = this
-      if (!pwd) {
-        this.error.common = this.$t('unlock.error.invalid_password')
-        this.isUnlock = false
-        return
-      }
-      let account = this.$route.query.account
-      let wallets = this.$common.get_wallets()
-      let wallet = wallets.find(function (w) {
-        return w.account === account
-      })
-      try {
-        let publicWallet = this.$common.backupPublicKey(wallet.active, pwd)
-        let activePubkey = wallet.activePubkey
-        if (wallet == null) {
-          this.isUnlock = false
-          self.error.common = self.$t('unlock.account_not_found')
-        } else if (activePubkey !== publicWallet) {
-          this.isUnlock = false
-          self.error.common = self.$t('wallet_backup.detail.error.invalid_password')
-        } else {
-          return self.$common.del_wallet(wallet).then(() => {
-            if (wallets.length > 1) {
-              wallets.map(item => {
-                if (item.account !== wallet.account) {
-                  self.$store.state.account = item.account
-                }
-              })
-            } else {
-              self.$store.state.account = ''
-            }
-            self.$router.replace({
-              path: self.$route.query.from || this.$router.push('/')// eslint-disable-line
+    unlocking (flag) {
+      if (!flag) {
+        let self = this
+        let account = this.$route.query.account
+        let wallets = this.$common.get_wallets()
+        let wallet = wallets.find(function (w) {
+          return w.account === account
+        })
+        self.$common.del_wallet(wallet).then(() => {
+          if (wallets.length > 1) {
+            wallets.map(item => {
+              if (item.account !== wallet.account) {
+                self.$store.state.account = item.account
+              }
             })
-            this.isUnlock = false
+          } else {
+            self.$store.state.account = ''
+          }
+          self.$router.replace({
+            path: self.$route.query.from || this.$router.push('/')// eslint-disable-line
           })
-        }
-      } catch (error) {
-        this.isUnlock = false
-        this.error.common = this.$t('unlock.error.invalid_password')
+          flag = false
+        })
       }
+      this.isUnlock = flag
     },
     setUnlock (val) {
       this.isUnlock = val
@@ -145,13 +134,25 @@ export default {
 }
 </script>
 <style scoped lang="less">
-.button-block {
-    margin-top: 4rem;
+.button-block{
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  display: flex;
+  justify-content: flex-start;
+  .weui-btn_primary{
+    flex: 3.5
+  }
+  .weui-btn_default{
+    flex: 2
+  }
 }
-.content-block{
-  margin: 1.75rem 0;
-  padding: 0 .75rem;
-  color: #6d6d72;
+.weui-btn + .weui-btn{
+  margin-top:0;
+}
+.badge-value{
+  position: absolute;
+  right: 2.857143rem;
 }
 .text-center {
     text-align: center;

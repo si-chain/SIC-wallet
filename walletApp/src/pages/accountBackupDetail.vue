@@ -1,53 +1,47 @@
 <template>
     <div class="page-group" style="overflow:hidden">
-      <x-header :left-options="{backText: ''}">{{$t('index.backup_wallet')}}</x-header>
+      <sic-header :left-options="{backText: ''}">{{$t('index.backup_wallet')}}</sic-header>
       <div class="page" id="page-wallet-backup-detail">
         <div class="content">
-          <!-- <div class="tip-info">
-              {{$t('wallet_backup.detail.tip')}}
-          </div> -->
-          <div class="content-block">
-            <div class="tip-warning" :class="{'text-center':!wifKey}" id='copywin'>
-              {{wifKey || '****************************'}}
+          <div class="content-head">
+            <div class="content-block">
+              <div class="tip-warning" :class="{'text-center':!wifKey}" id='copywin'>
+                {{wifKey || '****************************'}}
+              </div>
+              <p class="tip-error text-center" v-if="error.common">{{error.common}}</p>
             </div>
-            <p class="tip-error text-center" v-if="error.common">{{error.common}}</p>
-            <x-button v-if="!wifKey" type="primary" @click.native="unlock">{{$t('wallet_backup.detail.unlock')}}</x-button>
+            <ul class="tips color-danger">
+              <li>
+                {{$t('wallet_backup.detail.tip')}}
+              </li>
+              <li>
+                {{$t('wallet_backup.detail.tip1')}}
+              </li>
+              <li>
+                {{$t('wallet_backup.detail.tip2')}}
+              </li>
+            </ul>
           </div>
-          <ul class="tips color-danger">
-            <li>
-              {{$t('wallet_backup.detail.tip')}}
-            </li>
-            <li>
-              {{$t('wallet_backup.detail.tip1')}}
-            </li>
-            <li>
-              {{$t('wallet_backup.detail.tip2')}}
-            </li>
-          </ul>
+          <x-button class="unlock" v-if="!wifKey" type="primary" @click.native="unlock">{{$t('wallet_backup.detail.unlock')}}</x-button>
           <div class="button-block" v-if="wifKey">
-            <flexbox>
-              <flexbox-item>
-                <x-button type="primary" id='copy' data-clipboard-target="#copywin" @click.native="copyKey()">{{keyCopied ? $t('wallet_backup.detail.copied') : $t('wallet_backup.detail.copy')}}</x-button>
-              </flexbox-item>
-              <flexbox-item>
-                <x-button type="primary" @click.native="showPlugin" >{{$t('wallet_backup.detail.go_back')}}</x-button>
-              </flexbox-item>
-            </flexbox>
+            <x-button type="primary" id='copy' data-clipboard-target="#copywin" @click.native="copyKey()">{{keyCopied ? $t('wallet_backup.detail.copied') : $t('wallet_backup.detail.copy')}}</x-button>
+            <x-button type="default" @click.native="showPlugin" >{{$t('wallet_backup.detail.go_back')}}</x-button>
           </div>
         </div>
       </div>
-      <password-confirm v-if="isUnlock" ref="confirm" @setUnlock="setUnlock" @unlocking="unlocking"></password-confirm>
+      <password-confirm v-show="isUnlock" :iShowLock="isUnlock" ref="confirm" @setUnlock="setUnlock" @unlocking="unlocking"></password-confirm>
     </div>
 </template>
 <script>
-import { XButton, XHeader, Group, Cell, Flexbox, FlexboxItem, Confirm } from 'vux'
+import sicHeader from '../components/sicHeader'
+import { XButton, Group, Cell, Flexbox, FlexboxItem, Confirm } from 'vux'
 import Clipboard from 'clipboard'
 import PasswordConfirm from '../components/PasswordConfirm.vue'
 
 export default {
   components: {
     XButton,
-    XHeader,
+    sicHeader,
     Group,
     Cell,
     Flexbox,
@@ -73,13 +67,9 @@ export default {
       this.error.common = ''
       this.isUnlock = true
     },
-    unlocking (pwd) {
+    unlocking (flag, pwd) {
+      console.log(flag)
       let self = this
-      if (!pwd.trim()) {
-        console.log(11)
-        this.error.common = this.$t('unlock.error.invalid_password')
-        return
-      }
       let account = this.$route.query.account
       let wallets = this.$common.get_wallets()
       // let wallets = this.$store.state.wallets
@@ -87,32 +77,17 @@ export default {
       let wallet = wallets.find(w => {
         return w.account === account
       })
-      try {
-        let publicWallet = this.$common.backupPublicKey(wallet.active, pwd)
-        let activePubkey = wallet.activePubkey
-        if (wallet == null) {
-          self.isUnlock = false
-          self.error.common = self.$t('unlock.account_not_found')
-        } else if (activePubkey !== publicWallet) {
-          self.isUnlock = false
-          self.error.common = self.$t('wallet_backup.detail.error.invalid_password')
-        } else {
-          self.error.common = ''
-          let data = {
-            account: wallet.account,
-            active: wallet.active,
-            owner: wallet.owner
-          }
-          let wifKey = this.$common.backupExport(data, pwd)
-          self.wifKey = wifKey
-          self.wallet = wallet
-          self.unlocked = true
-          self.isUnlock = false
+      if (!flag) {
+        let data = {
+          account: wallet.account,
+          active: wallet.active,
+          owner: wallet.owner
         }
-      } catch (error) {
-        this.error.common = this.$t('unlock.error.invalid_password')
-        self.isUnlock = false
+        let wifKey = this.$common.backupExport(data, pwd)
+        self.wifKey = wifKey
+        self.wallet = wallet
       }
+      self.isUnlock = flag
     },
     copyKey () {
       let clipboard = new Clipboard('#copy')
@@ -186,32 +161,23 @@ export default {
 .bar-nav~.content {
     top: 2.2rem;
 }
-.content-block {
-    margin: 1.75rem 0;
-    padding: 0 .75rem;
-    color: #6d6d72;
+.content-head{
+  padding: 2.142857rem;
 }
 .text-right {
   text-align: right;
 }
 .tip-warning {
-    padding: .5rem;
-    font-weight: bold;
     text-align: center;
-}
-button.weui-btn {
-    border-radius: 20px;
-}
-.tip-warning {
-    background: #fff5e6;
-    border: 1px solid #ffebcc;
-    border-radius: 6px;
-    color: #495060;
-    font-size: 12px;
-    padding: .3rem;
+    background: #f1f1f1;
+    padding: .714286rem 1.071429rem;
+    border-radius: 1.428571rem;
+    color: #666666;
+    font-size: @font-size3;
     margin-bottom: 20px;
     white-space: normal;
     word-break: break-all;
+    font-weight: 500;
 }
 .tip-info {
   word-break: break-word;
@@ -224,10 +190,6 @@ button.weui-btn {
   margin-top:10px;
   line-height: 16px;
   color: #999;
-}
-.tip-warning {
-  padding: 0.5rem;
-  font-weight: bold;
 }
 .tip-error {
     background: #fbf2f1;
@@ -243,15 +205,20 @@ button.weui-btn {
 .tips {
     font-size: 12px;
     padding-left: 1.5rem;
-    color: #999;
+    list-style: outside;
+    li{
+      margin-top: 1.428571rem;
+      font-size: @font-size4;
+      color: #666666;
+    }
 }
 
 .link-green {
   font-size: 0.75rem;
 }
-
-.button-block {
-  margin-top: 4rem;
-  padding:0 16px;
+.unlock{
+  position: absolute;
+  bottom: 0;
+  padding: .357143rem 0;
 }
 </style>

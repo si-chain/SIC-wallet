@@ -2,14 +2,15 @@
   <div class="detail">
     <div class="sic">
       <p class="sic-account">{{account}}</p>
+      <p><span class="type">SIC</span></p>
       <p>
         <span class="num">{{accountData.balance}}</span>
-        <span class="type">SIC</span>
       </p>
     </div>
     <div class="info-content">
-      <span class="icon-c"> > </span>
-      <span v-if="!accountData.backup" class="backup-date">{{$t('wallet_manage.tip_backup')}}</span>
+      <span v-if="!accountData.backup" class="backup-date">
+        <img class="wallet-icon" src="../assets/images/ico_backup_wallets.png" alt="">
+      </span>
     </div>
   </div>
 
@@ -50,43 +51,34 @@ export default{
 </script>
 <style lang="less" scoped>
 .detail{
-  width: 75%;
+  width: 70%;
   overflow: hidden;
+  display: flex;
+  align-items: center;
+  position: relative;
 }
 .info-content{
-  float: left;
-  width: 50%;
-  line-height: 2rem;
-  padding: 21px 0;
-  .backup-date{
-    font-size: 13px;
-    color: #1857f2;
-    float: right;
-  }
-  .icon-c{
-    float: right;
-    font-size: 18px;
-    margin: -2px 20px 0 7px;
-    color: #cccccc;
-  }
+  position: absolute;
+  right: 1.428571rem;
 }
 .sic-account{
-  font-size: 22px;
-  color: #333333;
+  font-size: @font-size3;
+  color: #000000;
 }
 .sic{
   line-height: 1.4;
-  padding: 16px 0;
+  padding: 1.142857rem 0;
   text-align: left;
   float: left;
   width: 50%;
   .num{
-    font-size: 14px;
-    color: #1857f2;
+    font-size: @font-size1;
+    color: @index-color;
+    font-weight: 600;
   }
   .type{
-    font-size: 14px;
-    color: #999999;
+    font-size: @font-size3;
+    color: #666666;
     margin-right: 20px
   }
 }

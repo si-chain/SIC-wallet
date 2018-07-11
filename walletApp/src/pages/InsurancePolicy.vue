@@ -5,37 +5,17 @@
 ****--@describe   保单托管
 -->
 <template>
-    <div class="insurance-policy">
-      <x-header :left-options="{showBack: false}">{{$t('policy.tip_insurance')}}</x-header>
-      <div class="list-box" ref="wrapper" id="vux_view_box_body" v-swipedown="{fn:vuetouchDown}" v-swipeup="{fn:vuetouchUp}">
-        <!-- <group> -->
+    <div class="list-box" :style="{height:listHeight}" ref="wrapper" id="vux_view_box_body" v-swipedown="{fn:vuetouchDown}" v-swipeup="{fn:vuetouchUp}" v-swipeleft="{fn:vuetouchLeft}" v-swiperight="{fn:vuetouchRight}">
           <cell is-link link="/insurance-policy" style="border-bottom:1px solid #ddd">
             <img slot="icon" class="policy-icon" src="../assets/icon_031.png" width="25" height="25" alt="">
             <span slot="title"><span style="vertical-align:middle;">{{$t('policy.tip_insurance_policy')}}</span></span>
           </cell>
-          <!-- <cell is-link link="/insurance-claim">
-            <img slot="icon" class="policy-icon" src="../assets/icon_06.png" width="25" height="25" alt="">
-            <span slot="title"><span style="vertical-align:middle;">{{$t('index.claim_trusteeship')}}</span></span>
-          </cell> -->
-        <!-- </group> -->
         <div style="height:3.142857rem;">
-          <sticky ref="sticky" scroll-box="vux_view_box_body" :offset="-10" style="z-index: 99999" :check-sticky-support="false">
             <tab style="margin-top:0.714286rem;" v-model="index" prevent-default @on-before-index-change="switchTabItem">
               <tab-item v-if="index === 0" selected>{{$t('policy.history_policy')}}</tab-item>
               <tab-item v-else>{{$t('policy.history_policy')}}</tab-item>
-              <!-- <tab-item v-if="index === 1" selected>{{$t('policy.history_claim')}}</tab-item>
-              <tab-item v-else>{{$t('policy.history_claim')}}</tab-item> -->
             </tab>
-          </sticky>
         </div>
-        <!-- <p class="list-title" v-if="index === 0">
-          <img src="../assets/list.png" width="20" height="20" alt="">
-          {{ $t('policy.policy_list') }}
-        </p>
-        <p class="list-title" v-else>
-          <img src="../assets/list.png" width="20" height="20" alt="">
-          {{ $t('index.claim_trusteeship') }}
-        </p> -->
         <div ref="viewBox" class="wrapper" v-if="policyList.length > 0 || isLoading" >
           <div>
             <load-more tip=" " v-if="isTouchDown"></load-more>
@@ -53,29 +33,26 @@
               </step>
             </card>
           </div>
-          <div v-if="notmore">
-            <load-more tip=" "></load-more>
-          </div>
-          <div v-else-if="!more">
-            <!-- <load-more :show-loading="false" :tip="$t('policy.policy_more')"></load-more> -->
-            <divider class="no-more">{{ $t('policy.policy_more') }}</divider>
-            <p class="no-more-tip">{{$t('policy.upload_nomore_tip')}}</p>
-          </div>
-          <div v-else>
-            <load-more :tip="$t('loadmsg.more')"></load-more>
-          </div>
+        </div>
+        <div v-if="notmore">
+          <load-more tip=" "></load-more>
+        </div>
+        <div v-else-if="!more">
+          <divider class="no-more">{{ $t('policy.policy_more') }}</divider>
+          <p class="no-more-tip">{{$t('policy.upload_nomore_tip')}}</p>
+        </div>
+        <div v-else>
+          <load-more :tip="$t('loadmsg.more')"></load-more>
         </div>
         <loading :show="policyList.length === 0  && !isLoading" text=""></loading>
       </div>
-
-    </div>
 </template>
 
 <script>
 // import Bscroll from 'better-scroll'
 import Step from '../components/step'
 import StepItem from '../components/step-Item'
-import { XHeader, Group, Loading, Box, Tab, TabItem, Cell, Divider, Scroller, Card, Sticky, LoadMore } from 'vux'
+import { XHeader, Group, Loading, Box, Tab, TabItem, Cell, Divider, Scroller, Card, LoadMore } from 'vux'
 export default {
   components: {
     XHeader,
@@ -89,12 +66,12 @@ export default {
     Scroller,
     Tab,
     TabItem,
-    Sticky,
     Loading,
     LoadMore
   },
   data () {
     return {
+      listHeight: '37.3rem',
       index: 0,
       policyList: [],
       more: true,
@@ -131,6 +108,12 @@ export default {
       setTimeout(() => {
         this.notmore = false
       }, 750)
+    },
+    vuetouchLeft (s, e) {
+      this.$common.go(`/home?account=this.$route.query.account || this.$store.state.account`, this.$router)
+    },
+    vuetouchRight (s, e) {
+      this.$common.go(`/`, this.$router)
     },
     getPolicyData () {
       let _this = this
@@ -180,21 +163,17 @@ export default {
     }
     this.getPolicyData()
     window.addEventListener('scroll', this.policyHandleScroll, true)
+    this.listHeight = window.screen.availHeight / 14 - 8.357143 + 'rem'
   },
   watch: {
-    index (val) {
-      // this.getData()
-    }
-  },
-  mounted () {
-    this.$refs.sticky.bindSticky()
+    index (val) {}
   }
 }
 </script>
 
 <style scoped lang="less">
 .insurance-policy{
-  padding:3.285714rem 0 0.357143rem 0;
+  // margin-top: 8.357143rem;
 }
 .no-more {
   padding:10px 70px
@@ -209,6 +188,13 @@ export default {
   font-size: 17px;
 }
 .list-box{
+  position: absolute;
+  top: 8.357143rem;
+  overflow-y: scroll;
+  height: 100%;
+  width: 100%;
+}
+.wrapper{
   overflow-y: scroll;
 }
 .vux-step{

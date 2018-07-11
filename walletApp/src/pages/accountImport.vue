@@ -1,7 +1,7 @@
 <template>
     <div class="page-group">
         <div class="page" id="page-wallet-import">
-          <x-header>{{$t('wallet_import.title')}}</x-header>
+          <sic-header>{{$t('wallet_import.title')}}</sic-header>
             <div class="content">
                 <div class="list-block block-pwd">
                     <ul>
@@ -46,13 +46,14 @@
     </div>
 </template>
 <script>
-import {XHeader, XTextarea, Group, Msg, Alert, XInput, XButton, TransferDomDirective as TransferDom} from 'vux'
+import sicHeader from '../components/sicHeader'
+import {XTextarea, Group, Msg, Alert, XInput, XButton, TransferDomDirective as TransferDom} from 'vux'
 export default {
   directives: {
     TransferDom
   },
   components: {
-    XHeader,
+    sicHeader,
     XTextarea,
     XInput,
     XButton,

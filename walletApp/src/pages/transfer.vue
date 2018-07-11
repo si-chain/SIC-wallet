@@ -1,6 +1,6 @@
 <template>
   <div>
-    <x-header :left-options="{backText: ''}">{{$t('transfer.header')}}</x-header>
+    <sic-header :left-options="{backText: ''}">{{$t('transfer.header')}}</sic-header>
     <loading :show="transferData.length === 0  && !isLoading" text=""></loading>
     <div style="padding:3.714286rem 3px 0 3px" v-if="transferData.length > 0 || isLoading">
       <div v-for="(item,index) in transferData" :key="index">
@@ -9,8 +9,11 @@
       </div>
       <divider class="no-more">{{ $t('policy.policy_more') }}</divider>
     </div>
-    <div class="transfer-bom">
-      <flexbox style="margin-bottom:3px">
+    <div class="transfer-bom button-block">
+      <x-button type="primary" :text="$t('transfer.title')" :link="`/transfer-detail?account=${$route.query.account}`"></x-button>
+      <x-button v-if="isIdentity" :text="$t('transfer.extract')" :link="`/withdraw?account=${$route.query.account}`"></x-button>
+      <x-button v-else :text="$t('transfer.extract')" @click.native="ShowIdentityMsg = !ShowIdentityMsg"></x-button>
+      <!-- <flexbox style="margin-bottom:3px">
         <flexbox-item>
           <x-button type="primary" :text="$t('transfer.title')" :link="`/transfer-detail?account=${$route.query.account}`"></x-button>
         </flexbox-item>
@@ -18,7 +21,7 @@
           <x-button v-if="isIdentity" :text="$t('transfer.extract')" :link="`/withdraw?account=${$route.query.account}`"></x-button>
           <x-button v-else :text="$t('transfer.extract')" @click.native="ShowIdentityMsg = !ShowIdentityMsg"></x-button>
         </flexbox-item>
-      </flexbox>
+      </flexbox> -->
     </div>
     <div v-transfer-dom>
         <alert v-model="ShowIdentityMsg" button-text=" ">
@@ -28,7 +31,8 @@
   </div>
 </template>
 <script>
-import { Flexbox, FlexboxItem, XButton, XHeader, FormPreview, Divider, Alert, Msg, Loading, TransferDomDirective as TransferDom } from 'vux'
+import sicHeader from '../components/sicHeader'
+import { Flexbox, FlexboxItem, XButton, FormPreview, Divider, Alert, Msg, Loading, TransferDomDirective as TransferDom } from 'vux'
 export default{
   directives: {
     TransferDom
@@ -37,7 +41,7 @@ export default{
     Flexbox,
     FlexboxItem,
     XButton,
-    XHeader,
+    sicHeader,
     FormPreview,
     Divider,
     Loading,
@@ -113,8 +117,19 @@ export default{
 }
 .transfer-bom{
   position: absolute;
-  bottom:1px;
   width: 100%;
+  bottom: 0;
+  display: flex;
+  justify-content: flex-start;
+  .weui-btn_primary{
+    flex: 3.5
+  }
+  .weui-btn_default{
+    flex: 2
+  }
+}
+.weui-btn + .weui-btn{
+  margin-top:0;
 }
 .no-more {
   padding:0.714286rem 5.0rem
