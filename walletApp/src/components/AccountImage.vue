@@ -1,7 +1,7 @@
 <template>
-  <div :style="{width:wrapSize,height:wrapSize}" class="align-center canvas-wrap">
+  <div :style="{width:wrapSize,height:wrapSize,background:!account ? background : '#ffffff'}" class="align-center canvas-wrap">
     <canvas v-show="account" ref="canvas" :style="{width:size + 'px',height:size +'px'}" :width="size " :height="size " :data-jdenticon-hash="hash"></canvas>
-    <img v-show="!account" src="../assets/images/img_head_account.png" :width="size" style="margin-top:-4px" alt="">
+    <img v-show="!account" src="../assets/images/img_head_account.png" :width="60" style="margin-top:1px" alt="">
   </div>
 </template>
 <script>
@@ -20,6 +20,10 @@ export default {
     account: {
       type: String,
       default: ''
+    },
+    background: {
+      type: String,
+      default: '#ffffff'
     }
   },
   computed: {
@@ -60,7 +64,6 @@ export default {
 </script>
 <style lang="less" scoped>
 .canvas-wrap{
-  background: #ffffff;
   border-radius: 50%;
   align-items:center;
 }

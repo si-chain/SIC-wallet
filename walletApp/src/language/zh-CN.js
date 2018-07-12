@@ -3,7 +3,8 @@ const locale = {
     index: {
       http_error: '系统异常,请稍后再试',
       newAccount: '新账号',
-			version_log: '版本日志',
+      version_log: '版本日志',
+			version_update: '版本检测',
       newAccountTip:'创建一个钱包和一个账户',
       start:'点击开始SIC',
       home:'我',

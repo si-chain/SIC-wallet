@@ -2,41 +2,35 @@
     <div>
       <sic-header :left-options="option">{{$t('left_panel.about')}}</sic-header>
       <div class="logo-wrap">
-        <img class="logo" src="../assets/createlogo.png" alt="">
-        <p>智宝钱包</p>
+        <img class="logo" src="../assets/images/logo_about.png" alt="">
       </div>
-      <group>
-        <cell class="cell-border-top" title="版本日志" is-link :link="`/version-log?account=${this.$store.state.account}`">
-        </cell>
-        <cell class="has-before cell-border-bottom" title="版本检测"  @click.native="checkUpdata">
-        </cell>
-      </group>
+      <sic-cell class="align-center" :title="$t('index.version_log')" :link="`/version-log?account=${this.$store.state.account}`">
+        <img slot="icon" class="icon" src="../assets/images/ico_log_about.png" alt="">
+      </sic-cell>
+      <sic-cell class="align-center" :title="$t('index.version_update')" @click.native="checkUpdata" :isLink="false">
+        <img slot="icon" class="icon" src="../assets/images/ico_monitoring_about.png" alt="">
+      </sic-cell>
       <div class="footer">
         <p class="footer-tip">SIC Foundation</p>
       </div>
-      <div v-transfer-dom>
+      <!-- <div v-transfer-dom>
         <confirm
         v-model="showUpdateShow"
         :close-on-confirm="true"
         title="版本更新">
           <p style="text-align:center;">已经是最新版</p>
         </confirm>
-      </div>
+      </div> -->
     </div>
 </template>
 <script>
 import sicHeader from '../components/sicHeader'
-import { Group, Cell, Confirm, TransferDom } from 'vux'
+import sicCell from '../components/sicCell'
 import AppConfig from '../libs/config'
 export default {
-  directives: {
-    TransferDom
-  },
   components: {
     sicHeader,
-    Group,
-    Cell,
-    Confirm
+    sicCell
   },
   data () {
     return {
@@ -56,8 +50,6 @@ export default {
         this.AppUpDataUrl = data.version[data.version.length - 1].url
         if (this.isVersions !== this.serverAppVersion) {
           window.location.href = data.version[data.version.length - 1].url
-        } else {
-          this.showUpdateShow = true
         }
       })
     }
@@ -66,19 +58,18 @@ export default {
 </script>
 <style lang="less" scoped>
 .logo-wrap{
-  text-align:center;
-  margin-top: 2.0rem;
-  p{
-    font-size: 1.285714rem;
-    color: #999999;
-    font-weight: 300;
-    line-height: 4rem;
+  width: 100%;
+  height: 16.428571rem;
+  background-image: url(../assets/images/bg_wallet.png);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  .logo{
+    width: 6.428571rem;
+    height: 10rem;
+    margin: 2.857143rem;
   }
 }
-.logo{
-  width:10.0rem;
-  margin:0 auto;
-}
+
 .has-before:before{
   border-top: 1px solid #98b3db!important;
 }

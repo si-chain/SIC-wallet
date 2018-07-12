@@ -1,67 +1,64 @@
 <template>
-  <div style="overflow:hidden">
-    <sic-header :left-options="{backText: ''}">创建成功</sic-header>
+  <div style="overflow:hidden;width:100%">
+    <sic-header :left-options="{backText: ''}">{{$t('wallet_create.success.title')}}</sic-header>
     <div class="page-group">
       <div class="svg-wrap">
-        <success-check-mark></success-check-mark>
+        <!-- <success-check-mark></success-check-mark> -->
+        <img src="../assets/images/ico_success.png" alt="" width="70">
         <p class="text-center text-success">{{$t('wallet_create.success.tip1')}}</p>
       </div>
       <div class="tip-wrap">
         <p class="tip-alert text-center">{{$t('wallet_create.success.tip2')}}</p>
       </div>
-      <flexbox>
-        <flexbox-item>
-          <x-button type="primary" @click.native="backup">{{$t('wallet_create.success.backup_wallet')}}</x-button>
-        </flexbox-item>
-        <flexbox-item>
-          <x-button type="default" :link="`/?account=${$store.state.account}`">{{$t('wallet_create.success.detail')}}</x-button>
-        </flexbox-item>
-      </flexbox>
+      <div class="button-wrap button-block">
+        <x-button type="primary" :link="`/wallet-backup-key?account=${$store.state.account}`">{{$t('wallet_create.success.backup_wallet')}}</x-button>
+        <x-button type="default" :link="`/?account=${$store.state.account}`">{{$t('wallet_create.success.detail')}}</x-button>
+      </div>
     </div>
   </div>
 </template>
 <script>
 import sicHeader from '../components/sicHeader'
-import { XButton, Flexbox, FlexboxItem } from 'vux'
-import SuccessCheckMark from '../components/SuccessCheckMark.vue'
+import { XButton } from 'vux'
+// import SuccessCheckMark from '../components/SuccessCheckMark.vue'
 export default {
   data () {
     return {}
   },
   components: {
     XButton,
-    sicHeader,
-    Flexbox,
-    FlexboxItem,
-    SuccessCheckMark
-  },
-  methods: {
-    backup () {
-      console.log(this.$store.state.account)
-      this.$router.push({path: '/wallet-backup', query: {account: this.$store.state.account}})
-    }
+    sicHeader
   }
 }
 </script>
 <style scoped lang="less">
 .page-group{
-  padding:0 .75rem;
+  background: url(../assets/images/bg_create.jpg);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  height:100%;
 }
 .svg-wrap{
-  padding: 5rem 0;
+  img{
+    margin:9.285714rem 0 2.142857rem 0;
+  }
+  text-align: center;
 }
 .text-success{
-  margin-top: 2rem;
-  font-size: 18px;
+  font-size: @font-size3;
+  color:#ffffff;
 }
 .tip-wrap{
-  margin: 1rem;
+  margin:0 2.142857rem;
+  position: absolute;
+  bottom: 5.714286rem;
+  background: rgba(246, 57, 81, .2);
+  border-radius: 5px;
 }
 .tip-alert{
-  background: #fbf2f1;
-  color: #c2433b;
-  font-size: 12px;
-  padding: .3rem;
+  color: #f63951;
+  font-size: @font-size4;
+  padding:5px 1.071429rem;
   white-space: normal;
   letter-spacing: normal;
   word-break: normal;

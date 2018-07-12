@@ -1,7 +1,7 @@
 <template>
     <div class="page-group">
         <div class="page" id="page-wallet-import">
-          <sic-header>{{$t('wallet_import.title')}}</sic-header>
+          <sic-header :left-options="{backText: ''}">{{$t('wallet_import.title')}}</sic-header>
             <div class="content">
                 <div class="list-block block-pwd">
                     <ul>

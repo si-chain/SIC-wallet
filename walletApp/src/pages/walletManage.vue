@@ -15,14 +15,6 @@
       <div class="button-wrap button-block">
         <x-button type="primary" :link="`/create-account?account=${$route.query.account}`">{{$t('wallet_create.index.button_create')}}</x-button>
         <x-button type="default" :link="`/account-import?account=${$route.query.account}`">{{$t('wallet_create.index.button_import')}}</x-button>
-        <!-- <flexbox>
-          <flexbox-item>
-            
-          </flexbox-item>
-          <flexbox-item>
-            
-          </flexbox-item>
-        </flexbox> -->
       </div>
     </div>
 </template>

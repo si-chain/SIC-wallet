@@ -11,6 +11,7 @@ import i18n from './language/index'
 import util from './libs/utils'
 import Filters from './libs/filters'
 import moment from 'vue-moment'
+import Foot from './libs/foot'
 // import vueTouchObj from './libs/vueTouch'
 
 /*eslint-disable */
@@ -91,6 +92,7 @@ Vue.use(moment)
 Vue.use(ToastPlugin)
 Vue.use(AjaxPlugin)
 Vue.use(ConfirmPlugin)
+Vue.use(Foot)
 FastClick.attach(document.body)
 
 Vue.config.productionTip = false

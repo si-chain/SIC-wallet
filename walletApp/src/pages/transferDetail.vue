@@ -12,7 +12,7 @@
         <img slot="label" class="input-icon" src="../assets/images/ico_memo_send.png" width="24" height="24">
       </x-input>
     </group>
-    <x-button class="send-btn" :disabled="iconType === 'error' || iconType === ''" type="primary" @click.native="next" :show-loading="loading">{{btnTitle}}</x-button>
+    <x-button ref="sendBtn" v-foot class="send-btn" :disabled="iconType === 'error' || iconType === ''" type="primary" @click.native="next" :show-loading="loading">{{btnTitle}}</x-button>
     <toast v-model="showToast" :type="isSuccess">{{error}}</toast>
     <alert v-model="show" :title="$t('index.notice')" :content="error" @on-hide="alertHide"></alert>
     <password-confirm v-show="isUnlock" :iShowLock="isUnlock" ref="confirm" @setUnlock="setUnlock" @unlocking="unlocking"></password-confirm>
@@ -189,6 +189,17 @@ export default {
     },
     sendInputFocus (val) {
       this.val = val
+    }
+  },
+  mounted () {
+    const that = this
+    window.onresize = () => {
+      return (() => {
+        if (that.originHeight - window.screenHeight > 0) {
+          that.screenHeight = that.originHeight - window.screenHeight
+          alert(that.screenHeight)
+        }
+      })()
     }
   }
 }

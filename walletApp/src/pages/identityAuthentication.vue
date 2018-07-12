@@ -3,15 +3,16 @@
   <div>
     <sic-header :left-options="{backText: ''}">{{$t('index.identity')}}</sic-header>
     <group>
-      <x-input :title="$t('identity.phone')" v-model="phoneNumber" name="mobile" :placeholder="$t('identity.placeholder')" keyboard="number" @on-change="phoneNumberChange" is-type="china-mobile"></x-input>
-      <x-input :title="$t('identity.code')" :max="4" :min="4" class="weui-vcode" v-model="validateCode">
+      <x-input :class="val === 'phone' ? 'send-input-focus' : 'send-input'" :title="$t('identity.phone')" v-model="phoneNumber" name="mobile" :placeholder="$t('identity.placeholder')" keyboard="number" @on-change="phoneNumberChange" is-type="china-mobile" @on-focus="sendInputFocus('phone')">
+        <img slot="label" class="input-icon" src="../assets/images/ico_phone_authentication.png" width="24" height="24">
+      </x-input>
+      <x-input :class="val === 'code' ? 'send-input-focus' : 'send-input'" :title="$t('identity.code')" :max="4" :min="4" class="weui-vcode" placeholder="Code" v-model="validateCode" @on-focus="sendInputFocus('code')">
+        <img slot="label" class="input-icon" src="../assets/images/ico_code_authentication.png" width="24" height="24">
         <x-button :disabled="!((sendCode === '发送验证码' || sendCode === 'Send Code' || sendCode === '重置' || sendCode === 'Resend') && isPhone)" slot="right" type="primary" @click.native="getCode" mini>{{sendCode}}</x-button>
       </x-input>
 
     </group>
-    <box gap="10px 10px">
-      <x-button :disabled="!(isPhone && validateCode !=='')" @click.native="verifyCode" type="primary">{{$t('index.confirm')}}</x-button>
-    </box>
+    <x-button class="send-btn" :disabled="!(isPhone && validateCode !=='')" @click.native="verifyCode" type="primary">{{$t('index.confirm')}}</x-button>
     <div v-transfer-dom>
         <alert v-model="isIdentityMsg" button-text=" ">
           <msg slot="default" :title="title" :description="description" :buttons="buttons" :icon="icon"></msg>
@@ -29,6 +30,7 @@ export default {
   },
   data () {
     return {
+      val: 'phone',
       phoneNumber: '',
       validateCode: '',
       sendCode: this.$t('identity.sendCode'),
@@ -106,6 +108,9 @@ export default {
       if (this.timer) {
         clearInterval(this.timer)
       }
+    },
+    sendInputFocus (val) {
+      this.val = val
     }
   },
   created () {
@@ -119,8 +124,52 @@ export default {
   }
 }
 </script>
-
-<style>
-
-
+<style lang="less" scoped>
+.input-icon{
+  padding: 0 2.5rem 0 .714286rem;
+  display:block;
+}
+.send-btn{
+  position: absolute;
+  bottom: 0;
+  padding: .357143rem 0;
+}
+.send-input:after{
+    content: " ";
+    position: absolute;
+    left: 0;
+    top: 40px;
+    right: 0;
+    height: 1px;
+    border-bottom: 1px solid #D9D9D9;
+    color: #D9D9D9;
+    -webkit-transform-origin: 0 0;
+    transform-origin: 0 0;
+    -webkit-transform: scaleY(0.5);
+    transform: scaleY(0.5);
+    left: 81px;
+}
+.send-input-focus:after{
+  content: " ";
+  position: absolute;
+  left: 0;
+  top: 40px;
+  right: 0;
+  height: 1px;
+  border-bottom: 2px solid @index-color;
+  color: #D9D9D9;
+  -webkit-transform-origin: 0 0;
+  transform-origin: 0 0;
+  -webkit-transform: scaleY(0.5);
+  transform: scaleY(0.5);
+  left: 81px;
+}
+.weui-cell:before{
+  display: none;
+}
+.weui-btn_mini {
+  padding:11px 14px 3px 1.32rem;
+  margin: -17px -15px;
+}
 </style>
+

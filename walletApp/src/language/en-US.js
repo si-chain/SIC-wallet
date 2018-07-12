@@ -1,7 +1,8 @@
 /*eslint-disable */
 const locale = {
     index: {
-			version_log: 'Version Log',
+      version_log: 'Version Log',
+      version_update: 'Update',
       http_error: 'System Exception, Please Try Again Later',
       newAccount: 'New Account',
       newAccountTip: 'Create Account',
@@ -64,6 +65,7 @@ const locale = {
        header: 'SIC',
          title: 'Send',
          from: 'From',
+         extract: 'Withdraw',
          to: 'ethAddress',
          to_placeholder: 'account name',
          amount: 'Amount',
@@ -199,7 +201,7 @@ const locale = {
         },
         success: {
             title: 'Create Success',
-            tip1: 'Wallet created',
+            tip1: 'Wallet Created',
             tip2: 'Please do remember to backup your wallet private key, there is no way to find it back if you lost it.',
             backup_wallet: 'Backup Now',
             detail: 'Open my wallet'

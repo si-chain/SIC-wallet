@@ -11,17 +11,8 @@
     </div>
     <div class="transfer-bom button-block">
       <x-button type="primary" :text="$t('transfer.title')" :link="`/transfer-detail?account=${$route.query.account}`"></x-button>
-      <x-button v-if="isIdentity" :text="$t('transfer.extract')" :link="`/withdraw?account=${$route.query.account}`"></x-button>
-      <x-button v-else :text="$t('transfer.extract')" @click.native="ShowIdentityMsg = !ShowIdentityMsg"></x-button>
-      <!-- <flexbox style="margin-bottom:3px">
-        <flexbox-item>
-          <x-button type="primary" :text="$t('transfer.title')" :link="`/transfer-detail?account=${$route.query.account}`"></x-button>
-        </flexbox-item>
-        <flexbox-item>
-          <x-button v-if="isIdentity" :text="$t('transfer.extract')" :link="`/withdraw?account=${$route.query.account}`"></x-button>
-          <x-button v-else :text="$t('transfer.extract')" @click.native="ShowIdentityMsg = !ShowIdentityMsg"></x-button>
-        </flexbox-item>
-      </flexbox> -->
+      <x-button v-if="isIdentity" :text="$t('withdraw.extract')" :link="`/withdraw?account=${$route.query.account}`"></x-button>
+      <x-button v-else :text="$t('withdraw.extract')" @click.native="ShowIdentityMsg = !ShowIdentityMsg"></x-button>
     </div>
     <div v-transfer-dom>
         <alert v-model="ShowIdentityMsg" button-text=" ">
@@ -32,14 +23,12 @@
 </template>
 <script>
 import sicHeader from '../components/sicHeader'
-import { Flexbox, FlexboxItem, XButton, FormPreview, Divider, Alert, Msg, Loading, TransferDomDirective as TransferDom } from 'vux'
+import { XButton, FormPreview, Divider, Alert, Msg, Loading, TransferDomDirective as TransferDom } from 'vux'
 export default{
   directives: {
     TransferDom
   },
   components: {
-    Flexbox,
-    FlexboxItem,
     XButton,
     sicHeader,
     FormPreview,

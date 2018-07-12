@@ -1,57 +1,42 @@
 <template>
   <div class="creat-account" style="overflow:hidden">
-    <!-- <div v-if="$store.state.account" class="header">
-      <div @click="goback" class="left-arrow"></div>
-    </div> -->
     <sic-header v-if="$store.state.account" :left-options="{backText: ''}"></sic-header>
-    <!-- <x-header v-else :left-options="{showBack: false}"></x-header> -->
-    <sic-header v-else style="margin-bottom:12px;" :left-options="{showBack: false}"></sic-header>
-    <!-- <p v-else style="height:30px;height: 18px;
-    margin-bottom: 12px;background-color: #3287fd;"></p> -->
+    <p v-else style="height: 1.585714rem;background-color: #123258;"></p>
     <div class="creat-box" :class="$store.state.account ? 'hastop' : ''">
       <div class="logo">
-        <div class="logo-left">
-          <img src="../assets/createlogo.png" alt="">
+        <div class="logo-item logo-left">
+          <p class="new">New account</p>
+          <p>Create account</p>
         </div>
-        <div class="account-img">
-          <account-image style="margin:8px 0 0 1px;" :account="account" :size="16"></account-image>
+        <div class="logo-item logo-right">
+          <a class="has-account" @click="hasAccount">{{$t('index.existing_account')}}?</a>
+          <span class="inline-block language" @click="language">
+            <img class="middle" width="24" src="../assets/images/ico_font.png" alt="">
+          </span>
         </div>
       </div>
-      <p class="new-account-title">{{$t('index.newAccount')}}</p>
-      <p class="new-account-tip">{{$t('index.newAccountTip')}}</p>
+      <div class="account-img">
+        <account-image style="margin:8px 0 0 1px;" wrapSize="60px" background="#b2b2b2" :account="account" :size="35"></account-image>
+      </div>
       <div class="input-item">
         <p class="create-account-title">{{$t('index.account_name')}}</p>
-        <x-input novalidate :icon-type="iconType" :placeholder="$t('wallet_create.placeholder.step1')" v-model="account" :min="12" :max="12" @on-blur="accountOnBlur">
+        <x-input :class="val === 'account' ? 'create-input-focus' : 'create-input'" textAlign="color:#ffffff" novalidate :icon-type="iconType" :placeholder="$t('wallet_create.placeholder.step1')" v-model="account" :min="12" :max="12" @on-blur="accountOnBlur" @on-focus="sendInputFocus('account')">
           <x-button slot="right" type="primary" @click.native="randomEosName" mini>{{$t('index.random')}}</x-button>
         </x-input>
       </div>
       <div class="input-item">
         <p class="create-account-title">{{$t('wallet_create.placeholder.step2')}}</p>
-        <x-input novalidate :icon-type="iconTypePwd" type="password" @on-enter="submit" :placeholder="$t('wallet_create.placeholder.step2')" v-model="password" @on-blur="confirmOnBlur"></x-input>
-        <!-- <x-input :title="$t('wallet_create.two.label.password')" type="password" novalidate :icon-type="iconTypePwd" v-model="password"></x-input> -->
+        <x-input :class="val === 'pwd' ? 'create-input-focus' : 'create-input'" novalidate :icon-type="iconTypePwd" type="password" @on-enter="submit" :placeholder="$t('wallet_create.placeholder.step2')" v-model="password" @on-blur="confirmOnBlur" @on-focus="sendInputFocus('pwd')"></x-input>
       </div>
       <div class="input-item">
         <p class="create-account-title">{{$t('index.Invite')}}</p>
-        <x-input :placeholder="$t('index.placeholderInvite')" v-model="invite" @on-blur="InviteOnBlur"></x-input>
-        <!-- <x-input :title="$t('wallet_create.two.label.password')" type="password" novalidate :icon-type="iconTypePwd" v-model="password"></x-input> -->
+        <x-input :class="val === 'invitecode' ? 'create-input-focus' : 'create-input'" :placeholder="$t('index.placeholderInvite')" v-model="invite" @on-blur="InviteOnBlur" @on-focus="sendInputFocus('invitecode')"></x-input>
       </div>
-      <div class="btn-wrap">
-        <x-button :disabled="password === ''" type="primary" @click.native="submit">{{$t('wallet_create.create_account')}}</x-button>
-        <a class="has-account" @click="hasAccount">{{$t('index.existing_account')}}?</a>
-      </div>
+      <x-button type="default" :disabled="password === ''" @click.native="submit">{{$t('wallet_create.create_account')}}</x-button>
     </div>
-
-    <!-- <div class="account-image-wrap">
-      <account-image class="account-image" :size="40" :account="account"></account-image>
+    <div v-transfer-dom>
+      <actionsheet :menus="menus" v-model="showMenu" @on-click-menu="changeLocale"></actionsheet>
     </div>
-    <group>
-      <x-input :title="$t('wallet_create.two.label.password')" type="password" novalidate :icon-type="iconTypePwd" v-model="password"></x-input>
-      <x-input :title="$t('wallet_create.two.label.confirm')" type="password" novalidate :icon-type="iconTypePwd" v-model="confirm" @on-blur="confirmOnBlur"></x-input>
-    </group>
-    <box gap="30px 15px">
-      <x-button :disabled="!((password === confirm) && confirm !== '')" type="primary" @click.native="submit" :createShow-loading="loading">{{$t('index.sign_up')}}</x-button>
-      <a class="has-account" @click="hasAccount">{{$t('index.existing_account')}}?</a>
-    </box> -->
     <toast v-model="createShow" type="warn" :width="width">{{error}}</toast>
   </div>
 </template>
@@ -61,20 +46,23 @@ import ecc from 'eosjs-ecc'
 import AES from 'crypto-js/aes'
 import Co from 'co'
 import sicHeader from '../components/sicHeader'
-import { Box, Group, XButton, XInput, Toast } from 'vux'
+import { XButton, XInput, Toast, Actionsheet, TransferDom } from 'vux'
 export default{
+  directives: {
+    TransferDom
+  },
   components: {
     AccountImage,
     sicHeader,
-    Group,
+    Actionsheet,
     XButton,
     XInput,
-    Toast,
-    Box
+    Toast
   },
   data () {
     return {
       account: '',
+      val: 'invitecode',
       isAccount: false,
       invite: '',
       error: '',
@@ -86,10 +74,23 @@ export default{
       iconType: '',
       iconTypePwd: '',
       accountSuccess: false,
-      timerInt: null // 时间计时器
+      timerInt: null, // 时间计时器
+      showMenu: false,
+      menus: {
+        'language.noop': '<span class="menu-title">Language</span>',
+        'zh-CN': '中文',
+        'en-US': 'English'
+      }
     }
   },
   methods: {
+    language () {
+      this.showMenu = true
+    },
+    changeLocale (locale) {
+      this.$common.setStore('_locale', locale)
+      this.$i18n.locale = locale
+    },
     // Blur 事件
     accountOnBlur () {
       this.validateAccount()
@@ -222,143 +223,114 @@ export default{
         this.error = this.$t('wallet_create.placeholder.step1')
         this.createShow = true
       }
+    },
+    sendInputFocus (val) {
+      this.val = val
     }
   }
 }
 </script>
 <style lang="less" scoped>
-.vux-header{
-  height: 40px;
-  .vux-header-back{
-    color: #ffffff!important;
-  }
+.creat-account{
+  background: url(../assets/images/bg_create.jpg);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
 }
-.header{
-  background-color: #3287fd!important;
-  position: relative;
-  color: #000000;
-  text-align: left;
-  line-height: 46px;
-  height: 50px;
-  font-size: 18px;
-  .left-arrow {
-    position: absolute;
-    width: 30px;
-    height: 30px;
-    top: 5px;
-    left: 8px;
-  }
-  .left-arrow:before {
-    content: "";
-    position: absolute;
-    width: 12px;
-    height: 12px;
-    border: 1px solid #000000;
-    border-width: 1px 0 0 1px;
-    -webkit-transform: rotate(315deg);
-    transform: rotate(315deg);
-    top: 8px;
-    left: 7px;
-  }
-}
-.hastop{
-  margin-top: 10px;
+.input-item .weui-cell{
+  background:rgb(18, 51, 87, 0.1)!important;
 }
 .creat-box{
-  padding: 0 20px;
+  padding: 0 2.142857rem;
 }
 .logo{
-  height: 50px;
-}
-.logo-left {
-  float: left;
-  img{
-    height: 50px;
+  height: 3.214286rem;
+  position: relative;
+  display: flex;
+  .logo-item{
+    flex:1
+  }
+  .logo-left{
+    color: #8898ac;
+    font-size: 13px;
+    .new{
+      font-size: @font-size2;
+    }
+  }
+  .logo-right{
+    display: flex;
+    align-items: center;
+    a{
+      font-size: @font-size4;
+      color: #ffffff;
+      margin-left: 1.5rem;
+    }
+    .language{
+      margin-left: 1.857143rem;
+      position: absolute;
+      right: -1rem;
+      img{
+        margin-top: .428571rem;
+      }
+    }
   }
 }
 .account-img{
-  float: right;
-  height: 48px;
-  text-align: center;
-  width: 48px;
-  border-radius: 50%;
-  border:1px solid #0b4acd;
-}
-.new-account-title{
-  line-height: 27px;
-  font-size: 19px;
-  font-weight: 500;
-  color: #1c3c78;
-  text-align: left;
-  margin-top: 24px;
-  width: 100px;
-}
-.new-account-tip{
-  line-height: 20px;
-  font-size: 13px;
-  color: #4776cf;
-  text-align: left;
-  width: 200px;
-  margin-bottom: 25px;
-}
-.input-item{
-  margin-top: 9px;
+  margin: 2.142857rem 0  .714286rem -0.357143rem;
 }
 .create-account-title{
-  line-height: 25px;
-  font-size: 16px;
-  color:#222;
-  letter-spacing:4px;
+  font-size: @font-size4;
+  color: #ffffff;
 }
-.weui-input{
-  font-size: 18px;
-
+.input-item{
+  margin-top: 1.285714rem;
+}
+.weui-btn_disabled.weui-btn_default{
+  background-color: @assist-color;
+  color: #ffffff;
+  font-size: @font-size2;
+  border-radius: 2.142857rem;
+  padding: .285714rem 0;
+  margin-top: 2.142857rem;
+}
+.weui-btn_default{
+  font-size: @font-size2;
+  border-radius: 2.142857rem;
+  padding: .285714rem 0;
+  margin-top: 2.142857rem;
+}
+.weui-btn_mini{
+  background-color: @assist-color;
+  margin-right: .571429rem;
+  padding: 2px 1.2rem;
 }
 .weui-cell{
   padding: 5px 0;
-  border-bottom: 1px solid #D9D9D9;
-  background: #f5f5f5!important;
 }
-.weui-cell:before {
+.create-input-focus:before {
     content: " ";
     position: absolute;
     left: 0;
-    top: 0;
-    right: 0;
-    border-top:none;
+    top: 39px;
+    right: 8px;
+    border-top: 2px solid #ffffff;
     color: #D9D9D9;
     -webkit-transform-origin: 0 0;
     transform-origin: 0 0;
     -webkit-transform: scaleY(0.5);
     transform: scaleY(0.5);
-    left: 15px;
 }
-.btn-wrap{
-  width: 260px;
-  height: 45px;
-  margin:0 auto;
-  margin-top: 28px;
-}
-.account-image-wrap{
-  text-align: center;
-  padding: 30px 0;
-}
-.create-btn{
-  width: 250px;
-  height: 39px;
-  border: 2px solid #d1b774;
-  background-color: #3287fd!important;
-  border-radius: 28px;
-  line-height: 39px;
-  font-size: 16px;
-  // color: #ffffff;
-}
-.has-account{
-  color: #bbbbbb;
-  display: inline-block;
-  margin: 8px 0 0 10px;
-  font-size: 13px;
-  float: left;
+.create-input:before {
+    content: " ";
+    position: absolute;
+    left: 0;
+    top: 39px;
+    right: 8px;
+    border-top: 1px solid #8898ac;
+    color: #D9D9D9;
+    -webkit-transform-origin: 0 0;
+    transform-origin: 0 0;
+    -webkit-transform: scaleY(0.5);
+    transform: scaleY(0.5);
 }
 </style>
 
