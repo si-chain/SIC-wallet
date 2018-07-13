@@ -1,7 +1,7 @@
 [
   {
     "file": "index.html",
-    "hash": "1678f22feefb5f303cc0517df05813da"
+    "hash": "de3d26f3bcf55ca0ff0d029a89f4ae2c"
   },
   {
     "file": "js/index.js",
@@ -16,8 +16,8 @@
     "hash": "53fdf2d8205c189f63f30270e046aea2"
   },
   {
-    "file": "static/css/app.f0782e70fe3bba60a084c627a62440b9.css",
-    "hash": "7fbf8c0e4bbf641a3f44b3ebdc6b4a94"
+    "file": "static/css/app.35b2f7b4baf39c1631a415927685b133.css",
+    "hash": "c32328001a83dde0a3731a37ef5af0c9"
   },
   {
     "file": "static/dll/eos_manifest.json",
@@ -112,124 +112,136 @@
     "hash": "c2eed69de4ed83c73465a445ef54d345"
   },
   {
-    "file": "static/img/createlogo.7319209.png",
-    "hash": "731920920dd6382de70187ead1baff22"
+    "file": "static/img/bg_create.2db28a8.jpg",
+    "hash": "2db28a8a9c3bebe6da200250ccf7ff4d"
   },
   {
-    "file": "static/img/top_bg.1685b58.png",
-    "hash": "1685b580fe46db216ae1da1c6287e7bb"
+    "file": "static/img/bg_wallet.444b775.png",
+    "hash": "444b7758e88f730de10d2544bee27724"
   },
   {
-    "file": "static/js/0.998a84ba4a96b408738d.js",
-    "hash": "078350a6609d273483e9dc5e5a64bc68"
+    "file": "static/img/ico_phone_authentication.795e226.png",
+    "hash": "795e22603355dd77e1ac77acd760d499"
   },
   {
-    "file": "static/js/1.888a7b8001b71696f465.js",
-    "hash": "9ccec7d2e3ca9a504c05c9fe811ef16a"
+    "file": "static/img/logo_about.dceea43.png",
+    "hash": "dceea438113450c426825b8e3cec236c"
   },
   {
-    "file": "static/js/10.d01fa34942c821f54bf9.js",
-    "hash": "eb671c8be70f903ea79f71ef2a2a2b3a"
+    "file": "static/js/0.08aa1d5c60d6d704f1c0.js",
+    "hash": "db27379c9f5648d7144c0be5d41c953d"
   },
   {
-    "file": "static/js/11.579bd20ac36727f71241.js",
-    "hash": "07dbeef0e053414189f0f0eba4b0413e"
+    "file": "static/js/1.6edf7bdf924058bba3d1.js",
+    "hash": "7b459722b1465ef314a71fb078d4680f"
   },
   {
-    "file": "static/js/12.087d71dda9e0ca924271.js",
-    "hash": "53d5495cc523bb7436732939f5d6d583"
+    "file": "static/js/10.11f043b30300b30124cc.js",
+    "hash": "9faa90e504100826ef5c18316dbd4458"
   },
   {
-    "file": "static/js/13.26c7e926bfde387a4beb.js",
-    "hash": "5817e405edb914151207b7e8b85f9458"
+    "file": "static/js/11.ee42953957bbc85bc3ca.js",
+    "hash": "27901d852c95fbbdc86bd6e9b8c858e3"
   },
   {
-    "file": "static/js/14.2e150f0a47bd5bf17f43.js",
-    "hash": "2d5604c0d39e16e6bba5f12a98cbb115"
+    "file": "static/js/12.18e576e572fb39c50940.js",
+    "hash": "7c19e134dc6a95da2e2f83a48fb0efc0"
   },
   {
-    "file": "static/js/15.04e19c94e0b6acf90f64.js",
-    "hash": "404780635ba81a7405d3feeb4135312a"
+    "file": "static/js/13.14fdcc59055d39e21076.js",
+    "hash": "e53c8cd28d20e3ef6d9f03b0978fac55"
   },
   {
-    "file": "static/js/16.16a0f67140cec93c9200.js",
-    "hash": "01b8daabf6961d524d26357a9b37bc22"
+    "file": "static/js/14.dcc015282c1570afafb2.js",
+    "hash": "e000dd71d74ade055ac4e33ef10dfd61"
   },
   {
-    "file": "static/js/17.1574c060ee4cdddf5a8d.js",
-    "hash": "f33b68f86be65afd6e995246ce3b1f8c"
+    "file": "static/js/15.f24348269fed90ddbebf.js",
+    "hash": "50f87cf41509ad26a49ed3f69560193a"
   },
   {
-    "file": "static/js/18.b217c9b2933a98975605.js",
-    "hash": "5b37d0adfab9864ea18b9ec859902fdb"
+    "file": "static/js/16.fb47ecd879a0e25cc469.js",
+    "hash": "593af6d4381462fbdb703999795aa9ea"
   },
   {
-    "file": "static/js/19.9d7a880fa288fdf30544.js",
-    "hash": "93d2b97d37d5c04883a9be1ef1f7f7d9"
+    "file": "static/js/17.10fdaf724ad438ba0f50.js",
+    "hash": "a70b52f6905e09dcc70ff6e628c9d652"
   },
   {
-    "file": "static/js/2.fbb88be6b713ad308d4b.js",
-    "hash": "cb598fbb61fd3a150d0bcbc11f8efbcc"
+    "file": "static/js/18.e439057f8a35ad31b8ff.js",
+    "hash": "b64177b5f90983ea081264f1a79123ce"
   },
   {
-    "file": "static/js/20.b984724b20627538fc3c.js",
-    "hash": "7202b919842dfa26fcde492be8d748f3"
+    "file": "static/js/19.c6e5991b3a29b7fd52fc.js",
+    "hash": "3e1ac272f1c1aae8baa44ee92c29490b"
   },
   {
-    "file": "static/js/21.3017c39c928ba182623f.js",
-    "hash": "9b815f1a5d92bec938c11dbb538a9633"
+    "file": "static/js/2.2015732d0b9ded887129.js",
+    "hash": "5acfbaadfc616bd66e576935e14e8827"
   },
   {
-    "file": "static/js/3.8ec73c388b9717b23014.js",
-    "hash": "396c4e4e54fbe71007f462b021945b9c"
+    "file": "static/js/20.a5f3d3f4621f32987b90.js",
+    "hash": "bbfb4732e062b29a0bc3842527e74baa"
   },
   {
-    "file": "static/js/4.3699b8f728254991a8e5.js",
-    "hash": "9e95e9be8b1bd4c5fe8a3793cc4c8d5d"
+    "file": "static/js/21.0c888487d7f26c9894e3.js",
+    "hash": "a5f7cc99627af5d120b4d766f08c93d1"
   },
   {
-    "file": "static/js/5.3640f10b40b82ced07fe.js",
-    "hash": "a6ec3392597a1ca7fa5ef0e77b34458a"
+    "file": "static/js/22.b80005f041b4a14238d6.js",
+    "hash": "cda1562c2cc56709dc5994b455084647"
   },
   {
-    "file": "static/js/6.f644d4b300b8cd4963fd.js",
-    "hash": "e79dc51501e208e8f9aba5b40488ebf4"
+    "file": "static/js/3.392a5b3397aeba8c6c9c.js",
+    "hash": "2e581e630cde2d101b9205e81e07ad3f"
   },
   {
-    "file": "static/js/7.6806895eb09f68a13b1d.js",
-    "hash": "4ae5e6543d9ae368cbe1ab06bef1d240"
+    "file": "static/js/4.920914060aa127736da9.js",
+    "hash": "7ed345111398ad2c5f8dfe51ec279f78"
   },
   {
-    "file": "static/js/8.cfb634d5dddfd825d29d.js",
-    "hash": "d05e8d68a4deecf7aca43703355d2928"
+    "file": "static/js/5.5579afbae91306cc62f9.js",
+    "hash": "9f11cefff1ab356a4566619eb3c1b876"
   },
   {
-    "file": "static/js/9.9c1d286f2f1fcf3488d3.js",
-    "hash": "c69563714585a2ee8b27f304391e7f69"
+    "file": "static/js/6.0719bef3552427c7d3b4.js",
+    "hash": "4a5c64739668c40571107aa652ef3343"
   },
   {
-    "file": "static/js/app.22a670dc7e1085086353.js",
-    "hash": "c415d7a22e16c72b3b8e25a9026814ca"
+    "file": "static/js/7.14fb421063491aab8d93.js",
+    "hash": "03ac79766311fcf5ffb76b63c520811f"
   },
   {
-    "file": "static/js/eos.aa9151391e7dbcd21df6.js",
-    "hash": "f4e962682be882a95590efd19330ab1d"
+    "file": "static/js/8.e827b84a9271bcb72639.js",
+    "hash": "ebf403d8102bd32dbf1bdbe7c250ad97"
   },
   {
-    "file": "static/js/eostool.91abca077005e77e885a.js",
-    "hash": "a8247bcbca69268aee3d33aceda2b128"
+    "file": "static/js/9.7847d16066bec6637c44.js",
+    "hash": "888ca5a18383b4e657b2782c864b3af0"
+  },
+  {
+    "file": "static/js/app.1bc3cebae6b1b729b9c6.js",
+    "hash": "01e3123c7a3046c44a926e0eed16fc45"
+  },
+  {
+    "file": "static/js/eos.92cc505dddcbccd6b6f4.js",
+    "hash": "38bdae865fff4dbee0ac075b575abfbc"
+  },
+  {
+    "file": "static/js/eostool.ffcaf664518c28908f9c.js",
+    "hash": "ec932eab4a2f7f51889da10ceef2c2f8"
   },
   {
     "file": "static/js/index.js",
     "hash": "b144c071205225b243caacc5b550f592"
   },
   {
-    "file": "static/js/manifest.4cbe78af3c0409e2558a.js",
-    "hash": "faa29144765cc3abfba54f1bb6d23c35"
+    "file": "static/js/manifest.6c30568a8f4a7760df49.js",
+    "hash": "bb93c4a6155b4e38edd99ab3385922fa"
   },
   {
-    "file": "static/js/other.f1597a0b2e54054c2114.js",
-    "hash": "c5e5c91c1d38b1dc4917db955a5be8bc"
+    "file": "static/js/other.e41c957b473a9a88b453.js",
+    "hash": "094b40059df569a1fc630010fcc45c39"
   },
   {
     "file": "static/js/qrcode.js",
@@ -240,32 +252,32 @@
     "hash": "186a71a06adad4ba8b92e4d957c65fa5"
   },
   {
-    "file": "static/js/router.b6e40377fa8d0b2ae4da.js",
-    "hash": "364909df41e614d3b30c5efed9f9f103"
+    "file": "static/js/router.883c81e47b16c32db421.js",
+    "hash": "fe64a185d36afd68679af5d1d8cbb128"
   },
   {
-    "file": "static/js/tool.ae86142c938bb4dc37e2.js",
-    "hash": "bd523f45984facd3ae5aac7671e481cc"
+    "file": "static/js/tool.4171eea93a0767e6978c.js",
+    "hash": "9ab85fb5512f8010cf01b8d4417f8753"
   },
   {
-    "file": "static/js/vendor.f6efef851ea393d431ba.js",
-    "hash": "70b5427d80c255ca7dc81c88cfb7fd19"
+    "file": "static/js/vendor.1f821b6b5f3bce78ab7c.js",
+    "hash": "5a884f16ee6f817002bd42e6a1f6b33f"
   },
   {
-    "file": "static/js/vue.9e821c532f558ba04014.js",
-    "hash": "19d24bb699c91b37ce61512b61229e74"
+    "file": "static/js/vue.3be1fa7a054ed25188a9.js",
+    "hash": "975327d01ac801813d8008c928948ce8"
   },
   {
-    "file": "static/js/vuemoment.7d4ac10b8c57db5a2c2d.js",
-    "hash": "10c09d941e34a6ede03e2a12a430d575"
+    "file": "static/js/vuemoment.4d8698141e8731991f41.js",
+    "hash": "73da036a4108868a39c48d0d964752cf"
   },
   {
-    "file": "static/js/vuetool.da930d9d66127fd709e6.js",
-    "hash": "b599420a2556e10028ad79f42ddca09b"
+    "file": "static/js/vuetool.f364234c918f518e78db.js",
+    "hash": "8af9c022bc75a26ac8001618eb3949e3"
   },
   {
-    "file": "static/js/vuex.c2e4c4bbe27c7f107207.js",
-    "hash": "b27564ff0abb32f64debcefbd3a4cf0e"
+    "file": "static/js/vuex.b328bb66920ce44b5c62.js",
+    "hash": "da8ec2ea30c549cf69b2e5e88eb53834"
   },
   {
     "file": "static/js/zepto.js",

@@ -1,11 +1,11 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="io.cordova.hellocordova" version="1.1.2" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="io.cordova.sichain" version="1.1.2" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>智宝钱包</name>
     <description>
-        A sample Apache Cordova application that responds to the deviceready event.
+        The SIC wallet is an online insurance service provided to you by the SIC foundation of Singapore in accordance with the SIC Internet insurance platform.
     </description>
-    <author email="dev@cordova.apache.org" href="http://cordova.io">
-        Apache Cordova Team
+    <author email="service@sichain.io" href="https://sichain.io/">
+        SIC Team
     </author>
     <content src="index.html" />
     <access origin="*" />
@@ -15,7 +15,7 @@
     <allow-intent href="sms:*" />
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
-    <allow-navigation href="http://*/*" />
+    <allow-navigation href="*" />
     <preference name="StatusBarBackgroundColor" value="false" />
     <platform name="android">
         <allow-intent href="market:*" />
@@ -56,8 +56,8 @@
     <chcp>
         <auto-download enabled="true" />
         <auto-install enabled="true" />
-        <config-file url="https://wallet.sichain.io/www/chcp.json" />
-        <native-interface version="1.1.2" />
+        <config-file url="http://wallet.sichain.io/www/chcp.json" />
+        <native-interface version="1" />
     </chcp>
     <engine name="android" spec="^6.4.0" />
     <plugin name="phonegap-plugin-barcodescanner" spec="^8.0.0" />
