@@ -3,11 +3,7 @@
     <sic-header :left-options="{backText: ''}">{{$t('index.backup_wallet')}}</sic-header>
     <div class="page">
       <div class="content">
-        <!-- <div class="content-block text-center">
-          <account-image :size="30" :account="$route.query.account"></account-image>
-          <p>{{$route.query.account}}</p>
-        </div> -->
-        <wallet-detail :isBackground="false"></wallet-detail>
+        <wallet-detail link="/" :isBackground="false"></wallet-detail>
         <sic-cell :title="$t('wallet_backup.index.label.asset')" :isLink="false" :value="balance">
           <img slot="icon" class="icon" src="../assets/images/ico_asset_backup.png" alt="">
         </sic-cell>
@@ -21,21 +17,12 @@
             <badge :text="$store.state.msgList.length"></badge>
           </div>
         </sic-cell>
-        <!-- <p class="tip-error text-center" v-if="!error.common">{{error.common}}</p> -->
         <div class="tip-info">
             <span style="color:#999">*</span> {{$t('wallet_backup.index.tip')}}
         </div>
         <div class="button-block">
           <x-button type="primary" :link="`/wallet-backup-key?account=${$route.query.account}`">{{$t('wallet_backup.index.button_backup')}}</x-button>
           <x-button type="default" @click.native="delWallet">{{$t('wallet_backup.index.button_remove')}}</x-button>
-          <!-- <flexbox>
-            <flexbox-item>
-              <x-button type="primary" :link="`/wallet-backup-key?account=${$route.query.account}`">{{$t('wallet_backup.index.button_backup')}}</x-button>
-            </flexbox-item>
-            <flexbox-item>
-              <x-button type="default" @click.native="delWallet">{{$t('wallet_backup.index.button_remove')}}</x-button>
-            </flexbox-item>
-          </flexbox> -->
         </div>
       </div>
     </div>
@@ -46,17 +33,13 @@
 import sicHeader from '../components/sicHeader'
 import walletDetail from '../components/accountDetail'
 import sicCell from '../components/sicCell'
-import { XButton, Group, Cell, Flexbox, FlexboxItem, Badge } from 'vux'
+import { XButton, Badge } from 'vux'
 import AccountImage from '../components/AccountImage.vue'
 import PasswordConfirm from '../components/PasswordConfirm.vue'
 export default {
   components: {
     XButton,
-    Group,
-    Cell,
     sicHeader,
-    Flexbox,
-    FlexboxItem,
     AccountImage,
     PasswordConfirm,
     Badge,

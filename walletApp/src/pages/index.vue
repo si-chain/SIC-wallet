@@ -6,7 +6,7 @@
     <div style="padding-top: 8.357143rem;"></div>
     <account-detail></account-detail>
     <sic-cell type="circle" class="fund-manage-wrap align-center" :title="$t('index.SIC')" :value="balance" :link="`/transfer?account=${this.$store.state.account}`"></sic-cell>
-    <sic-cell class="align-center" :title="$t('index.SIC')" :value="balance" :link="`/wallet-backup?account=${this.$store.state.account}`">
+    <sic-cell class="align-center" :title="$t('index.backup_wallet')" :value="balance" :link="`/wallet-backup?account=${this.$store.state.account}`">
       <img slot="icon" class="icon" src="../assets/images/ico_backupkey_wallet.png" alt="">
     </sic-cell>
     <!-- <div class="is-backup">

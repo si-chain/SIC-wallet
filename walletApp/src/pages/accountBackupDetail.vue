@@ -68,7 +68,6 @@ export default {
       this.isUnlock = true
     },
     unlocking (flag, pwd) {
-      console.log(flag)
       let self = this
       let account = this.$route.query.account
       let wallets = this.$common.get_wallets()

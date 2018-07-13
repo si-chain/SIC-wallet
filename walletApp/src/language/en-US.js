@@ -17,8 +17,8 @@ const locale = {
       account:'Account',
       identity: 'Authentication',
       balance_loading: 'loading..',
-      success: 'success',
-      error: 'error',
+      success: 'Success',
+      error: 'Fail',
       notice: 'Notice',
       sign_up:'Sign Up',
       claim_trusteeship:'Claim Trusteeship',
@@ -204,7 +204,8 @@ const locale = {
             tip1: 'Wallet Created',
             tip2: 'Please do remember to backup your wallet private key, there is no way to find it back if you lost it.',
             backup_wallet: 'Backup Now',
-            detail: 'Open my wallet'
+            detail: 'Open my wallet',
+            back_home: 'Back Home'
         }
     },
     wallet_import: {
@@ -218,13 +219,7 @@ const locale = {
             password: 'Is equal to 6 characters'
         },
         confirm: 'Import Now',
-        error: {
-            password_not_equal: 'Password not equal',
-            account_already_exist: 'Account already imported',
-            account_not_found: 'Account not found',
-            invalid_key: 'Incorrect key format',
-            no_reference_account: 'Import failed! No account for this active private key was found.'
-        },
+        error: 'Reimport',
         success: {
             title: 'Import Success',
             tip1: 'Wallet imported',

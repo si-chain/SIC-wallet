@@ -44,6 +44,10 @@ export default {
     },
     iShowLock: {
       type: Boolean
+    },
+    isDecrypt: {
+      type: Boolean,
+      default: false
     }
   },
   directives: {
@@ -61,38 +65,42 @@ export default {
     onPasswordConfirm () {
       let self = this
       let flag = false
-      if (!this.password) {
-        this.error.common = this.$t('unlock.error.invalid_password')
-        flag = true
-      }
-      let account = this.$route.query.account
-      let wallets = this.$common.get_wallets()
-      let wallet
-      wallets.find(function (w) {
-        if (w.account === account) {
-          wallet = w
-        }
-      })
-      try {
-        let publicWallet = this.$common.backupPublicKey(wallet.active, this.password)
-        let activePubkey = wallet.activePubkey
-        if (wallet == null) {
+      if (this.isDecrypt) {
+        this.$emit('unlocking', flag, this.password)
+      } else {
+        if (!this.password) {
+          this.error.common = this.$t('unlock.error.invalid_password')
           flag = true
-          self.error.common = self.$t('unlock.account_not_found')
-        } else if (activePubkey !== publicWallet) {
-          flag = true
-          self.error.common = self.$t('wallet_backup.detail.error.invalid_password')
-        } else {
-          flag = false
         }
-      } catch (error) {
-        flag = true
-        this.error.common = this.$t('unlock.error.invalid_password')
-      }
-      this.$emit('unlocking', flag, this.password)
-      if (!flag) {
-        this.password = ''
-        this.error.common = ''
+        let account = this.$route.query.account
+        let wallets = this.$common.get_wallets()
+        let wallet
+        wallets.find(function (w) {
+          if (w.account === account) {
+            wallet = w
+          }
+        })
+        try {
+          let publicWallet = this.$common.backupPublicKey(wallet.active, this.password)
+          let activePubkey = wallet.activePubkey
+          if (wallet == null) {
+            flag = true
+            self.error.common = self.$t('unlock.account_not_found')
+          } else if (activePubkey !== publicWallet) {
+            flag = true
+            self.error.common = self.$t('wallet_backup.detail.error.invalid_password')
+          } else {
+            flag = false
+          }
+        } catch (error) {
+          flag = true
+          this.error.common = this.$t('unlock.error.invalid_password')
+        }
+        this.$emit('unlocking', flag, this.password)
+        if (!flag) {
+          this.password = ''
+          this.error.common = ''
+        }
       }
     },
     hidden () {

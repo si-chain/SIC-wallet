@@ -35,23 +35,6 @@
             <msg slot="default" :title="title" :buttons="buttons" :icon="icon"></msg>
           </alert>
         </div>
-        <!-- <tabbar class="clearfix" style="width:100%;position:absolute;left:0;top:0;z-index:100;height:2.875rem">
-            <tabbar-item :selected="$route.path === '/'" link="/">
-                <img style="margin-top:2px;height: 17px!important;width: 22px!important;" slot="icon" src="../assets/icon_01-03.png">
-                <img style="margin-top:2px;height: 17px!important;width: 22px!important;" slot="icon-active" src="../assets/icon_01-01.png">
-                <span slot="label">{{$t('index.wallet')}}</span>
-            </tabbar-item>
-            <tabbar-item :selected="$route.path === '/policy'" link="/policy">
-                <img style="width: 26px!important;height: 23px!important;" slot="icon" src="../assets/icon_01-06.png">
-                <img style="width: 26px!important;height: 23px!important;" slot="icon-active" src="../assets/icon_01-04.png">
-                <span slot="label">{{$t('policy.tip_insurance')}}</span>
-            </tabbar-item>
-            <tabbar-item :selected="$route.path === '/home'" :show-dot="$store.state.hasMsg" link="/home">
-                <img style="width: 22px!important;height: 22px!important;" slot="icon" src="../assets/icon_01-05.png">
-                <img style="width: 22px!important;height: 22px!important;" slot="icon-active" src="../assets/icon_01-02.png">
-                <span slot="label">{{$t('index.home')}}</span>
-            </tabbar-item>
-        </tabbar> -->
       </div>
       <router-view></router-view>
     </div>
@@ -59,15 +42,13 @@
 </template>
 
 <script>
-import {Tabbar, TabbarItem, Loading, Actionsheet, Alert, Msg, Confirm, TransferDom} from 'vux'
+import {Loading, Actionsheet, Alert, Msg, Confirm, TransferDom} from 'vux'
 export default {
   name: 'indexMenu',
   directives: {
     TransferDom
   },
   components: {
-    Tabbar,
-    TabbarItem,
     Loading,
     Actionsheet,
     Alert,
@@ -141,20 +122,30 @@ export default {
       this.qrcodeShow = false
     },
     qrcode () {
-      console.log(111)
       // let _this = this
       // let options = {
-      //   preferFrontCamera: true, // iOS and Android
-      //   showFlipCameraButton: true, // iOS and Android
-      //   showTorchButton: true, // iOS and Android
-      //   torchOn: true, // Android, launch with the torch switched on (if available)
-      //   saveHistory: false, // Android, save scan history (default false)
-      //   prompt: 'Place a barcode inside the scan area', // Android
-      //   resultDisplayDuration: 1500, // Android, display scanned text for X ms. 0 suppresses it entirely, default 1500
-      //   formats: 'QR_CODE,PDF_417', // default: all but PDF_417 and RSS_EXPANDED
-      //   orientation: 'portrait', // Android only (portrait|landscape), default unset so it rotates with the device
-      //   disableAnimations: true, // iOS
-      //   disableSuccessBeep: false // iOS and Android
+      //   // iOS and Android
+      //   preferFrontCamera: true,
+      //   // iOS and Android
+      //   showFlipCameraButton: true,
+      //   // iOS and Android
+      //   showTorchButton: true,
+      //   // Android, launch with the torch switched on (if available)
+      //   torchOn: true,
+      //   // Android, save scan history (default false)
+      //   saveHistory: false,
+      //   // Android
+      //   prompt: 'Place a barcode inside the scan area',
+      //   // Android, display scanned text for X ms. 0 suppresses it entirely, default 1500
+      //   resultDisplayDuration: 1500,
+      //   // default: all but PDF_417 and RSS_EXPANDED
+      //   formats: 'QR_CODE,PDF_417',
+      //   // Android only (portrait|landscape), default unset so it rotates with the device
+      //   orientation: 'portrait',
+      //   // iOS
+      //   disableAnimations: true,
+      //   // iOS and Android
+      //   disableSuccessBeep: false
       // }
       // try {
       //   let permissions = cordova.plugins.permissions

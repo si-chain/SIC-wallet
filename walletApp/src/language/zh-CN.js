@@ -221,20 +221,14 @@ const locale = {
             password: '6位字符'
         },
         confirm: '确认导入',
-        error: {
-            title:'导入失败',
-            password_not_equal: '两次输入密码不一致',
-            account_already_exist: '账户已存在',
-            account_not_found: '账户不存在',
-            invalid_key: '私钥格式错误',
-            no_reference_account: '导入失败，私钥对应账户不存在'
-        },
+        error: '重新导入',
         success: {
             title: '导入成功',
             tip1: '钱包导入成功',
             tip2: '强烈建议您在使用前备份钱包私钥，一旦丢失不可找回',
             backup_wallet: '备份私钥',
-            detail: '查看钱包详情'
+            detail: '查看钱包',
+            back_home: '返回首页',
         }
     },
     wallet_manage: {

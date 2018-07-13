@@ -27,6 +27,9 @@ export default{
     BackgroundColor: {
       type: String,
       default: '#f1f1f1'
+    },
+    link: {
+      type: String
     }
   },
   components: {
@@ -39,16 +42,12 @@ export default{
   },
   created () {
     this.wallet.account = this.$store.state.account
-    // this.$store.state.wallets.map(item => {
-    //   if (item.account === this.wallet.account && item.isBackUp) {
-    //     this.isBackup = false
-    //   }
-    //   item.account === this.$store.state.account ? this.wallet = item : this.wallet = this.$store.state.wallets[0]
-    // })
   },
   methods: {
     goIndex () {
-      if (this.wallet.account) {
+      if (this.link) {
+        this.$router.push(`${this.link}${this.wallet.account}`)
+      } else if (this.wallet.account) {
         this.$router.push(`/wallet-backup?account=${this.wallet.account}`)
       } else {
         this.$router.push('/create-account')
