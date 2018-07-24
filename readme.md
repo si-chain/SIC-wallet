@@ -1,4 +1,4 @@
-# SIC DApp
+# SIC Wallet
 
 This product had been discontinued and replaced by SIC Nebula.
 
